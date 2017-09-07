@@ -1,4 +1,6 @@
 package edu.gatech.oad.antlab.person;
+import java.util.Collections;
+import java.util.Arrays;
 
 /**
  *  A simple class for person 2
@@ -30,8 +32,18 @@ public class Person2 {
 	 * @return the modified string
 	 */
 	private String calc(String input) {
-	  //Person 2 put your implementation here
-	  return null;
+		if (input == null) {
+			throw new IllegalArgumentException();
+		} else if (input.length() <= 2) {
+			return input;
+		}
+		char[] backingArray = new char[input.length()];
+		for (int i = 0; i < input.length(); i++) {
+			backingArray[i] = input.charAt(i);
+		}
+		Collections.shuffle(Arrays.asList(backingArray));
+		String randomInput = new String(backingArray);
+	  	return randomInput;
 	}
 	/**
 	 * Return a string rep of this object
