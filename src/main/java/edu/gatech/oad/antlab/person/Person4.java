@@ -29,12 +29,18 @@ public class Person4 {
      * @param input the string to be modified
      * @return the modified string
      */
+
     private String calc(String input) {
-      //Person 4 put your implementation here
-      return null;
+      char[] temp = new char[input.length()];
+      for (int i = 0; i < input.length(); i++) {
+        temp[i] = (char) (input.charAt(i) + 1);
+      }
+      String ans = new String(temp);
+      return ans;
     }
-    
-    /**
+
+
+  /**
      * Return a string rep of this object
      * that varies with an input string
      *

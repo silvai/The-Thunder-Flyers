@@ -1,0 +1,20 @@
+apply plugin: 'java'
+
+defaultTasks 'jar'
+
+repositories {
+    flatDir {
+        dirs 'lib'
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'edu.gatech.oad.antlab.pkg1.AntLabMain'
+    }
+    from zipTree("lib/resources.jar")
+}
+
+dependencies {
+    compile name: 'resources'
+}
