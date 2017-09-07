@@ -33,7 +33,7 @@ public class Person6 {
 	 */
 	private String calc(String input) {
 	  //Person 2 put your implementation here
-	  if (input.length() = 0) {
+	  if (input.length() == 0) {
 	  	throw new IllegalArgumentException();
 	  }
 	  if (input.length() > 0 && input.length() <= 2) {
