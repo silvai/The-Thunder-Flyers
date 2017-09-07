@@ -1,11 +1,13 @@
 package edu.gatech.oad.antlab.person;
+import java.util.Collections;
+import java.util.Arrays;
 
 /**
  *  A simple class for person 6
  *  returns their name and a
  *  modified string 
  *
- * @author person6
+ * @author Leon Zhu
  * @version 1.1
  */
 public class Person6 {
@@ -31,7 +33,19 @@ public class Person6 {
 	 */
 	private String calc(String input) {
 	  //Person 2 put your implementation here
-	  return null;
+	  if (input.length() = 0) {
+	  	throw new IllegalArgumentException();
+	  }
+	  if (input.length() > 0 && input.length() <= 2) {
+	  	return input;
+	  }
+	  char[] arr = new char[input.length()];
+	  for( int i=0; i<input.length(); i++) {
+	  	arr[i] = input.charAt(i);
+	  }
+	  Collections.shuffle(Arrays.asList(arr));
+	  String out = new String(arr);
+	  return out;
 	}
 	/**
 	 * Return a string rep of this object
