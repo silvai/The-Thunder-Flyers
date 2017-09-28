@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class RegisterActivity extends AppCompatActivity {
     private Button cancel;
     private EditText firstName;
@@ -18,6 +20,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText password;
     private EditText confirmPass;
     private Spinner userOrAdmin;
+
+    public static ArrayList<User> users = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userOrAdmin.setAdapter(adapter);
     }
+
     public void cancel(View view) {
         Intent intent = new Intent(this, WelcomeActivity.class);
         startActivity(intent);
@@ -45,6 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         String user = username.getText().toString();
         String pass = password.getText().toString();
         String conPass = confirmPass.getText().toString();
+        UserMode um = (UserMode) userOrAdmin.getSelectedItem();
 
         if (firstN.equals("")) {
             Toast.makeText(this, "First name is empty!", Toast.LENGTH_SHORT).show();
@@ -63,6 +69,24 @@ public class RegisterActivity extends AppCompatActivity {
         }
         if (!pass.equals(conPass)) {
             Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
+        }
+
+        User u = new User(firstN, lastN, user, pass, um);
+        if (users.contains(u)) {
+            Toast.makeText(this, "User already exists!", Toast.LENGTH_SHORT).show();
+        } else {
+            boolean userNameSame = false;
+            for (User us : RegisterActivity.users) {
+                if (us.getUsername().equals(user)) {
+                    userNameSame = true;
+                    break;
+                }
+            }
+            if (userNameSame) {
+                Toast.makeText(this, "Username already taken!", Toast.LENGTH_SHORT).show();
+            } else {
+                users.add(u);
+            }
         }
     }
 

@@ -22,15 +22,25 @@ public class LoginActivity extends AppCompatActivity {
     public void submit(View v) {
         String user = username.getText().toString();
         String pass = password.getText().toString();
-        if (user.equals("user")) {
-            if (pass.equals("password")) {
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "Wrong password!", Toast.LENGTH_SHORT).show();
+
+        boolean foundUserName = false;
+        boolean foundPassword = false;
+
+        for (User u : RegisterActivity.users) {
+            if (u.getUsername().equals(user)) {
+                foundUserName = true;
+                if (u.getPassword().equals(pass)) {
+                    foundPassword = true;
+                    break;
+                }
             }
-        } else {
-            Toast.makeText(this, "Wrong user!", Toast.LENGTH_SHORT).show();
+        }
+
+        if (foundUserName && foundPassword) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } else if (foundUserName) {
+            Toast.makeText(this, "Wrong password!", Toast.LENGTH_SHORT).show();
         }
     }
 
