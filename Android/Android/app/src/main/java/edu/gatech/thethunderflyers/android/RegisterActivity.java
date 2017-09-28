@@ -16,6 +16,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText password;
     private EditText confirmPass;
     private Spinner userOrAdmin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,5 +41,15 @@ public class RegisterActivity extends AppCompatActivity {
         String pass = password.getText().toString();
         String conPass = confirmPass.getText().toString();
 
+    }
+
+    public enum UserMode {
+        USER ("user"), ADMIN ("admin");
+
+        private String representation;
+
+        UserMode (String representation) {
+            this.representation = representation;
+        }
     }
 }
