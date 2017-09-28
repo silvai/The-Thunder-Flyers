@@ -61,6 +61,9 @@ public class RegisterActivity extends AppCompatActivity {
         if (conPass.equals("")) {
             Toast.makeText(this, "Confirm your password!", Toast.LENGTH_SHORT).show();
         }
+        if (!pass.equals(conPass)) {
+            Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public enum UserMode {
