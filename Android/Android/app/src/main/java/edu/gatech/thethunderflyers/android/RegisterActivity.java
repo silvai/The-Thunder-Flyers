@@ -57,4 +57,14 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Confirm your password!", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public enum UserMode {
+        USER ("user"), ADMIN ("admin");
+
+        private String representation;
+
+        UserMode (String representation) {
+            this.representation = representation;
+        }
+    }
 }
