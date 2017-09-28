@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
     private Button cancel;
@@ -16,6 +17,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText password;
     private EditText confirmPass;
     private Spinner userOrAdmin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,20 @@ public class RegisterActivity extends AppCompatActivity {
         String user = username.getText().toString();
         String pass = password.getText().toString();
         String conPass = confirmPass.getText().toString();
-
+        if (firstN == null) {
+            Toast.makeText(this, "First name is empty!", Toast.LENGTH_SHORT).show();
+        }
+        if (lastN == null) {
+            Toast.makeText(this, "Last name is empty!", Toast.LENGTH_SHORT).show();
+        }
+        if (user == null) {
+            Toast.makeText(this, "Username is empty!", Toast.LENGTH_SHORT).show();
+        }
+        if (pass == null) {
+            Toast.makeText(this, "Password is empty!", Toast.LENGTH_SHORT).show();
+        }
+        if (conPass == null) {
+            Toast.makeText(this, "Confirm your password!", Toast.LENGTH_SHORT).show();
+        }
     }
 }
