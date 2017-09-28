@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -25,10 +26,13 @@ public class RegisterActivity extends AppCompatActivity {
         cancel = (Button) findViewById(R.id.cancelButton);
         firstName = (EditText) findViewById(R.id.firstName);
         lastName = (EditText) findViewById(R.id.lastName);
-        username = (EditText) findViewById(R.id.username);
+        username = (EditText) findViewById(R.id.regUserName);
         password = (EditText) findViewById(R.id.password);
         confirmPass = (EditText) findViewById(R.id.confirmPass);
         userOrAdmin = (Spinner) findViewById(R.id.userOrAdmin);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, UserMode.values());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        userOrAdmin.setAdapter(adapter);
     }
     public void cancel(View view) {
         Intent intent = new Intent(this, WelcomeActivity.class);
@@ -41,19 +45,20 @@ public class RegisterActivity extends AppCompatActivity {
         String user = username.getText().toString();
         String pass = password.getText().toString();
         String conPass = confirmPass.getText().toString();
-        if (firstN == null) {
+
+        if (firstN.equals("")) {
             Toast.makeText(this, "First name is empty!", Toast.LENGTH_SHORT).show();
         }
-        if (lastN == null) {
+        if (lastN.equals("")) {
             Toast.makeText(this, "Last name is empty!", Toast.LENGTH_SHORT).show();
         }
-        if (user == null) {
+        if (user.equals("")) {
             Toast.makeText(this, "Username is empty!", Toast.LENGTH_SHORT).show();
         }
-        if (pass == null) {
+        if (pass.equals("")) {
             Toast.makeText(this, "Password is empty!", Toast.LENGTH_SHORT).show();
         }
-        if (conPass == null) {
+        if (conPass.equals("")) {
             Toast.makeText(this, "Confirm your password!", Toast.LENGTH_SHORT).show();
         }
     }
