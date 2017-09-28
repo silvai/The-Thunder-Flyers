@@ -86,6 +86,12 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(this, "Username already taken!", Toast.LENGTH_SHORT).show();
             } else {
                 users.add(u);
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                Toast.makeText(this,"Account registered successfully!", Toast.LENGTH_SHORT).show();
+                //we should add something to notify user that they're registered
+                //and go back to the welcome screen
+                //or maybe we can automatically log them in after they register
             }
         }
     }

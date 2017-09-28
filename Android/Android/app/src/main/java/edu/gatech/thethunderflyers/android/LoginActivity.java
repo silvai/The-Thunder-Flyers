@@ -41,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         } else if (foundUserName) {
             Toast.makeText(this, "Wrong password!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "User does not exist!", Toast.LENGTH_SHORT).show();
         }
     }
 
