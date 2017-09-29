@@ -10,7 +10,7 @@ public class User implements Comparable<User>{
     private RegisterActivity.UserMode um;
 
     /**
-     * Constructor for Users
+     * Constructor for User
      * @param fname first name
      * @param lname last name
      * @param usern username
@@ -107,6 +107,21 @@ public class User implements Comparable<User>{
 
     @Override
     public int compareTo(@NonNull User user) {
-        return usern.compareTo(user.getUsername());
+        return usern.compareTo(user.getUsername())
+                + pass.compareTo(user.getPassword());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof User)) {
+            return false;
+        }
+        User u = (User) obj;
+        return this.fname.equals(u.getFname()) && this.lname.equals(u.getLname())
+                && this.usern.equals(u.getUsername()) && this.pass.equals(u.getPassword())
+                && this.um == u.getUserMode();
     }
 }

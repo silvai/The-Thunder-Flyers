@@ -3,11 +3,15 @@ package edu.gatech.thethunderflyers.android;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,9 +38,26 @@ public class RegisterActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
         confirmPass = (EditText) findViewById(R.id.confirmPass);
         userOrAdmin = (Spinner) findViewById(R.id.userOrAdmin);
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, UserMode.values());
+        ArrayAdapter<UserMode> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, UserMode.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userOrAdmin.setAdapter(adapter);
+
+        FormValidator fn = new FormValidator(firstName, "First name");
+        FormValidator ln = new FormValidator(lastName, "Last name");
+        FormValidator un = new FormValidator(username, "Username");
+        FormValidator pa = new FormValidator(password, "Password");
+        FormValidator cp = new FormValidator(confirmPass, "Confirm password");
+
+        firstName.addTextChangedListener(fn);
+        firstName.setOnFocusChangeListener(fn);
+        lastName.addTextChangedListener(ln);
+        lastName.setOnFocusChangeListener(ln);
+        username.addTextChangedListener(un);
+        username.setOnFocusChangeListener(un);
+        password.addTextChangedListener(pa);
+        password.setOnFocusChangeListener(pa);
+        confirmPass.addTextChangedListener(cp);
+        confirmPass.setOnFocusChangeListener(cp);
     }
 
     public void cancel(View view) {
@@ -52,57 +73,83 @@ public class RegisterActivity extends AppCompatActivity {
         String conPass = confirmPass.getText().toString();
         UserMode um = (UserMode) userOrAdmin.getSelectedItem();
 
-        if (firstN.equals("")) {
-            Toast.makeText(this, "First name is empty!", Toast.LENGTH_SHORT).show();
-        }
-        if (lastN.equals("")) {
-            Toast.makeText(this, "Last name is empty!", Toast.LENGTH_SHORT).show();
-        }
-        if (user.equals("")) {
-            Toast.makeText(this, "Username is empty!", Toast.LENGTH_SHORT).show();
-        }
-        if (pass.equals("")) {
-            Toast.makeText(this, "Password is empty!", Toast.LENGTH_SHORT).show();
-        }
-        if (conPass.equals("")) {
-            Toast.makeText(this, "Confirm your password!", Toast.LENGTH_SHORT).show();
-        }
         if (!pass.equals(conPass)) {
-            Toast.makeText(this, "Passwords don't match!", Toast.LENGTH_SHORT).show();
+            confirmPass.setError("Passwords don't match!");
         }
 
-        User u = new User(firstN, lastN, user, pass, um);
-        if (users.contains(u)) {
-            Toast.makeText(this, "User already exists!", Toast.LENGTH_SHORT).show();
-        } else {
-            boolean userNameSame = false;
-            for (User us : RegisterActivity.users) {
-                if (us.getUsername().equals(user)) {
-                    userNameSame = true;
-                    break;
+        boolean isValid = firstName.getError() == null && lastName.getError() == null
+                && username.getError() == null && password.getError() == null
+                && confirmPass.getError() == null && !TextUtils.isEmpty(firstN)
+                && !TextUtils.isEmpty(lastN) && !TextUtils.isEmpty(user) && !TextUtils.isEmpty(pass)
+                && !TextUtils.isEmpty(conPass);
+
+        if (isValid) {
+            User u = new User(firstN, lastN, user, pass, um);
+            if (users.contains(u)) {
+                Toast.makeText(this, "User already exists!", Toast.LENGTH_SHORT).show();
+            } else {
+                boolean userNameSame = false;
+                for (User us : RegisterActivity.users) {
+                    if (us.getUsername().equals(user)) {
+                        userNameSame = true;
+                        break;
+                    }
+                }
+                if (userNameSame) {
+                    Toast.makeText(this, "Username already taken!", Toast.LENGTH_SHORT).show();
+                } else {
+                    users.add(u);
+                    Toast.makeText(this,"Account registered successfully!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                    //we should add something to notify user that they're registered
+                    //and go back to the welcome screen
+                    //or maybe we can automatically log them in after they register
                 }
             }
-            if (userNameSame) {
-                Toast.makeText(this, "Username already taken!", Toast.LENGTH_SHORT).show();
-            } else {
-                users.add(u);
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                Toast.makeText(this,"Account registered successfully!", Toast.LENGTH_SHORT).show();
-                //we should add something to notify user that they're registered
-                //and go back to the welcome screen
-                //or maybe we can automatically log them in after they register
-            }
+        } else {
+            Toast.makeText(this, "One or more fields is invalid!", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public enum UserMode {
+    enum UserMode {
         USER ("user"), ADMIN ("admin");
 
         private String representation;
 
         UserMode (String representation) {
             this.representation = representation;
+        }
+    }
+
+    private class FormValidator implements TextWatcher, View.OnFocusChangeListener {
+        private TextView tv;
+        private String name;
+
+        FormValidator(TextView tv, String name) {
+            this.tv = tv;
+            this.name = name;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            String text = tv.getText().toString();
+            if (TextUtils.isEmpty(text)) {
+                tv.setError(name + " cannot be empty!");
+            }
+        }
+
+        @Override
+        public void onFocusChange(View view, boolean b) {
+            if (!b) {
+                afterTextChanged(((TextView) view).getEditableText());
+            }
         }
     }
 }
