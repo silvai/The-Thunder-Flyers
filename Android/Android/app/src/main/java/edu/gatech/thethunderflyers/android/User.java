@@ -107,14 +107,16 @@ public class User implements Comparable<User>{
 
     @Override
     public int compareTo(@NonNull User user) {
-        return usern.compareTo(user.getUsername())
-                + pass.compareTo(user.getPassword());
+        return usern.compareTo(user.getUsername());
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
+        }
+        if (obj == null) {
+            return false;
         }
         if (!(obj instanceof User)) {
             return false;
