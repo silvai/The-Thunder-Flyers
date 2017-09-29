@@ -9,18 +9,18 @@ module.exports.User = function User(/* params */) {
 	// STUB
 };
 
-module.exports.get = function get(req, res) {
+module.exports.get = async function get(req, res) {
 	// STUB
 };
 
-module.exports.update = function update(req, res) {
+module.exports.update = async function update(req, res) {
 	// STUB
 };
 
-module.exports.create = function create(req, res) {
+module.exports.create = async function create(req, res) {
 	// STUB
 };
 
-module.exports.authenticate = function authenticate(req, res) {
+module.exports.authenticate = async function authenticate(req, res) {
 	// STUB
 };
