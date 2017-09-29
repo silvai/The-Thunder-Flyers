@@ -1,3 +1,4 @@
 /Android/Android/.idea
 /Android/Android/.gradle
 .DS_Store
+/API/node_modules
