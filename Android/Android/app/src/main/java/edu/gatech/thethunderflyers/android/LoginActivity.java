@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void submit(View v) {
-        String user = username.getText().toString();
+        String user = username.getText().toString().toLowerCase();
         String pass = password.getText().toString();
 
         boolean foundUserName = false;

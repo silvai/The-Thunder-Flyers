@@ -47,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void submitReg(View view) {
         String firstN = firstName.getText().toString();
         String lastN = lastName.getText().toString();
-        String user = username.getText().toString();
+        String user = username.getText().toString().toLowerCase();
         String pass = password.getText().toString();
         String conPass = confirmPass.getText().toString();
         UserMode um = (UserMode) userOrAdmin.getSelectedItem();
