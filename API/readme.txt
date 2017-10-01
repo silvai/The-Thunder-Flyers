@@ -5,4 +5,5 @@ If anything goes wrong, run "drop database ratapp;" then "drop user cs2340@local
 You should end up with a database called ratapp that has two tables: users and data. Users should contain 1 user, which is a dummy user to allow the CSV import to work.
 Data should contain 100000+ records and you should see that 1700+ warnings were thrown. This is alright because some of the data is malformed.
 
+Make sure to run "npm install" before starting the code, otherwise dependencies will be missing.
 In order to start the API, run "npm start"

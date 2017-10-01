@@ -4,7 +4,7 @@
   "description": "A backend API to access MySQL for CS2340.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "The Thunder Flyers",
