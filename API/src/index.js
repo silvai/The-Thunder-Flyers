@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const bcrypt = require("bcrypt");
 
 const mysql = require("mysql");
 
@@ -34,7 +35,27 @@ app.put("/user/:id", (req, res) => {
 // POST (create) user
 // Take params from passed JSON and call function in user to create
 app.post("/auth/register", (req, res) => {
-
+    let firstName = req.body.firstName;
+    let lastName = req.body.lastName;
+    let userName = req.body.username;
+    let password = req.body.password;
+    let userType = req.body.userType;
+    bcrypt.hash(password, 10, (err, hashed) => {
+        if (err) { throw err; }
+        connection.query("INSERT INTO users VALUES (NULL, ?, ?, ?, ?, ?, 0)", [firstName, lastName, userName, hashed, userType], (err, results, fields) => {
+            if (err) {
+                res.json({
+                    success: false,
+                    message: "Could not create user."
+                });
+            } else {
+                res.json({
+                    success: true,
+                    message: "Successfully created user."
+                });
+            }
+        });
+    });
 });
 
 // POST user details to authenticate

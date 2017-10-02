@@ -8,7 +8,7 @@ CREATE TABLE users (
 	firstName VARCHAR(20) NOT NULL,
 	lastName VARCHAR(40) NOT NULL,
 	username VARCHAR(20) NOT NULL,
-	password VARCHAR(40) NOT NULL, 
+	password TEXT NOT NULL, 
         userType ENUM('USER', 'ADMIN') NOT NULL,
 	lockout TINYINT NOT NULL DEFAULT 0,
 	PRIMARY KEY (id)
