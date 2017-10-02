@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.get("/user/:id", (req, res) => {
     let id = req.params.id;
     connection.query("SELECT `firstName`,`lastName`,`username`,`userType` FROM users WHERE id = ?", [id], (error, result, fields) => {
-        if (error) { throw err; }
+        if (error) { throw error; }
         res.json(result[0]);
     });
 });
