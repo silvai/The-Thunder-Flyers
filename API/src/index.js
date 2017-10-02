@@ -18,7 +18,11 @@ app.use(bodyParser.json());
 // GET user by id
 // Call function in user to get user information
 app.get("/user/:id", (req, res) => {
-
+    let id = req.params.id;
+    connection.query("SELECT `firstName`,`lastName`,`username`,`userType` FROM users WHERE id = ?", [id], (error, result, fields) => {
+        if (error) { throw err; }
+        res.json(result[0]);
+    });
 });
 
 // PUT (update) user by id
