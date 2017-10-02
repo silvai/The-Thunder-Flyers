@@ -8,11 +8,11 @@ CREATE TABLE users (
 	lastName VARCHAR(40) NOT NULL,
 	username VARCHAR(20) NOT NULL,
 	password VARCHAR(40) NOT NULL, 
-        userType ENUM('user', 'admin') NOT NULL,
+        userType ENUM('USER', 'ADMIN') NOT NULL,
 	lockout TINYINT NOT NULL,
 	PRIMARY KEY (id)
 );
-INSERT INTO users VALUES ('a', 'b', 'system', 'password', 'admin');
+INSERT INTO users VALUES ('1', 'a', 'b', 'system', 'password', 'ADMIN', '0');
 CREATE TABLE data (
 	id INT UNSIGNED NOT NULL,
         createdDate DATETIME NOT NULL,
@@ -23,11 +23,13 @@ CREATE TABLE data (
         borough ENUM('MANHATTAN', 'STATEN ISLAND', 'QUEENS', 'BROOKLYN', 'BRONX') NOT NULL,
         latitude DECIMAL(20, 17) NOT NULL,
         longitude DECIMAL(20, 17) NOT NULL,
-	userId INT UNSIGNED NOT NULL,
 	PRIMARY KEY (id)
 );
 LOAD DATA LOCAL INFILE 'Rat_Sightings.csv' INTO TABLE data
 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
 IGNORE 1 LINES
-(id, @datetimevar, @dummy, @dummy, @dummy, @dummy, @dummy, locationType, incidentZip, incidentAddress, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, city, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, borough, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy,@dummy, @dummy, @dummy, @dummy, @dummy, @dummy,@dummy, @dummy, @dummy, @dummy, @dummy, @dummy,@dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, latitude, longitude, @dummy, userId)
+(id, @datetimevar, @dummy, @dummy, @dummy, @dummy, @dummy, locationType, incidentZip, incidentAddress, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, city, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, borough, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy,@dummy, @dummy, @dummy, @dummy, @dummy, @dummy,@dummy, @dummy, @dummy, @dummy, @dummy, @dummy,@dummy, @dummy, @dummy, @dummy, @dummy, @dummy, @dummy, latitude, longitude, @dummy)
 SET createdDate = STR_TO_DATE(@datetimevar, '%c/%e/%Y %r');
+ALTER TABLE data ADD userId MEDIUMINT NOT NULL;
+UPDATE data SET userId = 1;
+ALTER TABLE data ADD CONSTRAINT fk_userId FOREIGN KEY (userId) REFERENCES users(id);

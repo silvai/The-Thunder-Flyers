@@ -39,8 +39,6 @@ app.put("/data/:id", data.update);
 // Take id param and call function in data to delete rows
 app.delete("/data/:id", data.ddelete);
 
-app.listen(3000, () => {
-	console.log("Listening on port 3000!");
-});
+app.listen(3000, () => {});
 
 module.exports = app;
