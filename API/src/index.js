@@ -41,7 +41,12 @@ app.post("/auth/register", (req, res) => {
     let password = req.body.password;
     let userType = req.body.userType;
     bcrypt.hash(password, 10, (err, hashed) => {
-        if (err) { throw err; }
+        if (err) { 
+            res.json({
+                success: false,
+                message: "Unexpected error creating user."
+            });    
+        }
         connection.query("INSERT INTO users VALUES (NULL, ?, ?, ?, ?, ?, 0)", [firstName, lastName, userName, hashed, userType], (err, results, fields) => {
             if (err) {
                 res.json({
@@ -61,7 +66,41 @@ app.post("/auth/register", (req, res) => {
 // POST user details to authenticate
 // Take params from passed JSON and call function in user to authenticate
 app.post("/auth/login", (req, res) => {
-
+    let userName = req.body.username;
+    let password = req.body.password;
+    connection.query("SELECT `id`, `password` FROM users WHERE username = ?", [userName], (err, results, fields) => {
+        if (err) { 
+            res.json({
+                success: false,
+                message: "Unexpected error logging in."
+            }); 
+        }
+        if (results[0] == null) {
+            res.json({
+                success: false,
+                message: "Wrong username."
+            });
+        }
+        bcrypt.compare(password, results[0].password, (err, same) => {
+            if (err) { 
+                res.json({
+                    success: false,
+                    message: "Unexpected error creating user."
+                }); 
+            } 
+            if (same) {
+                res.json({
+                    success: true,
+                    message: results[0].id
+                });
+            } else {
+                res.json({
+                    success: false,
+                    message: "Wrong password."
+                });
+            }
+        });
+    });
 });
 
 // GET rat data from database by page
