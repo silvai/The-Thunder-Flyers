@@ -117,10 +117,23 @@ app.get("/data/:page", (req, res) => {
 // POST (create) rat data
 // Take params from passed JSON and call function in data to create
 app.post("/data/add", (req, res) => {
-    let date = req.body.createdDate;
-    let locationT = req.body.locationType;
-    let incZip = req.body.incidentZip;
-    let incAddress = req.body.incidentAddress;
+    let createdDate = req.body.createdDate;
+    let locationType = req.body.locationType;
+    let incidentZip = req.body.incidentZip;
+    let incidentAddress = req.body.incidentAddress;
+    let city = req.body.city;
+    let borough = req.body.borough;
+    let latitude = req.body.latitude;
+    let longitude = req.body.longitude;
+    let id = req.body.userId;
+    connection.query("INSERT INTO data VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+     [createdDate, locationType, incidentZip, incidentAddress, city, borough, latitude, longitude, id], (error, result, fields) => {
+         if (error) { throw error; }
+         res.json({
+             success: true,
+             message: "Successfully added rat data."
+         });
+     });
 });
 
 // PUT (update) data by id
