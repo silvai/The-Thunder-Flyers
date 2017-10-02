@@ -1,4 +1,4 @@
-package edu.gatech.thethunderflyers.android;
+package edu.gatech.thethunderflyers.android.controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import edu.gatech.thethunderflyers.android.R;
+import edu.gatech.thethunderflyers.android.model.User;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText username;

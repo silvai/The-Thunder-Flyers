@@ -1,4 +1,4 @@
-package edu.gatech.thethunderflyers.android;
+package edu.gatech.thethunderflyers.android.controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import edu.gatech.thethunderflyers.android.R;
+import edu.gatech.thethunderflyers.android.model.User;
+import edu.gatech.thethunderflyers.android.model.UserMode;
+import edu.gatech.thethunderflyers.android.util.FormValidator;
 
 public class RegisterActivity extends AppCompatActivity {
     private Button cancel;
@@ -112,44 +117,5 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    enum UserMode {
-        USER ("user"), ADMIN ("admin");
 
-        private String representation;
-
-        UserMode (String representation) {
-            this.representation = representation;
-        }
-    }
-
-    private class FormValidator implements TextWatcher, View.OnFocusChangeListener {
-        private TextView tv;
-        private String name;
-
-        FormValidator(TextView tv, String name) {
-            this.tv = tv;
-            this.name = name;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            String text = tv.getText().toString();
-            if (TextUtils.isEmpty(text)) {
-                tv.setError(name + " cannot be empty!");
-            }
-        }
-
-        @Override
-        public void onFocusChange(View view, boolean b) {
-            if (!b) {
-                afterTextChanged(((TextView) view).getEditableText());
-            }
-        }
-    }
 }
