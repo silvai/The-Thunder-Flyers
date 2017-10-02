@@ -1,4 +1,5 @@
-CREATE USER 'cs2340'@'localhost' IDENTIFIED BY 'cs2340ratapp';
+CREATE USER 'cs2340'@'localhost';
+SET PASSWORD FOR 'cs2340'@'localhost' = 'cs2340ratapp';
 GRANT ALL PRIVILEGES ON *.* TO 'cs2340'@'localhost' WITH GRANT OPTION;
 CREATE DATABASE ratapp;
 USE ratapp;
@@ -9,7 +10,7 @@ CREATE TABLE users (
 	username VARCHAR(20) NOT NULL,
 	password VARCHAR(40) NOT NULL, 
         userType ENUM('USER', 'ADMIN') NOT NULL,
-	lockout TINYINT NOT NULL,
+	lockout TINYINT NOT NULL DEFAULT 0,
 	PRIMARY KEY (id)
 );
 INSERT INTO users VALUES ('1', 'a', 'b', 'system', 'password', 'ADMIN', '0');
