@@ -21,10 +21,13 @@ describe("GET /user/:id (user.js get)", () => {
 	        res.should.have.status(200);
 	        res.body.should.be.a("object");
 			res.should.be.json;
-			res.body.firstName.should.equal("a");
-			res.body.lastName.should.equal("b");
-			res.body.username.should.equal("system");
-			res.body.userType.should.equal("admin");
+			res.body.success.should.equal(true);
+			res.body.message.should.be.a("object");
+			should.exist(res.body.message.firstName);
+			res.body.message.firstName.should.equal("a");
+			res.body.message.lastName.should.equal("b");
+			res.body.message.username.should.equal("system");
+			res.body.message.userType.should.equal("ADMIN");
 			done();
 	    });
     });

@@ -11,7 +11,7 @@ module.exports.User = function User(/* params */) {
 
 module.exports.get = async function get(req, res) {
 	// STUB
-	res.send("Not implemented yet.");
+	
 };
 
 module.exports.update = async function update(req, res) {

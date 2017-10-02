@@ -4,6 +4,17 @@ const bodyParser = require("body-parser");
 const user = require("./user");
 const data = require("./data");
 
+const mysql = require("mysql");
+
+const connection = mysql.createConnection({
+	host: "localhost",
+	user: "cs2340",
+	password: "cs2340ratapp",
+	database: "ratapp"
+});
+
+connection.connect();
+
 app.use(bodyParser.json());
 
 // GET user by id
@@ -25,7 +36,13 @@ app.post("/auth/login", user.authenticate);
 // GET rat data from database by page
 // Need to use pages because we cannot pass all 100000+ rows to user
 // Take page param and call function in data to get rows
-app.get("/data/:page", data.get);
+app.get("/data/:page", (req, res) => {
+    let page = req.params.page;
+    connection.query("SELECT * FROM data WHERE `id` > ? LIMIT 20", [(20 * page) + 11464394], (err, result, fields) => {
+        if (err) { throw err; }
+        res.json(result);
+    });
+});
 
 // POST (create) rat data
 // Take params from passed JSON and call function in data to create
