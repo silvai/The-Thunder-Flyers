@@ -78,7 +78,10 @@ app.get("/data/:page", (req, res) => {
 // POST (create) rat data
 // Take params from passed JSON and call function in data to create
 app.post("/data/add", (req, res) => {
-
+    let date = req.body.createdDate;
+    let locationT = req.body.locationType;
+    let incZip = req.body.incidentZip;
+    let incAddress = req.body.incidentAddress;
 });
 
 // PUT (update) data by id
