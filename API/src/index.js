@@ -51,7 +51,6 @@ app.post("/auth/register", (req, res) => {
         }
         connection.query("INSERT INTO users VALUES (NULL, ?, ?, ?, ?, ?, 0)", [firstName, lastName, userName, hashed, userType], (err, results, fields) => {
             if (err) {
-                console.log(err);
                 res.json({
                     success: false,
                     message: "Could not create user."
