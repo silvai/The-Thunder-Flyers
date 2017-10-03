@@ -1,12 +1,22 @@
 package edu.gatech.thethunderflyers.android.model;
 
 import android.support.annotation.NonNull;
+import com.google.gson.annotations.SerializedName;
 
 public class User implements Comparable<User>{
+    @SerializedName("firstName")
     private String fname;
+
+    @SerializedName("lastName")
     private String lname;
+
+    @SerializedName("username")
     private String usern;
+
+    @SerializedName("password")
     private String pass;
+
+    @SerializedName("userType")
     private UserMode um;
 
     /**

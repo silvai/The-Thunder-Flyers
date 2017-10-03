@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const morgan = require("morgan");
 const bcrypt = require("bcrypt");
 
 const mysql = require("mysql");
@@ -15,6 +16,7 @@ const connection = mysql.createConnection({
 connection.connect();
 
 app.use(bodyParser.json());
+app.use(morgan("dev"));
 
 // GET user by id
 // Call function in user to get user information
@@ -49,6 +51,7 @@ app.post("/auth/register", (req, res) => {
         }
         connection.query("INSERT INTO users VALUES (NULL, ?, ?, ?, ?, ?, 0)", [firstName, lastName, userName, hashed, userType], (err, results, fields) => {
             if (err) {
+                console.log(err);
                 res.json({
                     success: false,
                     message: "Could not create user."

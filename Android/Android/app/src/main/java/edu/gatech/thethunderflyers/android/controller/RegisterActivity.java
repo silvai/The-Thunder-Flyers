@@ -1,6 +1,8 @@
 package edu.gatech.thethunderflyers.android.controller;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,14 +16,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 import edu.gatech.thethunderflyers.android.R;
+import edu.gatech.thethunderflyers.android.model.APIMessage;
 import edu.gatech.thethunderflyers.android.model.User;
 import edu.gatech.thethunderflyers.android.model.UserMode;
+import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 import edu.gatech.thethunderflyers.android.util.FormValidator;
+import edu.gatech.thethunderflyers.android.util.RegisterTask;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements AsyncHandler<APIMessage> {
     private Button cancel;
     private EditText firstName;
     private EditText lastName;
@@ -70,6 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void submitReg(View view) {
         String firstN = firstName.getText().toString();
         String lastN = lastName.getText().toString();
@@ -90,32 +98,39 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (isValid) {
             User u = new User(firstN, lastN, user, pass, um);
-            if (users.contains(u)) {
-                Toast.makeText(this, "User already exists!", Toast.LENGTH_SHORT).show();
-            } else {
-                boolean userNameSame = false;
-                for (User us : RegisterActivity.users) {
-                    if (us.getUsername().equals(user)) {
-                        userNameSame = true;
-                        break;
-                    }
-                }
-                if (userNameSame) {
-                    Toast.makeText(this, "Username already taken!", Toast.LENGTH_SHORT).show();
-                } else {
-                    users.add(u);
-                    Toast.makeText(this,"Account registered successfully!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    startActivity(intent);
-                    //we should add something to notify user that they're registered
-                    //and go back to the welcome screen
-                    //or maybe we can automatically log them in after they register
-                }
-            }
+            new RegisterTask(this).execute(new Gson().toJson(u));
         } else {
             Toast.makeText(this, "One or more fields is invalid!", Toast.LENGTH_SHORT).show();
         }
     }
 
 
+    @Override
+    public void handleResponse(APIMessage response, Exception ex) {
+        if (ex != null) {
+            AlertDialog ad = new AlertDialog.Builder(this)
+                    .setMessage("An unexpected error occurred. Please try again later.")
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    }).create();
+            ad.show();
+        } else if (!response.isSuccess()) {
+            AlertDialog ad = new AlertDialog.Builder(this)
+                    .setMessage(response.getMessage())
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    }).create();
+            ad.show();
+        } else {
+            Toast.makeText(this, "Successfully registered user!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
 }
