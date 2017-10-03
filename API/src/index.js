@@ -145,7 +145,14 @@ app.put("/data/:id", (req, res) => {
 // DELETE rat data
 // Take id param and call function in data to delete rows
 app.delete("/data/:id", (req, res) => {
-    
+    let id = req.param.idl
+    connection.query("DELETE FROM data WHERE id = ?", [id], (error, result, fields) => {
+        if (error) { throw error; }
+        res.json({
+            success: true,
+            message: "Rat report deleted."
+        });
+    });
 });
 
 app.listen(3000, () => {});
