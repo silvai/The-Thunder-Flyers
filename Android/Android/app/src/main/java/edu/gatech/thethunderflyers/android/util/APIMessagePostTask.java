@@ -13,40 +13,39 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import edu.gatech.thethunderflyers.android.model.APIMessage;
 
-public class RegisterTask extends AsyncTask<String, Void, APIMessage> {
-    private final String POST_URL = "http://10.0.2.2:3000/auth/register";
+public class APIMessagePostTask extends AsyncTask<String, Void, APIMessage> {
 
-    private HttpURLConnection regConnection;
+    private HttpURLConnection connection;
     private BufferedReader reader;
     private Exception ex;
     private AsyncHandler<APIMessage> ah;
+    private final String url;
 
-    public RegisterTask(AsyncHandler<APIMessage> ah) {
+    public APIMessagePostTask(String url, AsyncHandler<APIMessage> ah) {
         this.ah = ah;
+        this.url = url;
     }
 
-    // strings[0] MUST be the correct JSON data
     @Override
     protected APIMessage doInBackground(String... strings) {
         try {
-            URL url = new URL(POST_URL);
-            regConnection = (HttpURLConnection) url.openConnection();
-            regConnection.setDoOutput(true);
-            regConnection.setDoInput(true);
-            regConnection.setRequestMethod("POST");
-            regConnection.setRequestProperty("Content-Type", "application/json");
-            regConnection.setRequestProperty("Accept", "application/json");
+            URL url = new URL(this.url);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
 
-            Writer w = new BufferedWriter(new OutputStreamWriter(regConnection.getOutputStream(), "UTF-8"));
+            Writer w = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
             w.write(strings[0]);
             w.close();
 
-            InputStream is = regConnection.getInputStream();
+            InputStream is = connection.getInputStream();
             StringBuilder sb = new StringBuilder();
             if (is == null) {
                 return null;
@@ -59,20 +58,21 @@ public class RegisterTask extends AsyncTask<String, Void, APIMessage> {
                 if (sb.length() == 0) {
                     return null;
                 }
+                Log.i("APIMessagePostTask", "Successful request");
                 return new Gson().fromJson(sb.toString(), APIMessage.class);
             }
         } catch (IOException e) {
-            Log.e("RegisterTask", e.getMessage());
+            Log.e("APIMessagePostTask", e.getMessage());
             ex = e;
         } finally {
-            if (regConnection != null) {
-                regConnection.disconnect();
+            if (connection != null) {
+                connection.disconnect();
             }
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    Log.e("RegisterTask", e.getMessage());
+                    Log.e("APIMessagePostTask", e.getMessage());
                     ex = e;
                 }
             }
@@ -81,7 +81,7 @@ public class RegisterTask extends AsyncTask<String, Void, APIMessage> {
     }
 
     @Override
-    protected void onPostExecute(APIMessage am) {
-        ah.handleResponse(am, ex);
+    protected void onPostExecute(APIMessage message) {
+        ah.handleResponse(message, ex);
     }
 }

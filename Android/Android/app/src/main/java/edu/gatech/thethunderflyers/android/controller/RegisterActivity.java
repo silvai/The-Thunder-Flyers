@@ -5,15 +5,12 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -24,9 +21,9 @@ import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.APIMessage;
 import edu.gatech.thethunderflyers.android.model.User;
 import edu.gatech.thethunderflyers.android.model.UserMode;
+import edu.gatech.thethunderflyers.android.util.APIMessagePostTask;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 import edu.gatech.thethunderflyers.android.util.FormValidator;
-import edu.gatech.thethunderflyers.android.util.RegisterTask;
 
 public class RegisterActivity extends AppCompatActivity implements AsyncHandler<APIMessage> {
     private Button cancel;
@@ -98,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity implements AsyncHandler<
 
         if (isValid) {
             User u = new User(firstN, lastN, user, pass, um);
-            new RegisterTask(this).execute(new Gson().toJson(u));
+            new APIMessagePostTask(getString(R.string.register_url), this).execute(new Gson().toJson(u));
         } else {
             Toast.makeText(this, "One or more fields is invalid!", Toast.LENGTH_SHORT).show();
         }
