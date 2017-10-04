@@ -19,6 +19,12 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
     }
 
+    /**
+     * Handles submit button click by verifying whether or not the submitted credentials match an
+     * actual user. If so, logs the user in by transitioning to MainActivity; otherwise shows an
+     * error.
+     * @param v the callback parameter
+     */
     public void submit(View v) {
         String user = username.getText().toString().toLowerCase();
         String pass = password.getText().toString();
@@ -46,6 +52,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Handles cancel button click.
+     * @param v the callback parameter
+     */
     public void cancel(View v) {
         Intent intent = new Intent(this, WelcomeActivity.class);
         startActivity(intent);

@@ -60,11 +60,20 @@ public class RegisterActivity extends AppCompatActivity {
         confirmPass.setOnFocusChangeListener(cp);
     }
 
+    /**
+     * Handles cancel button click.
+     * @param view the callback parameter
+     */
     public void cancel(View view) {
         Intent intent = new Intent(this, WelcomeActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Handles submit button click by performing some verification and either showing an error
+     * message or creating a new user.
+     * @param view the callback parameter
+     */
     public void submitReg(View view) {
         String firstN = firstName.getText().toString();
         String lastN = lastName.getText().toString();
@@ -112,6 +121,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Represents whether user is a user or admin.
+     */
     enum UserMode {
         USER ("user"), ADMIN ("admin");
 
@@ -122,6 +134,11 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Validates whether or not a TextView (EditText here) is empty or not. Sets an error on the
+     * TextView if empty, otherwise does nothing. Triggered when changing text in a TextView or
+     * changing the focus on a TextView.
+     */
     private class FormValidator implements TextWatcher, View.OnFocusChangeListener {
         private TextView tv;
         private String name;

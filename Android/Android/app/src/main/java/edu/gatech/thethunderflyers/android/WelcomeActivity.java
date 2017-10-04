@@ -19,10 +19,19 @@ public class WelcomeActivity extends AppCompatActivity {
         registerbutton = (Button) findViewById(R.id.registerButton);
     }
 
+    /**
+     * Handles login button click.
+     * @param view the callback parameter
+     */
     public void login(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * Handles register button click.
+     * @param view the callback parameter
+     */
     public void register(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);

@@ -13,6 +13,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    /**
+     * Handles logout button click.
+     * @param view the callback parameter
+     */
     public void logout(View view) {
         Intent intent = new Intent(this, WelcomeActivity.class);
         startActivity(intent);
