@@ -19,6 +19,9 @@ public class User implements Comparable<User>{
     @SerializedName("userType")
     private UserMode um;
 
+    @SerializedName("id")
+    private int id;
+
     /**
      * Constructor for User
      * @param fname first name
@@ -26,13 +29,15 @@ public class User implements Comparable<User>{
      * @param usern username
      * @param pass password
      * @param um usermode (admin or user)
+     * @param id the unique id key for the user
      */
-    public User(String fname, String lname, String usern, String pass, UserMode um) {
+    public User(String fname, String lname, String usern, String pass, UserMode um, int id) {
         this.fname = fname;
         this.lname = lname;
         this.usern = usern;
         this.pass = pass;
         this.um = um;
+        this.id = id;
     }
 
     /**
@@ -76,6 +81,11 @@ public class User implements Comparable<User>{
     }
 
     /**
+     * Setter for the ID of the admin or user
+     * @param id the id given to the user
+     */
+    public void setId(int id) { this.id = id; }
+    /**
      * Getter for first name
      * @return the first name
      */
@@ -114,6 +124,12 @@ public class User implements Comparable<User>{
     public UserMode getUserMode() {
         return um;
     }
+
+    /**
+     * The id for the user
+     * @return the id of the user
+     */
+    public int getId() { return id; }
 
     @Override
     public int compareTo(@NonNull User user) {
