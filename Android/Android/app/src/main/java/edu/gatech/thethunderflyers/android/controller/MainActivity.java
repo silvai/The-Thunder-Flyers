@@ -6,8 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import edu.gatech.thethunderflyers.android.R;
+import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AsyncHandler<RatData[]> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,5 +23,10 @@ public class MainActivity extends AppCompatActivity {
     public void logout(View view) {
         Intent intent = new Intent(this, WelcomeActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void handleResponse(RatData[] response, Exception ex) {
+
     }
 }
