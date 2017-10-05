@@ -1,13 +1,23 @@
-package edu.gatech.thethunderflyers.android;
+package edu.gatech.thethunderflyers.android.model;
 
 import android.support.annotation.NonNull;
+import com.google.gson.annotations.SerializedName;
 
 public class User implements Comparable<User>{
+    @SerializedName("firstName")
     private String fname;
+
+    @SerializedName("lastName")
     private String lname;
+
+    @SerializedName("username")
     private String usern;
+
+    @SerializedName("password")
     private String pass;
-    private RegisterActivity.UserMode um;
+
+    @SerializedName("userType")
+    private UserMode um;
 
     /**
      * Constructor for User
@@ -17,7 +27,7 @@ public class User implements Comparable<User>{
      * @param pass password
      * @param um usermode (admin or user)
      */
-    public User(String fname, String lname, String usern, String pass, RegisterActivity.UserMode um) {
+    public User(String fname, String lname, String usern, String pass, UserMode um) {
         this.fname = fname;
         this.lname = lname;
         this.usern = usern;
@@ -61,7 +71,7 @@ public class User implements Comparable<User>{
      * Setter for user mode (admin or user)
      * @param um the new usermode
      */
-    public void setUserMode(RegisterActivity.UserMode um) {
+    public void setUserMode(UserMode um) {
         this.um = um;
     }
 
@@ -101,7 +111,7 @@ public class User implements Comparable<User>{
      * Getter for the usermode
      * @return returns user or admin
      */
-    public RegisterActivity.UserMode getUserMode() {
+    public UserMode getUserMode() {
         return um;
     }
 

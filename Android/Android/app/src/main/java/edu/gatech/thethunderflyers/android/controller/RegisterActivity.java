@@ -1,22 +1,31 @@
-package edu.gatech.thethunderflyers.android;
+package edu.gatech.thethunderflyers.android.controller;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class RegisterActivity extends AppCompatActivity {
+import edu.gatech.thethunderflyers.android.R;
+import edu.gatech.thethunderflyers.android.model.APIMessage;
+import edu.gatech.thethunderflyers.android.model.User;
+import edu.gatech.thethunderflyers.android.model.UserMode;
+import edu.gatech.thethunderflyers.android.util.APIMessagePostTask;
+import edu.gatech.thethunderflyers.android.util.AsyncHandler;
+import edu.gatech.thethunderflyers.android.util.FormValidator;
+
+public class RegisterActivity extends AppCompatActivity implements AsyncHandler<APIMessage> {
     private Button cancel;
     private EditText firstName;
     private EditText lastName;
@@ -94,79 +103,38 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (isValid) {
             User u = new User(firstN, lastN, user, pass, um);
-            if (users.contains(u)) {
-                Toast.makeText(this, "User already exists!", Toast.LENGTH_SHORT).show();
-            } else {
-                boolean userNameSame = false;
-                for (User us : RegisterActivity.users) {
-                    if (us.getUsername().equals(user)) {
-                        userNameSame = true;
-                        break;
-                    }
-                }
-                if (userNameSame) {
-                    Toast.makeText(this, "Username already taken!", Toast.LENGTH_SHORT).show();
-                } else {
-                    users.add(u);
-                    Toast.makeText(this,"Account registered successfully!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    startActivity(intent);
-                    //we should add something to notify user that they're registered
-                    //and go back to the welcome screen
-                    //or maybe we can automatically log them in after they register
-                }
-            }
+            new APIMessagePostTask(getString(R.string.register_url), this).execute(new Gson().toJson(u));
         } else {
             Toast.makeText(this, "One or more fields is invalid!", Toast.LENGTH_SHORT).show();
         }
     }
 
-    /**
-     * Represents whether user is a user or admin.
-     */
-    enum UserMode {
-        USER ("user"), ADMIN ("admin");
+    @Override
+    public void handleResponse(APIMessage response, Exception ex) {
+        if (ex != null) {
+            AlertDialog ad = new AlertDialog.Builder(this)
+                    .setMessage("An unexpected error occurred. Please try again later.")
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-        private String representation;
+                        }
+                    }).create();
+            ad.show();
+        } else if (!response.isSuccess()) {
+            AlertDialog ad = new AlertDialog.Builder(this)
+                    .setMessage(response.getMessage())
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-        UserMode (String representation) {
-            this.representation = representation;
-        }
-    }
-
-    /**
-     * Validates whether or not a TextView (EditText here) is empty or not. Sets an error on the
-     * TextView if empty, otherwise does nothing. Triggered when changing text in a TextView or
-     * changing the focus on a TextView.
-     */
-    private class FormValidator implements TextWatcher, View.OnFocusChangeListener {
-        private TextView tv;
-        private String name;
-
-        FormValidator(TextView tv, String name) {
-            this.tv = tv;
-            this.name = name;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            String text = tv.getText().toString();
-            if (TextUtils.isEmpty(text)) {
-                tv.setError(name + " cannot be empty!");
-            }
-        }
-
-        @Override
-        public void onFocusChange(View view, boolean b) {
-            if (!b) {
-                afterTextChanged(((TextView) view).getEditableText());
-            }
+                        }
+                    }).create();
+            ad.show();
+        } else {
+            Toast.makeText(this, "Successfully registered user!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 }
