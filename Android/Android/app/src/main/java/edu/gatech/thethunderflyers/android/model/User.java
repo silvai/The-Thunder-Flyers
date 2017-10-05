@@ -19,8 +19,6 @@ public class User implements Comparable<User>{
     @SerializedName("userType")
     private UserMode um;
 
-    @SerializedName("id")
-    private int id;
 
     /**
      * Constructor for User

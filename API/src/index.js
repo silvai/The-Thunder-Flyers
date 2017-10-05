@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const morgan = require("morgan");
 const bcrypt = require("bcrypt");
 
 const mysql = require("mysql");
@@ -16,7 +15,6 @@ const connection = mysql.createConnection({
 connection.connect();
 
 app.use(bodyParser.json());
-app.use(morgan("dev"));
 
 // GET user by id
 // Call function in user to get user information
