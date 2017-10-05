@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import edu.gatech.thethunderflyers.android.R;
+import edu.gatech.thethunderflyers.android.model.RatData;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 
 public class MainActivity extends AppCompatActivity implements AsyncHandler<RatData[]> {
