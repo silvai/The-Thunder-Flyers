@@ -4,17 +4,34 @@ import com.google.gson.annotations.SerializedName;
 
 public class RatData {
 
+    @SerializedName("id")
     private int id;
+
+    @SerializedName("createdDate")
     private Date date;
+
+    @SerializedName("locationType")
     private LocationType locatType;
+
+    @SerializedName("incidentZip")
     private int zip;
-    private int address;
+
+    @SerializedName("incidentAddress")
+    private String address;
+
+    @SerializedName("city")
     private String city;
+
+    @SerializedName("borough")
     private Borough borough;
+
+    @SerializedName("latitude")
     private double latitude;
+
+    @SerializedName("longitude")
     private double longitude;
 
-    public RatData(int id, Date date, LocationType locatType, int zip, int address,
+    public RatData(int id, Date date, LocationType locatType, int zip, String address,
                    String city, Borough borough, double latitutde, double longitude) {
         this.id = id;
         this.date = date;
@@ -63,7 +80,7 @@ public class RatData {
      * Getter method
      * @return the address of the report
      */
-    public int getAddress() {
+    public String getAddress() {
         return address;
     }
 
@@ -135,7 +152,7 @@ public class RatData {
      * setter method
      * @param address sets the address to the new one
      */
-    public void setAddress(int address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 

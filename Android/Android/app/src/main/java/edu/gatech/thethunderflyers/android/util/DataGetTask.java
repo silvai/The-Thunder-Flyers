@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,28 +13,29 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import edu.gatech.thethunderflyers.android.model.RatData;
 
-public class DataGetTask extends AsyncTask<String, Void, RatData[]> {
+public class DataGetTask extends AsyncTask<String, Void, List<RatData>> {
 
     private HttpURLConnection connection;
     private BufferedReader reader;
     private Exception ex;
-    private AsyncHandler<RatData[]> ah;
+    private AsyncHandler<List<RatData>> ah;
     private final String url;
 
-    public DataGetTask(String url, AsyncHandler<RatData[]> ah) {
+    public DataGetTask(String url, AsyncHandler<List<RatData>> ah) {
         this.ah = ah;
         this.url = url;
     }
 
     @Override
-    protected RatData[] doInBackground(String... strings) {
+    protected List<RatData> doInBackground(String... strings) {
         try {
             URL url = new URL(this.url);
             connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
+            connection.setConnectTimeout(1000);
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
             InputStream is = connection.getInputStream();
@@ -50,7 +52,8 @@ public class DataGetTask extends AsyncTask<String, Void, RatData[]> {
                     return null;
                 }
                 Log.i("DataGetTask", "Successful request");
-                return new Gson().fromJson(sb.toString(), RatData[].class);
+                return new Gson().fromJson(sb.toString(),
+                        new TypeToken<List<RatData>>(){}.getType());
             }
         } catch (IOException e) {
             Log.e("DataGetTask", e.getMessage());
@@ -72,7 +75,7 @@ public class DataGetTask extends AsyncTask<String, Void, RatData[]> {
     }
 
     @Override
-    protected void onPostExecute(RatData[] ratData) {
+    protected void onPostExecute(List<RatData> ratData) {
         ah.handleResponse(ratData, ex);
     }
 }

@@ -47,19 +47,36 @@ app.post("/auth/register", (req, res) => {
                 message: "Unexpected error creating user."
             });    
         }
-        connection.query("INSERT INTO users VALUES (NULL, ?, ?, ?, ?, ?, 0)", [firstName, lastName, userName, hashed, userType], (err, results, fields) => {
+        connection.query("SELECT `id` FROM users WHERE username = ?", [userName], 
+        (err, results, fields) => {
             if (err) {
                 res.json({
                     success: false,
-                    message: "Could not create user."
+                    message: "An unexpected error occurred."
+                });
+            } else if (results[0]) {
+                res.json({
+                    success: false,
+                    message: "The username already exists."
                 });
             } else {
-                res.json({
-                    success: true,
-                    message: "Successfully created user."
+                connection.query("INSERT INTO users VALUES (NULL, ?, ?, ?, ?, ?, 0)", 
+                [firstName, lastName, userName, hashed, userType], 
+                (err, results, fields) => {
+                    if (err) {
+                        res.json({
+                            success: false,
+                            message: "Could not create user."
+                        });
+                    } else {
+                        res.json({
+                            success: true,
+                            message: "Successfully created user."
+                        });
+                    }
                 });
             }
-        });
+        })
     });
 });
 
@@ -72,7 +89,7 @@ app.post("/auth/login", (req, res) => {
         if (err) { 
             res.json({
                 success: false,
-                message: "Unexpected error logging in."
+                message: "An unexpected error occurred."
             }); 
         }
         if (results[0] == null) {
@@ -85,7 +102,7 @@ app.post("/auth/login", (req, res) => {
             if (err) { 
                 res.json({
                     success: false,
-                    message: "Unexpected error creating user."
+                    message: "An unexpected error occurred."
                 }); 
             } 
             if (same) {

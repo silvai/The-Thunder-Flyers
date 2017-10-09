@@ -35,6 +35,7 @@ public class APIMessagePostTask extends AsyncTask<String, Void, APIMessage> {
         try {
             URL url = new URL(this.url);
             connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(1000);
             connection.setDoOutput(true);
             connection.setDoInput(true);
             connection.setRequestMethod("POST");

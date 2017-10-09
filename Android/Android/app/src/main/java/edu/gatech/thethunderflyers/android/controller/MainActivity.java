@@ -1,26 +1,59 @@
 package edu.gatech.thethunderflyers.android.controller;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.RatData;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
+import edu.gatech.thethunderflyers.android.util.DataGetTask;
 
-public class MainActivity extends AppCompatActivity implements AsyncHandler<RatData[]> {
+public class MainActivity extends AppCompatActivity implements AsyncHandler<List<RatData>> {
 
     private RecyclerView dataView;
     private RatDataAdapter dataAdapter;
     private LinearLayoutManager dataManager;
 
+    private int itemCount;
+    private int lastVisibleItem;
+    private boolean loading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dataView = (RecyclerView) findViewById(R.id.dataView);
+        dataAdapter = new RatDataAdapter(new ArrayList<RatData>());
+        dataManager = new LinearLayoutManager(this);
+        dataView.setAdapter(dataAdapter);
+        dataView.setLayoutManager(dataManager);
+        dataView.addItemDecoration(new DividerItemDecoration(dataView.getContext(),
+                dataManager.getOrientation()));
+        new DataGetTask(getString(R.string.get_data_url) + dataAdapter.getPage(),
+                this).execute();
+        dataView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                itemCount = dataManager.getItemCount();
+                lastVisibleItem = dataManager.findLastVisibleItemPosition();
+                if (!loading && itemCount <= (lastVisibleItem + 5)) {
+                    loading = true;
+                    new DataGetTask(getString(R.string.get_data_url) + dataAdapter.getPage(),
+                            MainActivity.this).execute();
+                }
+            }
+        });
     }
 
     /**
@@ -33,7 +66,22 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<RatD
     }
 
     @Override
-    public void handleResponse(RatData[] response, Exception ex) {
+    public void handleResponse(List<RatData> response, Exception ex) {
+        loading = false;
+        if (ex != null) {
+            AlertDialog ad = new AlertDialog.Builder(this)
+                    .setMessage(ex.toString())
+                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
+                        }
+                    }).create();
+            ad.show();
+        } else {
+            dataAdapter.setPage(dataAdapter.getPage() + 1);
+            dataAdapter.getData().addAll(response);
+            dataAdapter.notifyDataSetChanged();
+        }
     }
 }
