@@ -1,11 +1,16 @@
 package edu.gatech.thethunderflyers.android.model;
 
 public enum UserMode {
-    USER ("user"), ADMIN ("admin");
+    USER ("User"), ADMIN ("Admin");
 
     private String representation;
 
     UserMode (String representation) {
         this.representation = representation;
+    }
+
+    @Override
+    public String toString() {
+        return representation;
     }
 }
