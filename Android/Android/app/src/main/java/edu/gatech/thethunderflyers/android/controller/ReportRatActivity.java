@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -59,7 +60,6 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
         longitude = (EditText) findViewById(R.id.longitude);
         locatType = (Spinner) findViewById(R.id.locatType);
         boro = (Spinner) findViewById(R.id.borough);
-        date = Calendar.getInstance().getTime();
 
         ArrayAdapter<LocationType> adapterLT = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LocationType.values());
         adapterLT.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -92,7 +92,42 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
     }
 
     public void submit(View view) {
+        date = Calendar.getInstance().getTime();
         String add = address.getText().toString();
+        String cit = city.getText().toString();
+        if (!TextUtils.isDigitsOnly(zip.getText().toString())) {
+            zip.setError("Must enter number");
+        } else {
+            int zi = Integer.parseInt(zip.getText().toString());
+        }
+        if (!TextUtils.isDigitsOnly(lat.getText().toString())) {
+            lat.setError("Must enter number");
+        } else {
+            double la = Double.parseDouble(lat.getText().toString());
+        }
+        if (!TextUtils.isDigitsOnly(longitude.getText().toString())) {
+            longitude.setError("Must enter number");
+        } else {
+            double lo = Double.parseDouble(longitude.getText().toString());
+        }
+        LocationType lt = (LocationType) locatType.getSelectedItem();
+        Borough bor = (Borough) boro.getSelectedItem();
+
+        boolean isValid = address.getError() == null && city.getError() == null
+                && zip.getError() == null && lat.getError() == null
+                && longitude.getError() == null && !TextUtils.isEmpty(add)
+                && !TextUtils.isEmpty(cit) && !TextUtils.isEmpty(zip.getText().toString())
+                && !TextUtils.isEmpty(lat.getText().toString())
+                && !TextUtils.isEmpty(longitude.getText().toString());
+
+        if (isValid) {
+            //add to database
+            Toast.makeText(this, "data correct but didnt do anything", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "One or more fields invalid", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
