@@ -146,7 +146,12 @@ app.post("/data/add", (req, res) => {
     let id = req.body.userId;
     connection.query("INSERT INTO data VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
      [createdDate, locationType, incidentZip, incidentAddress, city, borough, latitude, longitude, id], (error, result, fields) => {
-         if (error) { throw error; }
+         if (error) {
+             res.json({
+                 success: false,
+                 message: "An unexpected error occurred."
+             });
+          }
          res.json({
              success: true,
              message: "Successfully added rat data."
