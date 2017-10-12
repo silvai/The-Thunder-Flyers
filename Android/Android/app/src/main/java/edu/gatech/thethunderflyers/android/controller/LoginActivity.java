@@ -23,6 +23,8 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
     private EditText username;
     private EditText password;
 
+    public static int userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +85,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
                     }).create();
             ad.show();
         } else {
+            userId = Integer.parseInt(response.getMessage());
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
