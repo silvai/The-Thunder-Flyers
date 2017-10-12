@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.text.Normalizer;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -20,12 +19,8 @@ import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.APIMessage;
 import edu.gatech.thethunderflyers.android.model.Borough;
 import edu.gatech.thethunderflyers.android.model.LocationType;
-import edu.gatech.thethunderflyers.android.model.UserMode;
-<<<<<<< HEAD
 import edu.gatech.thethunderflyers.android.util.FormValidator;
-=======
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
->>>>>>> dbce642031f2c0f502e7e07016e1537f96836a73
 
 public class ReportRatActivity extends AppCompatActivity implements AsyncHandler<APIMessage> {
     private Button report;
@@ -74,7 +69,6 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
     }
 
     public void submit(View view) {
-<<<<<<< HEAD
         String add = address.getText().toString();
 
         Toast.makeText(this, "did not submit", Toast.LENGTH_SHORT).show();
@@ -82,7 +76,6 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-=======
 
     }
 
@@ -112,6 +105,5 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
->>>>>>> dbce642031f2c0f502e7e07016e1537f96836a73
     }
 }
