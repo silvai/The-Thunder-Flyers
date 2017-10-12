@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
         dataView.setLayoutManager(dataManager);
         dataView.addItemDecoration(new DividerItemDecoration(dataView.getContext(),
                 dataManager.getOrientation()));
-        new DataGetTask(getString(R.string.get_data_url) + dataAdapter.getPage(),
-                this).execute();
+        new DataGetTask(getString(R.string.get_data_url) + dataAdapter.getLastId() + "/"
+                + dataAdapter.getPage() + "/", this).execute();
         dataView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -49,8 +49,9 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
                 lastVisibleItem = dataManager.findLastVisibleItemPosition();
                 if (!loading && itemCount <= (lastVisibleItem + 5)) {
                     loading = true;
-                    new DataGetTask(getString(R.string.get_data_url) + dataAdapter.getPage(),
-                            MainActivity.this).execute();
+                    String url = getString(R.string.get_data_url) + dataAdapter.getLastId() + "/"
+                            + dataAdapter.getPage() + "/";
+                    new DataGetTask(url, MainActivity.this).execute();
                 }
             }
         });
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
             ad.show();
         } else {
             dataAdapter.setPage(dataAdapter.getPage() + 1);
+            dataAdapter.setLastId(response.get(19).getId());
             dataAdapter.getData().addAll(response);
             dataAdapter.notifyDataSetChanged();
         }

@@ -123,9 +123,10 @@ app.post("/auth/login", (req, res) => {
 // GET rat data from database by page
 // Need to use pages because we cannot pass all 100000+ rows to user
 // Take page param and call function in data to get rows
-app.get("/data/:page", (req, res) => {
+app.get("/data/:lastId/:page", (req, res) => {
     let page = req.params.page;
-    connection.query("SELECT * FROM data LIMIT 20 OFFSET ?", [20 * page], (err, result, fields) => {
+    let lastId = req.params.lastId;
+    connection.query("SELECT * FROM data WHERE `id` > ? ORDER BY `id` LIMIT 20", [lastId], (err, result, fields) => {
         if (err) { throw err; }
         res.json(result);
     });
