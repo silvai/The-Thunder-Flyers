@@ -57,6 +57,14 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
     }
 
     /**
+     * Handles the new rat report button click
+     * @param view the callback parameter
+     */
+    public void report(View view) {
+        Intent intent = new Intent(this, ReportRatActivity.class);
+        startActivity(intent);
+    }
+    /**
      * Handles logout button click.
      * @param view the callback parameter
      */
