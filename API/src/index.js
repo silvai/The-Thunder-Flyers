@@ -144,18 +144,28 @@ app.post("/data/add", (req, res) => {
     let latitude = req.body.latitude;
     let longitude = req.body.longitude;
     let id = req.body.userId;
-    connection.query("INSERT INTO data VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    connection.query("INSERT INTO data VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, (SELECT `id` FROM users WHERE `id` = ?))",
      [createdDate, locationType, incidentZip, incidentAddress, city, borough, latitude, longitude, id], (error, result, fields) => {
+        console.log(createdDate);
+        console.log(locationType);
+        console.log(incidentZip);
+        console.log(incidentAddress);
+        console.log(city);
+        console.log(borough);
+        console.log(latitude);
+        console.log(longitude);
+        console.log(id);
          if (error) {
              res.json({
                  success: false,
                  message: "An unexpected error occurred."
              });
-          }
-         res.json({
-             success: true,
-             message: "Successfully added rat data."
-         });
+        } else {
+            res.json({
+                success: true,
+                message: "Successfully added rat data."
+            });
+        }
      });
 });
 

@@ -2,6 +2,8 @@ package edu.gatech.thethunderflyers.android.model;
 import java.util.Date;
 import com.google.gson.annotations.SerializedName;
 
+import edu.gatech.thethunderflyers.android.controller.LoginActivity;
+
 public class RatData {
 
     @SerializedName("id")
@@ -31,6 +33,9 @@ public class RatData {
     @SerializedName("longitude")
     private double longitude;
 
+    @SerializedName("userId")
+    private int userId;
+
     public RatData(int id, Date date, LocationType locatType, int zip, String address,
                    String city, Borough borough, double latitutde, double longitude) {
         this.id = id;
@@ -54,6 +59,7 @@ public class RatData {
         this.borough = borough;
         this.latitude = latitutde;
         this.longitude = longitude;
+        this.userId = LoginActivity.userId;
     }
 
     /**
@@ -200,5 +206,13 @@ public class RatData {
      */
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

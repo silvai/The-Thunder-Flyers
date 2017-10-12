@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.gson.Gson;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -28,6 +29,7 @@ import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.APIMessage;
 import edu.gatech.thethunderflyers.android.model.Borough;
 import edu.gatech.thethunderflyers.android.model.LocationType;
+import edu.gatech.thethunderflyers.android.model.RatData;
 import edu.gatech.thethunderflyers.android.util.APIMessagePostTask;
 import edu.gatech.thethunderflyers.android.util.FormValidator;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
@@ -74,6 +76,17 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
         FormValidator latitude = new FormValidator(lat, "Latitude");
         FormValidator longi = new FormValidator(longitude, "Longitude");
 
+        address.addTextChangedListener(add);
+        address.setOnFocusChangeListener(add);
+        city.addTextChangedListener(cit);
+        city.setOnFocusChangeListener(cit);
+        zip.addTextChangedListener(zipCode);
+        zip.setOnFocusChangeListener(zipCode);
+        lat.addTextChangedListener(latitude);
+        lat.setOnFocusChangeListener(latitude);
+        longitude.addTextChangedListener(longi);
+        longitude.setOnFocusChangeListener(longi);
+
         client = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -95,20 +108,22 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
         date = Calendar.getInstance().getTime();
         String add = address.getText().toString();
         String cit = city.getText().toString();
-        if (!TextUtils.isDigitsOnly(zip.getText().toString())) {
+        int zi = 0;
+        double la = 0.0, lo = 0.0;
+        if (!TextUtils.isDigitsOnly(zip.getText().toString()) || TextUtils.isEmpty(zip.getText().toString())) {
             zip.setError("Must enter number");
         } else {
-            int zi = Integer.parseInt(zip.getText().toString());
+            zi = Integer.parseInt(zip.getText().toString());
         }
-        if (!TextUtils.isDigitsOnly(lat.getText().toString())) {
+        if (!TextUtils.isDigitsOnly(lat.getText().toString()) || TextUtils.isEmpty(lat.getText().toString())) {
             lat.setError("Must enter number");
         } else {
-            double la = Double.parseDouble(lat.getText().toString());
+            la = Double.parseDouble(lat.getText().toString());
         }
-        if (!TextUtils.isDigitsOnly(longitude.getText().toString())) {
+        if (!TextUtils.isDigitsOnly(longitude.getText().toString()) || TextUtils.isEmpty(longitude.getText().toString())) {
             longitude.setError("Must enter number");
         } else {
-            double lo = Double.parseDouble(longitude.getText().toString());
+            lo = Double.parseDouble(longitude.getText().toString());
         }
         LocationType lt = (LocationType) locatType.getSelectedItem();
         Borough bor = (Borough) boro.getSelectedItem();
@@ -120,9 +135,10 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
                 && !TextUtils.isEmpty(lat.getText().toString())
                 && !TextUtils.isEmpty(longitude.getText().toString());
 
+        RatData rd = new RatData(date, lt, zi, cit, add, bor, la, lo);
+
         if (isValid) {
-            //add to database
-            Toast.makeText(this, "data correct but didnt do anything", Toast.LENGTH_SHORT).show();
+            new APIMessagePostTask(getString(R.string.post_rat_data_url), this).execute(new Gson().toJson(rd));
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         } else {
