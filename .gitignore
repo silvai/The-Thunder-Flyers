@@ -2,3 +2,4 @@
 /Android/Android/.gradle
 .DS_Store
 /API/node_modules
+/API/Rat_Sightings.csv
