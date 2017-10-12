@@ -1,7 +1,11 @@
 package edu.gatech.thethunderflyers.android.controller;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +16,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -19,6 +27,7 @@ import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.APIMessage;
 import edu.gatech.thethunderflyers.android.model.Borough;
 import edu.gatech.thethunderflyers.android.model.LocationType;
+import edu.gatech.thethunderflyers.android.util.APIMessagePostTask;
 import edu.gatech.thethunderflyers.android.util.FormValidator;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 
@@ -33,6 +42,9 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
     private Spinner locatType;
     private Spinner boro;
     private Date date;
+
+    private FusedLocationProviderClient client;
+    private Location location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +73,17 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
         FormValidator zipCode = new FormValidator(zip, "ZipCode");
         FormValidator latitude = new FormValidator(lat, "Latitude");
         FormValidator longi = new FormValidator(longitude, "Longitude");
+
+        client = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                ReportRatActivity.this.location = location;
+            }
+        });
     }
 
     public void cancel(View view) {
@@ -70,13 +93,6 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
 
     public void submit(View view) {
         String add = address.getText().toString();
-
-        Toast.makeText(this, "did not submit", Toast.LENGTH_SHORT).show();
-
-
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
     }
 
     @Override
