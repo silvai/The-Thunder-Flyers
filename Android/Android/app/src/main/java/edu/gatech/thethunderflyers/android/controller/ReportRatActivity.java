@@ -10,10 +10,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.Normalizer;
+import java.util.Calendar;
+import java.util.Date;
+
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.Borough;
 import edu.gatech.thethunderflyers.android.model.LocationType;
 import edu.gatech.thethunderflyers.android.model.UserMode;
+import edu.gatech.thethunderflyers.android.util.FormValidator;
 
 public class ReportRatActivity extends AppCompatActivity {
     private Button report;
@@ -25,6 +30,7 @@ public class ReportRatActivity extends AppCompatActivity {
     private EditText longitude;
     private Spinner locatType;
     private Spinner boro;
+    private Date date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +45,20 @@ public class ReportRatActivity extends AppCompatActivity {
         longitude = (EditText) findViewById(R.id.longitude);
         locatType = (Spinner) findViewById(R.id.locatType);
         boro = (Spinner) findViewById(R.id.borough);
+        date = Calendar.getInstance().getTime();
+
         ArrayAdapter<LocationType> adapterLT = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LocationType.values());
         adapterLT.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locatType.setAdapter(adapterLT);
         ArrayAdapter<Borough> adapterB = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Borough.values());
         adapterB.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         boro.setAdapter(adapterB);
+
+        FormValidator add = new FormValidator(address, "Address");
+        FormValidator cit = new FormValidator(city, "City");
+        FormValidator zipCode = new FormValidator(zip, "ZipCode");
+        FormValidator latitude = new FormValidator(lat, "Latitude");
+        FormValidator longi = new FormValidator(longitude, "Longitude");
     }
 
     public void cancel(View view) {
@@ -53,8 +67,12 @@ public class ReportRatActivity extends AppCompatActivity {
     }
 
     public void submit(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+        String add = address.getText().toString();
+
         Toast.makeText(this, "did not submit", Toast.LENGTH_SHORT).show();
+
+
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }
