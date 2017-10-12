@@ -44,7 +44,7 @@ public class ReportRatActivity extends AppCompatActivity {
         locatType.setAdapter(adapterLT);
         ArrayAdapter<Borough> adapterB = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Borough.values());
         adapterB.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        locatType.setAdapter(adapterB);
+        boro.setAdapter(adapterB);
     }
 
     public void cancel(View view) {
