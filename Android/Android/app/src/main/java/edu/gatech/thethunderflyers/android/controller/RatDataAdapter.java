@@ -17,6 +17,7 @@ public class RatDataAdapter extends RecyclerView.Adapter{
     private List<RatData> data;
     private final int DATA = 0;
     private int page = 0;
+    private int lastId = 0;
 
     public RatDataAdapter(List<RatData> data) {
         this.data = data;
@@ -59,6 +60,14 @@ public class RatDataAdapter extends RecyclerView.Adapter{
 
     public List<RatData> getData() {
         return data;
+    }
+
+    public int getLastId() {
+        return lastId;
+    }
+
+    public void setLastId(int lastId) {
+        this.lastId = lastId;
     }
 
     private static class DataViewHolder extends RecyclerView.ViewHolder {

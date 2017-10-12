@@ -15,7 +15,7 @@ CREATE TABLE users (
 );
 INSERT INTO users VALUES ('1', 'a', 'b', 'system', 'password', 'ADMIN', '0');
 CREATE TABLE data (
-	id INT UNSIGNED NOT NULL,
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
         createdDate DATETIME NOT NULL,
         locationType ENUM('3+ Family Mixed Use Building', 'Commercial Building', 
         '1-2 Family Dwelling', '3+ Family Apt. Building', 'Public Stairs', 
