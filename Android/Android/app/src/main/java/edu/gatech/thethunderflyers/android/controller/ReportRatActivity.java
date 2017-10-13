@@ -131,7 +131,6 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
                 && !TextUtils.isEmpty(longitude.getText().toString());
 
         RatData rd = new RatData(lt, zi, cit, add, bor, la, lo);
-
         if (isValid) {
             new APIMessagePostTask(getString(R.string.post_rat_data_url), this).execute(new Gson().toJson(rd));
         } else {
