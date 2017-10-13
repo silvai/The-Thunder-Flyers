@@ -134,8 +134,6 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
 
         if (isValid) {
             new APIMessagePostTask(getString(R.string.post_rat_data_url), this).execute(new Gson().toJson(rd));
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
         } else {
             Toast.makeText(this, "One or more fields invalid", Toast.LENGTH_SHORT).show();
         }
@@ -164,6 +162,7 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
                     }).create();
             ad.show();
         } else {
+            Toast.makeText(this, "Successfully reported rat!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
