@@ -49,9 +49,8 @@ public class RatData {
         this.longitude = longitude;
     }
 
-    public RatData(Date date, LocationType locatType, int zip, String address,
+    public RatData(LocationType locatType, int zip, String address,
                    String city, Borough borough, double latitutde, double longitude) {
-        this.date = date;
         this.locatType = locatType;
         this.zip = zip;
         this.address = address;

@@ -22,9 +22,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.APIMessage;
 import edu.gatech.thethunderflyers.android.model.Borough;
@@ -44,7 +41,6 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
     private EditText longitude;
     private Spinner locatType;
     private Spinner boro;
-    private Date date;
 
     private FusedLocationProviderClient client;
     private Location location;
@@ -105,7 +101,6 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
     }
 
     public void submit(View view) {
-        date = Calendar.getInstance().getTime();
         String add = address.getText().toString();
         String cit = city.getText().toString();
         int zi = 0;
@@ -135,7 +130,7 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
                 && !TextUtils.isEmpty(lat.getText().toString())
                 && !TextUtils.isEmpty(longitude.getText().toString());
 
-        RatData rd = new RatData(date, lt, zi, cit, add, bor, la, lo);
+        RatData rd = new RatData(lt, zi, cit, add, bor, la, lo);
 
         if (isValid) {
             new APIMessagePostTask(getString(R.string.post_rat_data_url), this).execute(new Gson().toJson(rd));

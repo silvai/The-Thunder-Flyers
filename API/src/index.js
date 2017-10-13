@@ -135,7 +135,7 @@ app.get("/data/:lastId/:page", (req, res) => {
 // POST (create) rat data
 // Take params from passed JSON and call function in data to create
 app.post("/data/add", (req, res) => {
-    let createdDate = req.body.createdDate;
+    let createdDate = new Date();
     let locationType = req.body.locationType;
     let incidentZip = req.body.incidentZip;
     let incidentAddress = req.body.incidentAddress;
