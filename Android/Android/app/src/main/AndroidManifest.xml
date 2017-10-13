@@ -26,7 +26,8 @@
         <activity android:name=".controller.LoginActivity" />
         <activity android:name=".controller.MainActivity" />
         <activity android:name=".controller.RegisterActivity" />
-        <activity android:name=".controller.ReportRatActivity"></activity>
+        <activity android:name=".controller.ReportRatActivity" />
+        <activity android:name=".controller.DetailRatDataActivity"></activity>
     </application>
 
 </manifest>

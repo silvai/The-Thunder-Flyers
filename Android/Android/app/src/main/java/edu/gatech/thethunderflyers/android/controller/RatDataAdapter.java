@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,8 +20,14 @@ public class RatDataAdapter extends RecyclerView.Adapter{
     private int page = 0;
     private int lastId = 0;
 
-    public RatDataAdapter(List<RatData> data) {
+    public interface OnItemClickListener {
+        void onItemClick(RatData item);
+    }
+
+    private final OnItemClickListener listener;
+    public RatDataAdapter(List<RatData> data, OnItemClickListener listener) {
         this.data = data;
+        this.listener = listener;
     }
 
     @Override
@@ -33,7 +40,7 @@ public class RatDataAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         DataViewHolder dvh = (DataViewHolder) holder;
-        RatData rd = data.get(position);
+        final RatData rd = data.get(position);
         dvh.dataDate.setText(String.format("%tc", rd.getDate()));
         dvh.dataAddress.setText(rd.getAddress());
         dvh.dataZip.setText(String.valueOf(rd.getZip()));
@@ -43,6 +50,11 @@ public class RatDataAdapter extends RecyclerView.Adapter{
         dvh.dataBorough.setText(rd.getBorough().toString());
         dvh.dataCity.setText(rd.getCity());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                listener.onItemClick(rd);
+            }
+        });
     }
 
     @Override

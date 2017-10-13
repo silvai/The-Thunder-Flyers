@@ -1,5 +1,6 @@
 package edu.gatech.thethunderflyers.android.controller;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -33,7 +34,13 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dataView = (RecyclerView) findViewById(R.id.dataView);
-        dataAdapter = new RatDataAdapter(new ArrayList<RatData>());
+        dataAdapter = new RatDataAdapter(new ArrayList<RatData>(), new RatDataAdapter.OnItemClickListener() {
+            @Override public void onItemClick(RatData rat) {
+                Context context = dataView.getContext();
+                Intent intent = new Intent(context, DetailRatDataActivity.class);
+                startActivity(intent);
+            }
+        });
         dataManager = new LinearLayoutManager(this);
         dataView.setAdapter(dataAdapter);
         dataView.setLayoutManager(dataManager);
