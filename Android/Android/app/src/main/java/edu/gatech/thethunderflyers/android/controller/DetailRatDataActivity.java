@@ -38,7 +38,7 @@ public class DetailRatDataActivity extends AppCompatActivity {
         date = (TextView) findViewById(R.id.dataDate);
         date.setText("Date of Report\n" + rd.getDate().toString());
         address = (TextView) findViewById(R.id.dataAddress);
-        address.setText("Address\n " + rd.getAddress());
+        address.setText("Address\n" + rd.getAddress());
         zip = (TextView) findViewById(R.id.dataZip);
         zip.setText("Zip\n" + rd.getZip());
         city = (TextView) findViewById(R.id.dataCity);
