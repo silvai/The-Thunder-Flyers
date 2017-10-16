@@ -30,6 +30,7 @@ public class DetailRatDataActivity extends AppCompatActivity {
     private TextView boro;
     private TextView latlong;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_rat_data);
@@ -54,6 +55,11 @@ public class DetailRatDataActivity extends AppCompatActivity {
         latlong.setText("Latitude, Longitude\n" + lat + ", " + longi);
 
     }
+
+    /**
+     * handles the cancel button click
+     * @param view the call back parameter
+     */
     public void cancel(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

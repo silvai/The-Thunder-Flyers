@@ -95,11 +95,19 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
         });
     }
 
+    /**
+     * Handles the cancel button click
+     * @param view the call back parameter
+     */
     public void cancel(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * handles the submit button click
+     * @param view the call back parameter
+     */
     public void submit(View view) {
         String add = address.getText().toString();
         String cit = city.getText().toString();
