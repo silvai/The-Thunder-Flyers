@@ -19,6 +19,18 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintLeft_creator="1" />
 
+    <ImageView
+        android:id="@+id/profilePic"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:contentDescription="profile picture"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="/Users/isabellasilva/Desktop/CS_2340/The-Thunder-Flyers/Mouse.png"
+        tools:ignore="HardcodedText" />
+
     <TextView
         android:id="@+id/dataDate"
         android:layout_width="wrap_content"
