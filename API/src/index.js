@@ -132,6 +132,15 @@ app.get("/data/:lastId/:page", (req, res) => {
     });
 });
 
+app.get("/data/:minDate/:maxDate", (req, res) => {
+    let minDate = new Date(req.params.minDate);
+    let maxDate = new Date(req.params.maxDate);
+    connection.query("SELECT * FROM data WHERE `createdDate` > ? and `createdDate` < ?", [minDate, maxDate], (err, results, fields) => {
+        if (err) { throw err; }
+        res.json(results);
+    })
+});
+
 // POST (create) rat data
 // Take params from passed JSON and call function in data to create
 app.post("/data/add", (req, res) => {
