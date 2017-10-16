@@ -38,9 +38,11 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
             @Override public void onItemClick(RatData rat) {
                 Context context = dataView.getContext();
                 Intent intent = new Intent(context, DetailRatDataActivity.class);
+                intent.putExtra("rat", rat);
                 startActivity(intent);
             }
         });
+
         dataManager = new LinearLayoutManager(this);
         dataView.setAdapter(dataAdapter);
         dataView.setLayoutManager(dataManager);

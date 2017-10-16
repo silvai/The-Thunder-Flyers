@@ -1,10 +1,11 @@
 package edu.gatech.thethunderflyers.android.model;
+import java.io.Serializable;
 import java.util.Date;
 import com.google.gson.annotations.SerializedName;
 
 import edu.gatech.thethunderflyers.android.controller.LoginActivity;
 
-public class RatData {
+public class RatData implements Serializable {
 
     @SerializedName("id")
     private int id;
