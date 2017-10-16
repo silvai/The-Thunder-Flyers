@@ -12,15 +12,16 @@
 
         <ImageView
             android:id="@+id/profilePic"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="73dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:contentDescription="profile picture"
+            android:src="/Users/isabellasilva/Desktop/CS_2340/The-Thunder-Flyers/Mouse.png"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/sym_def_app_icon"
-            tools:ignore="HardcodedText" />
+            <!--app:srcCompat="@android:drawable/sym_def_app_icon"-->
+        tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/reportDate"
