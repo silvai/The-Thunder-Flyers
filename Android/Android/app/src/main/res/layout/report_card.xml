@@ -19,7 +19,8 @@
             android:contentDescription="profile picture"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/sym_def_app_icon"
+            android:src="The-ThunderFlyers/Mouse.png"
+            <!--app:srcCompat="@android:drawable/sym_def_app_icon"-->
             tools:ignore="HardcodedText" />
 
         <TextView
