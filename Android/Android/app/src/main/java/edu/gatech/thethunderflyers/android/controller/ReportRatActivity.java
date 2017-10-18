@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.APIMessage;
@@ -41,9 +43,6 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
     private EditText longitude;
     private Spinner locatType;
     private Spinner boro;
-
-    private FusedLocationProviderClient client;
-    private Location location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,17 +81,6 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
         lat.setOnFocusChangeListener(latitude);
         longitude.addTextChangedListener(longi);
         longitude.setOnFocusChangeListener(longi);
-
-        client = LocationServices.getFusedLocationProviderClient(this);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        client.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                ReportRatActivity.this.location = location;
-            }
-        });
     }
 
     /**
@@ -149,6 +137,7 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
     @Override
     public void handleResponse(APIMessage response, Exception ex) {
         if (ex != null) {
+            Log.e("ReportRatActivity", ex.getMessage());
             AlertDialog ad = new AlertDialog.Builder(this)
                     .setMessage("An unexpected error occurred. Please try again later.")
                     .setNeutralButton("OK", new DialogInterface.OnClickListener() {
