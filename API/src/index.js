@@ -132,10 +132,18 @@ app.get("/data/:lastId/:page", (req, res) => {
     });
 });
 
+app.get("/data/:minDate/:maxDate", (req, res) => {
+    let minDate = new Date(req.params.minDate);
+    let maxDate = new Date(req.params.maxDate);
+    connection.query("SELECT * FROM data WHERE `createdDate` > ? and `createdDate` < ?", [minDate, maxDate], (err, results, fields) => {
+        if (err) { throw err; }
+        res.json(results);
+    })
+});
+
 // POST (create) rat data
 // Take params from passed JSON and call function in data to create
 app.post("/data/add", (req, res) => {
-    let createdDate = new Date();
     let locationType = req.body.locationType;
     let incidentZip = req.body.incidentZip;
     let incidentAddress = req.body.incidentAddress;
@@ -144,18 +152,10 @@ app.post("/data/add", (req, res) => {
     let latitude = req.body.latitude;
     let longitude = req.body.longitude;
     let id = req.body.userId;
-    connection.query("INSERT INTO data VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, (SELECT `id` FROM users WHERE `id` = ?))",
-     [createdDate, locationType, incidentZip, incidentAddress, city, borough, latitude, longitude, id], (error, result, fields) => {
-        console.log(createdDate);
-        console.log(locationType);
-        console.log(incidentZip);
-        console.log(incidentAddress);
-        console.log(city);
-        console.log(borough);
-        console.log(latitude);
-        console.log(longitude);
-        console.log(id);
+    connection.query("INSERT INTO data VALUES (NULL, NOW(), ?, ?, ?, ?, ?, ?, ?, (SELECT `id` FROM users WHERE `id` = ?))",
+     [locationType, incidentZip, incidentAddress, city, borough, latitude, longitude, id], (error, result, fields) => {
          if (error) {
+             console.error(error);
              res.json({
                  success: false,
                  message: "An unexpected error occurred."

@@ -41,6 +41,10 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
         password.setOnFocusChangeListener(passwordFV);
     }
 
+    /**
+     * handles the submit button action
+     * @param v the call back parameter
+     */
     public void submit(View v) {
 
         String user = username.getText().toString();
@@ -57,6 +61,10 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
         }
     }
 
+    /**
+     * Handles the cancel button action
+     * @param v the call back parameter
+     */
     public void cancel(View v) {
         Intent intent = new Intent(this, WelcomeActivity.class);
         startActivity(intent);
