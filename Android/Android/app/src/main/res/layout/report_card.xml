@@ -17,7 +17,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:contentDescription="profile picture"
-            android:src="/Users/isabellasilva/Desktop/CS_2340/The-Thunder-Flyers/Mouse.png"
+            android:src="@drawable/mouse"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="HardcodedText" />
