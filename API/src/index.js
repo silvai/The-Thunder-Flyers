@@ -123,23 +123,32 @@ app.post("/auth/login", (req, res) => {
 // GET rat data from database by page
 // Need to use pages because we cannot pass all 100000+ rows to user
 // Take page param and call function in data to get rows
-app.get("/data/:lastId/:page", (req, res) => {
-    let page = req.params.page;
+app.get("/data/:lastId/:millis", (req, res) => {
+    let date = new Date(req.params.millis);
     let lastId = req.params.lastId;
-    connection.query("SELECT * FROM data WHERE `id` > ? ORDER BY `id` LIMIT 20", [lastId], (err, result, fields) => {
+    connection.query("SELECT MAX(`createdDate`) FROM data", (err, result, fields) => {
         if (err) { throw err; }
-        res.json(result);
+        if (date.getTime() == 0) {
+            date = result[0].createdDate;
+        }
+        if (lastId == 0) {
+            lastId = 4294967295;
+        }
+        connection.query("SELECT * FROM data WHERE `createdDate` <= ? OR `id` < ? ORDER BY `createdDate` DESC LIMIT 20", [date, lastId], (err, result, fields) => {
+            if (err) { throw err; }
+            res.json(result);
+        });
     });
 });
 
-app.get("/data/:minDate/:maxDate", (req, res) => {
-    let minDate = new Date(req.params.minDate);
-    let maxDate = new Date(req.params.maxDate);
-    connection.query("SELECT * FROM data WHERE `createdDate` > ? and `createdDate` < ?", [minDate, maxDate], (err, results, fields) => {
-        if (err) { throw err; }
-        res.json(results);
-    })
-});
+// app.get("/data/:minDate/:maxDate", (req, res) => {
+//     let minDate = new Date(req.params.minDate);
+//     let maxDate = new Date(req.params.maxDate);
+//     connection.query("SELECT * FROM data WHERE `createdDate` > ? and `createdDate` < ?", [minDate, maxDate], (err, results, fields) => {
+//         if (err) { throw err; }
+//         res.json(results);
+//     })
+// });
 
 // POST (create) rat data
 // Take params from passed JSON and call function in data to create
@@ -155,7 +164,6 @@ app.post("/data/add", (req, res) => {
     connection.query("INSERT INTO data VALUES (NULL, NOW(), ?, ?, ?, ?, ?, ?, ?, (SELECT `id` FROM users WHERE `id` = ?))",
      [locationType, incidentZip, incidentAddress, city, borough, latitude, longitude, id], (error, result, fields) => {
          if (error) {
-             console.error(error);
              res.json({
                  success: false,
                  message: "An unexpected error occurred."

@@ -101,21 +101,9 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
         String cit = city.getText().toString();
         int zi = 0;
         double la = 0.0, lo = 0.0;
-        if (!TextUtils.isDigitsOnly(zip.getText().toString()) || TextUtils.isEmpty(zip.getText().toString())) {
-            zip.setError("Must enter number");
-        } else {
-            zi = Integer.parseInt(zip.getText().toString());
-        }
-        if (!TextUtils.isDigitsOnly(lat.getText().toString()) || TextUtils.isEmpty(lat.getText().toString())) {
-            lat.setError("Must enter number");
-        } else {
-            la = Double.parseDouble(lat.getText().toString());
-        }
-        if (!TextUtils.isDigitsOnly(longitude.getText().toString()) || TextUtils.isEmpty(longitude.getText().toString())) {
-            longitude.setError("Must enter number");
-        } else {
-            lo = Double.parseDouble(longitude.getText().toString());
-        }
+        zi = Integer.parseInt(zip.getText().toString());
+        la = Double.parseDouble(lat.getText().toString());
+        lo = Double.parseDouble(longitude.getText().toString());
         LocationType lt = (LocationType) locatType.getSelectedItem();
         Borough bor = (Borough) boro.getSelectedItem();
 

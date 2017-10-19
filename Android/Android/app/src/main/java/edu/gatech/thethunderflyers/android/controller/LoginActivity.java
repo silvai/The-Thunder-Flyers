@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
             ad.show();
         } else {
             userId = Integer.parseInt(response.getMessage());
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
         }
     }

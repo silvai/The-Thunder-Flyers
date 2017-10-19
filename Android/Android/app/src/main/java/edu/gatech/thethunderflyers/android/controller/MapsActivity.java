@@ -1,8 +1,12 @@
 package edu.gatech.thethunderflyers.android.controller;
 
+import android.app.DatePickerDialog;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -13,6 +17,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import edu.gatech.thethunderflyers.android.R;
@@ -20,9 +27,12 @@ import edu.gatech.thethunderflyers.android.model.RatData;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 import edu.gatech.thethunderflyers.android.util.DataGetTask;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, AsyncHandler<List<RatData>> {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback/*, AsyncHandler<List<RatData>> */{
 
     private GoogleMap mMap;
+    private EditText beginDate;
+    private EditText endDate;
+    private Button searchReports;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +42,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        beginDate = findViewById(R.id.beginDate);
+        endDate = findViewById(R.id.endDate);
+        beginDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        beginDate.setText(String.format("%d/%d/%d", i1, i2, i));
+                    }
+                }, year, month, day).show();
+            }
+        });
+        endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        endDate.setText(String.format("%d/%d/%d", i1, i2, i));
+                    }
+                }, year, month, day).show();
+            }
+        });
+        searchReports = (Button) findViewById(R.id.searchReports);
     }
 
+    public void search(View view) {
+
+    }
 
     /**
      * Manipulates the map once available.
@@ -47,20 +93,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        new DataGetTask(getString(R.string.get_data_url), this).execute();
+//        new DataGetTask(getString(R.string.get_data_url), this).execute();
     }
 
-    @Override
-    public void handleResponse(List<RatData> response, Exception ex) {
-        for (RatData rd: response) {
-            MarkerOptions mo = new MarkerOptions()
-                    .position(new LatLng(rd.getLatitude(), rd.getLongitude()))
-                    .title(rd.getId() + "")
-                    .snippet(rd.getDate() + "\n"
-                    + rd.getLocatType());
-            mMap.addMarker(mo);
-        }
-    }
+//    @Override
+//    public void handleResponse(List<RatData> response, Exception ex) {
+//        for (RatData rd: response) {
+//            MarkerOptions mo = new MarkerOptions()
+//                    .position(new LatLng(rd.getLatitude(), rd.getLongitude()))
+//                    .title(rd.getId() + "")
+//                    .snippet(rd.getDate() + "\n"
+//                    + rd.getLocatType());
+//            mMap.addMarker(mo);
+//        }
+//    }
 
 //
 //    class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {

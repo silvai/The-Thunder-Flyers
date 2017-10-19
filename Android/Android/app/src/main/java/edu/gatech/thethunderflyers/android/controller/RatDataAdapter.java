@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,7 +17,7 @@ import edu.gatech.thethunderflyers.android.model.RatData;
 
 public class RatDataAdapter extends RecyclerView.Adapter{
     private List<RatData> data;
-    private int page = 0;
+    private Date date = new Date(0);
     private int lastId = 0;
 
     public interface OnItemClickListener {
@@ -55,14 +56,6 @@ public class RatDataAdapter extends RecyclerView.Adapter{
         return data == null ? 0 : data.size();
     }
 
-    public int getPage() {
-        return page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
-    }
-
     public List<RatData> getData() {
         return data;
     }
@@ -73,6 +66,14 @@ public class RatDataAdapter extends RecyclerView.Adapter{
 
     public void setLastId(int lastId) {
         this.lastId = lastId;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     private static class DataViewHolder extends RecyclerView.ViewHolder {
