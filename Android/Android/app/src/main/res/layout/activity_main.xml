@@ -14,16 +14,16 @@
         android:onClick="logout"
         android:layout_width="152dp"
         android:layout_height="59dp"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
         android:text="Logout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.208"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" />
 
     <Button
         android:id="@+id/reportRat"
@@ -33,7 +33,7 @@
         android:layout_height="59dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:text="Report a Rat"
         app:layout_constraintLeft_toRightOf="@+id/logoutButton"
         app:layout_constraintRight_toRightOf="parent"
@@ -45,11 +45,12 @@
         android:layout_width="385dp"
         android:layout_height="503dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoutButton"
-        app:layout_constraintVertical_bias="0.421" />
+        app:layout_constraintVertical_bias="0.52" />
 </android.support.constraint.ConstraintLayout>
