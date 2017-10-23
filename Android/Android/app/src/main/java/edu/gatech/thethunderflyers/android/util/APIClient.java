@@ -5,6 +5,7 @@ import java.lang.ref.WeakReference;
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.controller.LoginActivity;
 import edu.gatech.thethunderflyers.android.controller.MainActivity;
+import edu.gatech.thethunderflyers.android.controller.MapsActivity;
 import edu.gatech.thethunderflyers.android.controller.RegisterActivity;
 import edu.gatech.thethunderflyers.android.controller.ReportRatActivity;
 
@@ -41,7 +42,8 @@ public class APIClient {
         new APIMessagePostTask(rra.getString(R.string.post_rat_data_url), rra).execute(rd);
     }
 
-    public void getRatDataDateRange() {
-
+    public void getRatDataDateRange(long beginDate, long endDate, WeakReference<MapsActivity> ref) {
+        MapsActivity ma = ref.get();
+        new DataGetTask(ma.getString(R.string.get_data_date_url) + beginDate + "/" + endDate, ma).execute();
     }
 }
