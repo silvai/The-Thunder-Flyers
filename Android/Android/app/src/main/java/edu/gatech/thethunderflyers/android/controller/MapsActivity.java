@@ -25,7 +25,7 @@ import java.util.List;
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.RatData;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
-import edu.gatech.thethunderflyers.android.util.DataGetTask;
+//import edu.gatech.thethunderflyers.android.util.DataGetTask;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback/*, AsyncHandler<List<RatData>> */{
 
@@ -93,7 +93,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-//        new DataGetTask(getString(R.string.get_data_url), this).execute();
     }
 
 //    @Override

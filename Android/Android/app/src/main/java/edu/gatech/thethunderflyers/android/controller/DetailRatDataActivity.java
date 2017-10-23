@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.RatData;
 
@@ -36,24 +38,28 @@ public class DetailRatDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_rat_data);
         cancel = (Button) findViewById(R.id.cancelButton);
         rd = (RatData) getIntent().getSerializableExtra("rat");
+
         date = (TextView) findViewById(R.id.dataDate);
-        date.setText("Date of Report\n" + rd.getDate().toString());
+        date.setText(String.format(Locale.US, "Date of Report%n%s", rd.getDate().toString()));
+
         address = (TextView) findViewById(R.id.dataAddress);
-        address.setText("Address\n" + rd.getAddress());
+        address.setText(String.format(Locale.US, "Address%n%s", rd.getAddress()));
+
         zip = (TextView) findViewById(R.id.dataZip);
-        zip.setText("Zip\n" + rd.getZip());
+        zip.setText(String.format(Locale.US, "Zip%n%d", rd.getZip()));
+
         city = (TextView) findViewById(R.id.dataCity);
-        city.setText("City \n" + rd.getCity());
+        city.setText(String.format(Locale.US, "City%n%s", rd.getCity()));
+
         locationT = (TextView) findViewById(R.id.dataLocationT);
-        locationT.setText("Location Type \n" + rd.getLocatType().toString());
+        locationT.setText(String.format(Locale.US, "Location Type%n%s", rd.getLocatType().toString()));
+
         boro = (TextView) findViewById(R.id.dataBorough);
-        boro.setText("Borough\n" + rd.getBorough().toString());
+        boro.setText(String.format(Locale.US, "Borough%n%s", rd.getBorough().toString()));
 
-        String lat = String.format("%.3f", rd.getLatitude());
-        String longi = String.format("%.3f", rd.getLongitude());
         latlong = (TextView) findViewById(R.id.dataLatLong);
-        latlong.setText("Latitude, Longitude\n" + lat + ", " + longi);
-
+        latlong.setText(String.format(Locale.US, "Latitude, Longitude%n(%.3f, %.3f)",
+                rd.getLatitude(), rd.getLongitude()));
     }
 
     /**

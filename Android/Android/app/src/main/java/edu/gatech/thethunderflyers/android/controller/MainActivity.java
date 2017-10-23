@@ -3,21 +3,23 @@ package edu.gatech.thethunderflyers.android.controller;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.RatData;
+import edu.gatech.thethunderflyers.android.util.APIClient;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
-import edu.gatech.thethunderflyers.android.util.DataGetTask;
+//import edu.gatech.thethunderflyers.android.util.DataGetTask;
 
 public class MainActivity extends AppCompatActivity implements AsyncHandler<List<RatData>> {
 
@@ -56,9 +58,8 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
                 lastVisibleItem = dataManager.findLastVisibleItemPosition();
                 if (!loading && itemCount <= (lastVisibleItem + 5)) {
                     loading = true;
-                    String url = getString(R.string.get_data_url) + dataAdapter.getLastId() + "/"
-                            + dataAdapter.getDate().getTime() + "/";
-                    new DataGetTask(url, MainActivity.this).execute();
+                    APIClient.getInstance().getRatDataList(dataAdapter.getLastId(),
+                            dataAdapter.getDate().getTime(), new WeakReference<>(MainActivity.this));
                 }
             }
         });
@@ -67,8 +68,8 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
     @Override
     public void onResume() {
         super.onResume();
-        new DataGetTask(getString(R.string.get_data_url) + dataAdapter.getLastId() + "/"
-                + dataAdapter.getDate().getTime() + "/", this).execute();
+        APIClient.getInstance().getRatDataList(dataAdapter.getLastId(),
+                dataAdapter.getDate().getTime(), new WeakReference<>(MainActivity.this));
     }
 
     /**

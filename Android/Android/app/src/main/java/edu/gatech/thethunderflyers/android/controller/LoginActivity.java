@@ -10,12 +10,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
+import java.lang.ref.WeakReference;
 
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.APIMessage;
-import edu.gatech.thethunderflyers.android.model.LoginUser;
-import edu.gatech.thethunderflyers.android.util.APIMessagePostTask;
+import edu.gatech.thethunderflyers.android.model.Model;
+import edu.gatech.thethunderflyers.android.util.APIClient;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 import edu.gatech.thethunderflyers.android.util.FormValidator;
 
@@ -54,8 +54,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
                 && !TextUtils.isEmpty(user) && !TextUtils.isEmpty(pass);
 
         if (isValid) {
-            LoginUser lu = new LoginUser(user, pass);
-            new APIMessagePostTask(getString(R.string.login_url), this).execute(new Gson().toJson(lu));
+            APIClient.getInstance().login(Model.getLoginUser(user, pass), new WeakReference<>(this));
         } else {
             Toast.makeText(this, "One or more fields is invalid!", Toast.LENGTH_SHORT).show();
         }
@@ -94,7 +93,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
             ad.show();
         } else {
             userId = Integer.parseInt(response.getMessage());
-            Intent intent = new Intent(this, MapsActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
     }

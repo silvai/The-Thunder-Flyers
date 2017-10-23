@@ -1,14 +1,10 @@
 package edu.gatech.thethunderflyers.android.controller;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.support.v4.app.ActivityCompat;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -18,20 +14,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.lang.ref.WeakReference;
 
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.APIMessage;
 import edu.gatech.thethunderflyers.android.model.Borough;
 import edu.gatech.thethunderflyers.android.model.LocationType;
+import edu.gatech.thethunderflyers.android.model.Model;
 import edu.gatech.thethunderflyers.android.model.RatData;
-import edu.gatech.thethunderflyers.android.util.APIMessagePostTask;
-import edu.gatech.thethunderflyers.android.util.FormValidator;
+import edu.gatech.thethunderflyers.android.util.APIClient;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
+import edu.gatech.thethunderflyers.android.util.FormValidator;
 
 public class ReportRatActivity extends AppCompatActivity implements AsyncHandler<APIMessage> {
     private Button report;
@@ -114,9 +107,9 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
                 && !TextUtils.isEmpty(lat.getText().toString())
                 && !TextUtils.isEmpty(longitude.getText().toString());
 
-        RatData rd = new RatData(lt, zi, cit, add, bor, la, lo);
         if (isValid) {
-            new APIMessagePostTask(getString(R.string.post_rat_data_url), this).execute(new Gson().toJson(rd));
+            APIClient.getInstance().submitRatReport(Model.getRatData(lt, zi, cit, add, bor, la, lo),
+                    new WeakReference<>(this));
         } else {
             Toast.makeText(this, "One or more fields invalid", Toast.LENGTH_SHORT).show();
         }

@@ -37,27 +37,14 @@ public class RatData implements Serializable {
     @SerializedName("userId")
     private int userId;
 
-    public RatData(int id, Date date, LocationType locatType, int zip, String address,
-                   String city, Borough borough, double latitutde, double longitude) {
-        this.id = id;
-        this.date = date;
-        this.locatType = locatType;
-        this.zip = zip;
-        this.address = address;
-        this.city = city;
-        this.borough = borough;
-        this.latitude = latitutde;
-        this.longitude = longitude;
-    }
-
     public RatData(LocationType locatType, int zip, String address,
-                   String city, Borough borough, double latitutde, double longitude) {
+                   String city, Borough borough, double latitude, double longitude) {
         this.locatType = locatType;
         this.zip = zip;
         this.address = address;
         this.city = city;
         this.borough = borough;
-        this.latitude = latitutde;
+        this.latitude = latitude;
         this.longitude = longitude;
         this.userId = LoginActivity.userId;
     }

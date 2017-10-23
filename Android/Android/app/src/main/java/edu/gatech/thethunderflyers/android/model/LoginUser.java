@@ -2,7 +2,7 @@ package edu.gatech.thethunderflyers.android.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LoginUser {
+class LoginUser {
     @SerializedName("username")
     private String username;
 
