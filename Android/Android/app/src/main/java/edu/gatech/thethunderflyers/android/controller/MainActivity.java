@@ -71,6 +71,15 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
     }
 
     /**
+     * Button click action to go to maps activity
+     * @param view the call back parameter
+     */
+    public void mapStart(View view) {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
+
+    /**
      * Handles the new rat report button click
      * @param view the callback parameter
      */
