@@ -26,10 +26,11 @@ import java.util.List;
 
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.RatData;
+import edu.gatech.thethunderflyers.android.util.APIClient;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 //import edu.gatech.thethunderflyers.android.util.DataGetTask;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback/*, AsyncHandler<List<RatData>> */{
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, AsyncHandler<List<RatData>> {
 
     private GoogleMap mMap;
     private Button beginDate;
@@ -93,6 +94,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (dateBegin.compareTo(dateEnd) > 0) {
                 Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT).show();
             } else {
+                //make api calls and set markers
                 
             }
         } catch (ParseException e) {
@@ -114,42 +116,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
     }
 
-//    @Override
-//    public void handleResponse(List<RatData> response, Exception ex) {
-//        for (RatData rd: response) {
-//            MarkerOptions mo = new MarkerOptions()
-//                    .position(new LatLng(rd.getLatitude(), rd.getLongitude()))
-//                    .title(rd.getId() + "")
-//                    .snippet(rd.getDate() + "\n"
-//                    + rd.getLocatType());
-//            mMap.addMarker(mo);
-//        }
-//    }
+    @Override
+    public void handleResponse(List<RatData> response, Exception ex) {
+        for (RatData rd: response) {
+            MarkerOptions mo = new MarkerOptions()
+                    .position(new LatLng(rd.getLatitude(), rd.getLongitude()))
+                    .title(rd.getId() + "")
+                    .snippet(rd.getDate() + "\n"
+                    + rd.getLocatType());
+            mMap.addMarker(mo);
+        }
+    }
 
-//
-//    class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
-//
-//        private final View myContentsView;
-//
-//        CustomInfoWindowAdapter() {
-//            myContentsView = getLayoutInflater().inflate(R.layout.custom_info_contents, null);
-//        }
-//
-//        @Override
-//        public View getInfoContents(Marker marker) {
-//
-//            TextView tvTitle = ((TextView) myContentsView.findViewById(R.id.title));
-//            tvTitle.setText(marker.getTitle());
-//            TextView tvSnippet = ((TextView) myContentsView.findViewById(R.id.snippet));
-//            tvSnippet.setText(marker.getSnippet());
-//
-//            return myContentsView;
-//        }
-//
-//        @Override
-//        public View getInfoWindow(Marker marker) {
-//            // TODO Auto-generated method stub
-//            return null;
-//        }
-//    }
+
+    class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+
+        private final View myContentsView;
+
+        CustomInfoWindowAdapter() {
+            myContentsView = getLayoutInflater().inflate(R.layout.marker_content, null);
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+
+            TextView tvTitle = ((TextView) myContentsView.findViewById(R.id.title));
+            tvTitle.setText(marker.getTitle());
+            TextView tvSnippet = ((TextView) myContentsView.findViewById(R.id.snippet));
+            tvSnippet.setText(marker.getSnippet());
+
+            return myContentsView;
+        }
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+    }
 }
