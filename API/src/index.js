@@ -141,10 +141,10 @@ app.get("/data/:lastId/:millis", (req, res) => {
     });
 });
 
-app.get("/data/search:minDate/:maxDate", (req, res) => {
-    let minDate = new Date(req.params.minDate);
-    let maxDate = new Date(req.params.maxDate);
-    connection.query("SELECT * FROM data WHERE `createdDate` > ? AND `createdDate` < ?", [minDate, maxDate], (err, results, fields) => {
+app.get("/data/search/:minDate/:maxDate", (req, res) => {
+    let minDate = new Date(parseInt(req.params.minDate, 10));
+    let maxDate = new Date(parseInt(req.params.maxDate, 10));
+    connection.query("SELECT * FROM data WHERE `createdDate` >= ? AND `createdDate` <= ?", [minDate, maxDate], (err, results, fields) => {
         if (err) { throw err; }
         res.json(results);
     })

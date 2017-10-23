@@ -3,6 +3,7 @@ package edu.gatech.thethunderflyers.android.controller;
 import android.app.DatePickerDialog;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,10 +19,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.lang.ref.WeakReference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import edu.gatech.thethunderflyers.android.R;
@@ -57,7 +60,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 DatePickerDialog dp = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        beginDate.setText(String.format("%d/%d/%d", i1, i2, i));
+                        Calendar c = new GregorianCalendar();
+                        c.set(i,i1,i2);
+                        Date d = c.getTime();
+                        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+                        beginDate.setText(format.format(d));
                     }
                 }, year, month, day);
                 dp.getDatePicker().setMaxDate(new Date().getTime());
@@ -75,7 +82,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 DatePickerDialog dpd = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        endDate.setText(String.format("%d/%d/%d", i1, i2, i));
+                        Calendar c = new GregorianCalendar();
+                        c.set(i,i1,i2);
+                        Date d = c.getTime();
+                        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+                        endDate.setText(format.format(d));
                     }
 
                 }, year, month, day);
@@ -91,11 +102,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         try {
             Date dateBegin = format.parse((String) beginDate.getText());
             Date dateEnd = format.parse((String) endDate.getText());
-            if (dateBegin.compareTo(dateEnd) > 0) {
+            if (dateBegin.compareTo(dateEnd) > 0 || dateBegin == null ||dateEnd == null) {
                 Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT).show();
             } else {
-                //make api calls and set markers
-                
+                APIClient.getInstance().getRatDataDateRange(dateBegin.getTime(), dateEnd.getTime(), new WeakReference<>(this));
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -118,6 +128,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void handleResponse(List<RatData> response, Exception ex) {
+        mMap.clear();
         for (RatData rd: response) {
             MarkerOptions mo = new MarkerOptions()
                     .position(new LatLng(rd.getLatitude(), rd.getLongitude()))
@@ -127,30 +138,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addMarker(mo);
         }
     }
+//
+//    class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+//
+//        private final View myContentsView;
+//
+//        CustomInfoWindowAdapter() {
+//            myContentsView = getLayoutInflater().inflate(R.layout.marker_content, null);
+//        }
+//
+//        @Override
+//        public View getInfoContents(Marker marker) {
+//
+//            TextView tvTitle = ((TextView) myContentsView.findViewById(R.id.title));
+//            tvTitle.setText(marker.getTitle());
+//            TextView tvSnippet = ((TextView) myContentsView.findViewById(R.id.snippet));
+//            tvSnippet.setText(marker.getSnippet());
+//
+//            return myContentsView;
+//        }
 
-    class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
-
-        private final View myContentsView;
-
-        CustomInfoWindowAdapter() {
-            myContentsView = getLayoutInflater().inflate(R.layout.marker_content, null);
-        }
-
-        @Override
-        public View getInfoContents(Marker marker) {
-
-            TextView tvTitle = ((TextView) myContentsView.findViewById(R.id.title));
-            tvTitle.setText(marker.getTitle());
-            TextView tvSnippet = ((TextView) myContentsView.findViewById(R.id.snippet));
-            tvSnippet.setText(marker.getSnippet());
-
-            return myContentsView;
-        }
-
-        @Override
-        public View getInfoWindow(Marker marker) {
-            // TODO Auto-generated method stub
-            return null;
-        }
-    }
+//        @Override
+//        public View getInfoWindow(Marker marker) {
+//            // TODO Auto-generated method stub
+//            return null;
+//        }
+//    }
 }
