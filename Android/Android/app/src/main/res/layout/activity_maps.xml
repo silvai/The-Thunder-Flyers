@@ -19,28 +19,6 @@
     android:layout_marginRight="8dp"
     map:layout_constraintRight_toRightOf="parent" />
 
-    <EditText
-        android:id="@+id/beginDate"
-        android:layout_width="162dp"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:inputType="date"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="0dp"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <EditText
-        android:id="@+id/endDate"
-        android:layout_width="164dp"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:inputType="date"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="6dp"
-        app:layout_constraintRight_toRightOf="parent" />
-
     <Button
         android:id="@+id/searchReports"
         android:onClick="search"
@@ -53,4 +31,24 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/map" />
+
+    <Button
+        android:id="@+id/beginDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Begin Date"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/endDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End Date"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
 </android.support.constraint.ConstraintLayout>

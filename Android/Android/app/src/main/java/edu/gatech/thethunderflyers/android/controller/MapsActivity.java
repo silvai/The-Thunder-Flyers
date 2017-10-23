@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,8 +32,8 @@ import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback/*, AsyncHandler<List<RatData>> */{
 
     private GoogleMap mMap;
-    private EditText beginDate;
-    private EditText endDate;
+    private Button beginDate;
+    private Button endDate;
     private Button searchReports;
 
     @Override
@@ -51,14 +53,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
-                new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dp = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         beginDate.setText(String.format("%d/%d/%d", i1, i2, i));
                     }
-                }, year, month, day).show();
+                }, year, month, day);
+                dp.getDatePicker().setMaxDate(new Date().getTime());
+                dp.show();
             }
         });
+
         endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,19 +71,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
-                new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dpd = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         endDate.setText(String.format("%d/%d/%d", i1, i2, i));
                     }
-                }, year, month, day).show();
+
+                }, year, month, day);
+                dpd.getDatePicker().setMaxDate(new Date().getTime());
+                dpd.show();
             }
         });
         searchReports = (Button) findViewById(R.id.searchReports);
     }
 
     public void search(View view) {
-
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        try {
+            Date dateBegin = format.parse((String) beginDate.getText());
+            Date dateEnd = format.parse((String) endDate.getText());
+            if (dateBegin.compareTo(dateEnd) > 0) {
+                Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT).show();
+            } else {
+                
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
