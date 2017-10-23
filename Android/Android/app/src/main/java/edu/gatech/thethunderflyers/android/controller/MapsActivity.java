@@ -29,7 +29,7 @@ import edu.gatech.thethunderflyers.android.model.RatData;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 //import edu.gatech.thethunderflyers.android.util.DataGetTask;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback/*, AsyncHandler<List<RatData>> */{
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, AsyncHandler<List<RatData>> {
 
     private GoogleMap mMap;
     private Button beginDate;
@@ -114,17 +114,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
     }
 
-//    @Override
-//    public void handleResponse(List<RatData> response, Exception ex) {
-//        for (RatData rd: response) {
-//            MarkerOptions mo = new MarkerOptions()
-//                    .position(new LatLng(rd.getLatitude(), rd.getLongitude()))
-//                    .title(rd.getId() + "")
-//                    .snippet(rd.getDate() + "\n"
-//                    + rd.getLocatType());
-//            mMap.addMarker(mo);
-//        }
-//    }
+
+    @Override
+    public void handleResponse(List<RatData> response, Exception ex) {
+        for (RatData rd: response) {
+            MarkerOptions mo = new MarkerOptions()
+                    .position(new LatLng(rd.getLatitude(), rd.getLongitude()))
+                    .title(rd.getId() + "")
+                    .snippet(rd.getDate() + "\n"
+                    + rd.getLocatType());
+            mMap.addMarker(mo);
+        }
+    }
 
 //
 //    class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
