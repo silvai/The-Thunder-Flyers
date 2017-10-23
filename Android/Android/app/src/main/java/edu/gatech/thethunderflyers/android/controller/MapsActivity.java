@@ -116,10 +116,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> e04dfa7142f0a8df6cb2d10e01281d4c1cf3d6ff
     @Override
     public void handleResponse(List<RatData> response, Exception ex) {
         for (RatData rd: response) {
@@ -131,8 +127,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addMarker(mo);
         }
     }
-
-<<<<<<< HEAD
 
     class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
@@ -159,32 +153,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return null;
         }
     }
-=======
-//
-//    class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
-//
-//        private final View myContentsView;
-//
-//        CustomInfoWindowAdapter() {
-//            myContentsView = getLayoutInflater().inflate(R.layout.custom_info_contents, null);
-//        }
-//
-//        @Override
-//        public View getInfoContents(Marker marker) {
-//
-//            TextView tvTitle = ((TextView) myContentsView.findViewById(R.id.title));
-//            tvTitle.setText(marker.getTitle());
-//            TextView tvSnippet = ((TextView) myContentsView.findViewById(R.id.snippet));
-//            tvSnippet.setText(marker.getSnippet());
-//
-//            return myContentsView;
-//        }
-//
-//        @Override
-//        public View getInfoWindow(Marker marker) {
-//            // TODO Auto-generated method stub
-//            return null;
-//        }
-//    }
->>>>>>> e04dfa7142f0a8df6cb2d10e01281d4c1cf3d6ff
 }
