@@ -1,22 +1,17 @@
 package edu.gatech.thethunderflyers.android.controller;
 
 import android.app.DatePickerDialog;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.lang.ref.WeakReference;
@@ -31,7 +26,6 @@ import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.RatData;
 import edu.gatech.thethunderflyers.android.util.APIClient;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
-//import edu.gatech.thethunderflyers.android.util.DataGetTask;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, AsyncHandler<List<RatData>> {
 
