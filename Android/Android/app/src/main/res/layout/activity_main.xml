@@ -7,8 +7,6 @@
     tools:context="edu.gatech.thethunderflyers.android.controller.MainActivity">
 
 
-
-
     <Button
         android:id="@+id/logoutButton"
         android:onClick="logout"
