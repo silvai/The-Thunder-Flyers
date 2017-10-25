@@ -25,7 +25,7 @@ class APIMessagePostTask extends AsyncTask<String, Void, APIMessage> {
     private AsyncHandler<APIMessage> ah;
     private final String url;
 
-    public APIMessagePostTask(String url, AsyncHandler<APIMessage> ah) {
+    APIMessagePostTask(String url, AsyncHandler<APIMessage> ah) {
         this.ah = ah;
         this.url = url;
     }
