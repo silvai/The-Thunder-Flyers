@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@drawable/mouse_1" android:duration="90" />
-    <item android:drawable="@drawable/mouse_2" android:duration="90" />
-    <item android:drawable="@drawable/mouse_3" android:duration="90" />
-    <item android:drawable="@drawable/mouse_4" android:duration="90" />
-    <item android:drawable="@drawable/mouse_5" android:duration="90" />
-    <item android:drawable="@drawable/mouse_6" android:duration="90" />
-    <item android:drawable="@drawable/mouse_7" android:duration="90" />
+    <!--<item android:drawable="@drawable/mouse_1" android:duration="90" />-->
+    <!--<item android:drawable="@drawable/mouse_2" android:duration="90" />-->
+    <!--<item android:drawable="@drawable/mouse_3" android:duration="90" />-->
+    <!--<item android:drawable="@drawable/mouse_4" android:duration="90" />-->
+    <!--<item android:drawable="@drawable/mouse_5" android:duration="90" />-->
+    <!--<item android:drawable="@drawable/mouse_6" android:duration="90" />-->
+    <!--<item android:drawable="@drawable/mouse_7" android:duration="90" />-->
 
 
 
