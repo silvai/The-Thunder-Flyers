@@ -17,7 +17,7 @@ import java.net.URL;
 
 import edu.gatech.thethunderflyers.android.model.APIMessage;
 
-public class APIMessagePostTask extends AsyncTask<String, Void, APIMessage> {
+class APIMessagePostTask extends AsyncTask<String, Void, APIMessage> {
 
     private HttpURLConnection connection;
     private BufferedReader reader;
@@ -25,7 +25,7 @@ public class APIMessagePostTask extends AsyncTask<String, Void, APIMessage> {
     private AsyncHandler<APIMessage> ah;
     private final String url;
 
-    public APIMessagePostTask(String url, AsyncHandler<APIMessage> ah) {
+    APIMessagePostTask(String url, AsyncHandler<APIMessage> ah) {
         this.ah = ah;
         this.url = url;
     }

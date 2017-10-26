@@ -1,10 +1,8 @@
 package edu.gatech.thethunderflyers.android.controller;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,15 +11,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
+import java.lang.ref.WeakReference;
 
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.APIMessage;
-import edu.gatech.thethunderflyers.android.model.User;
+import edu.gatech.thethunderflyers.android.model.Model;
 import edu.gatech.thethunderflyers.android.model.UserMode;
-import edu.gatech.thethunderflyers.android.util.APIMessagePostTask;
+import edu.gatech.thethunderflyers.android.util.APIClient;
+import edu.gatech.thethunderflyers.android.util.AlertDialogProvider;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 import edu.gatech.thethunderflyers.android.util.FormValidator;
 
@@ -33,8 +30,6 @@ public class RegisterActivity extends AppCompatActivity implements AsyncHandler<
     private EditText password;
     private EditText confirmPass;
     private Spinner userOrAdmin;
-
-    public static ArrayList<User> users = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +97,8 @@ public class RegisterActivity extends AppCompatActivity implements AsyncHandler<
                 && !TextUtils.isEmpty(conPass);
 
         if (isValid) {
-            User u = new User(firstN, lastN, user, pass, um);
-            new APIMessagePostTask(getString(R.string.register_url), this).execute(new Gson().toJson(u));
+            APIClient.getInstance().register(Model.getUser(firstN, lastN, user, pass, um),
+                    new WeakReference<>(this));
         } else {
             Toast.makeText(this, "One or more fields is invalid!", Toast.LENGTH_SHORT).show();
         }
@@ -112,25 +107,9 @@ public class RegisterActivity extends AppCompatActivity implements AsyncHandler<
     @Override
     public void handleResponse(APIMessage response, Exception ex) {
         if (ex != null) {
-            AlertDialog ad = new AlertDialog.Builder(this)
-                    .setMessage("An unexpected error occurred. Please try again later.")
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    }).create();
-            ad.show();
+            AlertDialogProvider.getExceptionDialog(this).show();
         } else if (!response.isSuccess()) {
-            AlertDialog ad = new AlertDialog.Builder(this)
-                    .setMessage(response.getMessage())
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    }).create();
-            ad.show();
+            AlertDialogProvider.getNotSuccessDialog(this, response.getMessage()).show();
         } else {
             Toast.makeText(this, "Successfully registered user!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LoginActivity.class);

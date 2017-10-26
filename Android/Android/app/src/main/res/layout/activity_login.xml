@@ -39,7 +39,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent" />
-    
+
     <EditText
         android:id="@+id/password"
         android:layout_width="wrap_content"

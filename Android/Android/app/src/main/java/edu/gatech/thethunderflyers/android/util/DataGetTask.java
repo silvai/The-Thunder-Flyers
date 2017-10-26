@@ -17,7 +17,7 @@ import java.util.List;
 
 import edu.gatech.thethunderflyers.android.model.RatData;
 
-public class DataGetTask extends AsyncTask<String, Void, List<RatData>> {
+class DataGetTask extends AsyncTask<String, Void, List<RatData>> {
 
     private HttpURLConnection connection;
     private BufferedReader reader;
@@ -25,7 +25,7 @@ public class DataGetTask extends AsyncTask<String, Void, List<RatData>> {
     private AsyncHandler<List<RatData>> ah;
     private final String url;
 
-    public DataGetTask(String url, AsyncHandler<List<RatData>> ah) {
+    DataGetTask(String url, AsyncHandler<List<RatData>> ah) {
         this.ah = ah;
         this.url = url;
     }

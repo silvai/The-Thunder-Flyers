@@ -24,7 +24,7 @@ CREATE TABLE data (
         '1-2 Family Mixed Use Building', 'Catch Basin/Sewer', 'Day Care/Nursery', 
         'Government Building', 'Office Building', 'School/Pre-School', 
         'Single Room Occupancy (SRO)'),
-	incidentZip SMALLINT UNSIGNED NOT NULL,
+	incidentZip MEDIUMINT UNSIGNED NOT NULL,
         incidentAddress TEXT NOT NULL,
         city TEXT NOT NULL,
         borough ENUM('MANHATTAN', 'STATEN ISLAND', 'QUEENS', 'BROOKLYN', 'BRONX') NOT NULL,

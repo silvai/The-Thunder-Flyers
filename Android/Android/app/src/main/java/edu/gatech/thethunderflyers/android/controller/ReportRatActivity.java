@@ -1,16 +1,9 @@
 package edu.gatech.thethunderflyers.android.controller;
 
-import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,20 +11,17 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.lang.ref.WeakReference;
 
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.APIMessage;
 import edu.gatech.thethunderflyers.android.model.Borough;
 import edu.gatech.thethunderflyers.android.model.LocationType;
-import edu.gatech.thethunderflyers.android.model.RatData;
-import edu.gatech.thethunderflyers.android.util.APIMessagePostTask;
-import edu.gatech.thethunderflyers.android.util.FormValidator;
+import edu.gatech.thethunderflyers.android.model.Model;
+import edu.gatech.thethunderflyers.android.util.APIClient;
+import edu.gatech.thethunderflyers.android.util.AlertDialogProvider;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
+import edu.gatech.thethunderflyers.android.util.FormValidator;
 
 public class ReportRatActivity extends AppCompatActivity implements AsyncHandler<APIMessage> {
     private Button report;
@@ -101,21 +91,9 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
         String cit = city.getText().toString();
         int zi = 0;
         double la = 0.0, lo = 0.0;
-        if (!TextUtils.isDigitsOnly(zip.getText().toString()) || TextUtils.isEmpty(zip.getText().toString())) {
-            zip.setError("Must enter number");
-        } else {
-            zi = Integer.parseInt(zip.getText().toString());
-        }
-        if (!TextUtils.isDigitsOnly(lat.getText().toString()) || TextUtils.isEmpty(lat.getText().toString())) {
-            lat.setError("Must enter number");
-        } else {
-            la = Double.parseDouble(lat.getText().toString());
-        }
-        if (!TextUtils.isDigitsOnly(longitude.getText().toString()) || TextUtils.isEmpty(longitude.getText().toString())) {
-            longitude.setError("Must enter number");
-        } else {
-            lo = Double.parseDouble(longitude.getText().toString());
-        }
+        zi = Integer.parseInt(zip.getText().toString());
+        la = Double.parseDouble(lat.getText().toString());
+        lo = Double.parseDouble(longitude.getText().toString());
         LocationType lt = (LocationType) locatType.getSelectedItem();
         Borough bor = (Borough) boro.getSelectedItem();
 
@@ -126,9 +104,9 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
                 && !TextUtils.isEmpty(lat.getText().toString())
                 && !TextUtils.isEmpty(longitude.getText().toString());
 
-        RatData rd = new RatData(lt, zi, cit, add, bor, la, lo);
         if (isValid) {
-            new APIMessagePostTask(getString(R.string.post_rat_data_url), this).execute(new Gson().toJson(rd));
+            APIClient.getInstance().submitRatReport(Model.getRatData(lt, zi, cit, add, bor, la, lo),
+                    new WeakReference<>(this));
         } else {
             Toast.makeText(this, "One or more fields invalid", Toast.LENGTH_SHORT).show();
         }
@@ -137,26 +115,9 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
     @Override
     public void handleResponse(APIMessage response, Exception ex) {
         if (ex != null) {
-            Log.e("ReportRatActivity", ex.getMessage());
-            AlertDialog ad = new AlertDialog.Builder(this)
-                    .setMessage("An unexpected error occurred. Please try again later.")
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    }).create();
-            ad.show();
+            AlertDialogProvider.getExceptionDialog(this).show();
         } else if (!response.isSuccess()) {
-            AlertDialog ad = new AlertDialog.Builder(this)
-                    .setMessage(response.getMessage())
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    }).create();
-            ad.show();
+            AlertDialogProvider.getNotSuccessDialog(this, response.getMessage()).show();
         } else {
             Toast.makeText(this, "Successfully reported rat!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);
