@@ -17,6 +17,7 @@ import edu.gatech.thethunderflyers.android.util.APIClient;
 import edu.gatech.thethunderflyers.android.util.AlertDialogProvider;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 import edu.gatech.thethunderflyers.android.util.FormValidator;
+import edu.gatech.thethunderflyers.android.util.Navigator;
 
 public class LoginActivity extends AppCompatActivity implements AsyncHandler<APIMessage> {
     private EditText username;
@@ -64,8 +65,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
      * @param v the call back parameter
      */
     public void cancel(View v) {
-        Intent intent = new Intent(this, WelcomeActivity.class);
-        startActivity(intent);
+        Navigator.goToWelcomeActivity(this);
     }
 
     @Override
@@ -76,8 +76,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
             AlertDialogProvider.getNotSuccessDialog(this, response.getMessage()).show();
         } else {
             userId = Integer.parseInt(response.getMessage());
-            Intent intent = new Intent(this, MapsActivity.class);
-            startActivity(intent);
+            Navigator.goToMapsActivity(this);
         }
     }
 }

@@ -16,10 +16,14 @@ public class FormValidator implements TextWatcher, View.OnFocusChangeListener {
     }
 
     @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
 
     @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
 
     @Override
     public void afterTextChanged(Editable editable) {

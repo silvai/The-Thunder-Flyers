@@ -33,6 +33,7 @@ import edu.gatech.thethunderflyers.android.util.AlertDialogProvider;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 import edu.gatech.thethunderflyers.android.util.FormValidator;
 import edu.gatech.thethunderflyers.android.util.LocationProvider;
+import edu.gatech.thethunderflyers.android.util.Navigator;
 
 public class ReportRatActivity extends AppCompatActivity implements AsyncHandler<APIMessage>,
         LocationProvider.LocationCallback {
@@ -106,8 +107,7 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
      * @param view the call back parameter
      */
     public void cancel(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        Navigator.goToMainActivity(this);
     }
 
     /**
@@ -117,14 +117,6 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
     public void submit(View view) {
         String add = address.getText().toString();
         String cit = city.getText().toString();
-        int zi = 0;
-        double la = 0.0, lo = 0.0;
-        zi = Integer.parseInt(zip.getText().toString());
-        la = Double.parseDouble(lat.getText().toString());
-        lo = Double.parseDouble(longitude.getText().toString());
-        LocationType lt = (LocationType) locatType.getSelectedItem();
-        Borough bor = (Borough) boro.getSelectedItem();
-
         boolean isValid = address.getError() == null && city.getError() == null
                 && zip.getError() == null && lat.getError() == null
                 && longitude.getError() == null && !TextUtils.isEmpty(add)
@@ -133,6 +125,13 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
                 && !TextUtils.isEmpty(longitude.getText().toString());
 
         if (isValid) {
+            int zi = 0;
+            double la = 0.0, lo = 0.0;
+            zi = Integer.parseInt(zip.getText().toString());
+            la = Double.parseDouble(lat.getText().toString());
+            lo = Double.parseDouble(longitude.getText().toString());
+            LocationType lt = (LocationType) locatType.getSelectedItem();
+            Borough bor = (Borough) boro.getSelectedItem();
             APIClient.getInstance().submitRatReport(Model.getRatData(lt, zi, cit, add, bor, la, lo),
                     new WeakReference<>(this));
         } else {
@@ -148,8 +147,7 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
             AlertDialogProvider.getNotSuccessDialog(this, response.getMessage()).show();
         } else {
             Toast.makeText(this, "Successfully reported rat!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            Navigator.goToMainActivity(this);
         }
     }
 

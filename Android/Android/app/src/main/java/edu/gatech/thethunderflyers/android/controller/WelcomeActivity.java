@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import edu.gatech.thethunderflyers.android.R;
+import edu.gatech.thethunderflyers.android.util.Navigator;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -26,8 +27,7 @@ public class WelcomeActivity extends AppCompatActivity {
      * @param view the callback parameter
      */
     public void login(View view) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        Navigator.goToLoginActivity(this);
     }
 
     /**
@@ -35,7 +35,6 @@ public class WelcomeActivity extends AppCompatActivity {
      * @param view the callback parameter
      */
     public void register(View view) {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
+        Navigator.goToRegisterActivity(this);
     }
 }

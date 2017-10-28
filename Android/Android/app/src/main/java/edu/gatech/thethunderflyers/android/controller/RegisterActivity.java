@@ -21,6 +21,7 @@ import edu.gatech.thethunderflyers.android.util.APIClient;
 import edu.gatech.thethunderflyers.android.util.AlertDialogProvider;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 import edu.gatech.thethunderflyers.android.util.FormValidator;
+import edu.gatech.thethunderflyers.android.util.Navigator;
 
 public class RegisterActivity extends AppCompatActivity implements AsyncHandler<APIMessage> {
     private Button cancel;
@@ -69,8 +70,7 @@ public class RegisterActivity extends AppCompatActivity implements AsyncHandler<
      * @param view the callback parameter
      */
     public void cancel(View view) {
-        Intent intent = new Intent(this, WelcomeActivity.class);
-        startActivity(intent);
+        Navigator.goToWelcomeActivity(this);
     }
 
     /**
@@ -112,8 +112,7 @@ public class RegisterActivity extends AppCompatActivity implements AsyncHandler<
             AlertDialogProvider.getNotSuccessDialog(this, response.getMessage()).show();
         } else {
             Toast.makeText(this, "Successfully registered user!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            Navigator.goToLoginActivity(this);
         }
     }
 }
