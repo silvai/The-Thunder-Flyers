@@ -1,15 +1,25 @@
 package edu.gatech.thethunderflyers.android.controller;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationListener;
 
 import java.lang.ref.WeakReference;
 
@@ -22,8 +32,10 @@ import edu.gatech.thethunderflyers.android.util.APIClient;
 import edu.gatech.thethunderflyers.android.util.AlertDialogProvider;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 import edu.gatech.thethunderflyers.android.util.FormValidator;
+import edu.gatech.thethunderflyers.android.util.LocationProvider;
 
-public class ReportRatActivity extends AppCompatActivity implements AsyncHandler<APIMessage> {
+public class ReportRatActivity extends AppCompatActivity implements AsyncHandler<APIMessage>,
+        LocationProvider.LocationCallback {
     private Button report;
     private Button submit;
     private EditText address;
@@ -33,6 +45,8 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
     private EditText longitude;
     private Spinner locatType;
     private Spinner boro;
+
+    private LocationProvider lp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +85,20 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
         lat.setOnFocusChangeListener(latitude);
         longitude.addTextChangedListener(longi);
         longitude.setOnFocusChangeListener(longi);
+
+        lp = new LocationProvider(this, this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        lp.connect();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        lp.disconnect();
     }
 
     /**
@@ -123,5 +151,10 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
+    }
+
+    public void handleLocation(Location loc) {
+        lat.setText(String.valueOf(loc.getLatitude()));
+        longitude.setText(String.valueOf(loc.getLongitude()));
     }
 }
