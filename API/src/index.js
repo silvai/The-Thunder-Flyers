@@ -85,7 +85,7 @@ app.post("/auth/register", (req, res) => {
 app.post("/auth/login", (req, res) => {
     let userName = req.body.username;
     let password = req.body.password;
-    connection.query("SELECT `id`, `password` FROM users WHERE username = ?", [userName], (err, results, fields) => {
+    connection.query("SELECT `id`, `password`, `lockout` FROM users WHERE username = ?", [userName], (err, results, fields) => {
         if (err) { 
             res.json({
                 success: false,
@@ -98,25 +98,34 @@ app.post("/auth/login", (req, res) => {
                 message: "Wrong username."
             });
         }
-        bcrypt.compare(password, results[0].password, (err, same) => {
-            if (err) { 
-                res.json({
-                    success: false,
-                    message: "An unexpected error occurred."
-                }); 
-            } 
-            if (same) {
-                res.json({
-                    success: true,
-                    message: results[0].id
-                });
-            } else {
-                res.json({
-                    success: false,
-                    message: "Wrong password."
-                });
-            }
-        });
+        if (results[0].lockout >= 3) {
+            res.json({
+                success: false,
+                message: "You have been locked out of your account. Please contact an admin to get back in."
+            });
+        } else {
+            bcrypt.compare(password, results[0].password, (err, same) => {
+                if (err) { 
+                    res.json({
+                        success: false,
+                        message: "An unexpected error occurred."
+                    }); 
+                } 
+                if (same) {
+                    res.json({
+                        success: true,
+                        message: results[0].id
+                    });
+                } else {
+                    connection.query("UPDATE users SET `lockout` = `lockout` + 1 WHERE `id` = ?", [results[0].id], (err3, results2, fields2) => {
+                        res.json({
+                            success: false,
+                            message: "Wrong password."
+                        });
+                    })
+                }
+            });
+        }
     });
 });
 
