@@ -1,9 +1,7 @@
 package edu.gatech.thethunderflyers.android.controller;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,8 +18,8 @@ import edu.gatech.thethunderflyers.android.model.UserMode;
 import edu.gatech.thethunderflyers.android.util.APIClient;
 import edu.gatech.thethunderflyers.android.util.AlertDialogProvider;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
-import edu.gatech.thethunderflyers.android.util.FormValidator;
 import edu.gatech.thethunderflyers.android.util.Navigator;
+import edu.gatech.thethunderflyers.android.util.Validator;
 
 public class RegisterActivity extends AppCompatActivity implements AsyncHandler<APIMessage> {
     private Button cancel;
@@ -46,23 +44,6 @@ public class RegisterActivity extends AppCompatActivity implements AsyncHandler<
         ArrayAdapter<UserMode> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, UserMode.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userOrAdmin.setAdapter(adapter);
-
-        FormValidator fn = new FormValidator(firstName, "First name");
-        FormValidator ln = new FormValidator(lastName, "Last name");
-        FormValidator un = new FormValidator(username, "Username");
-        FormValidator pa = new FormValidator(password, "Password");
-        FormValidator cp = new FormValidator(confirmPass, "Confirm password");
-
-        firstName.addTextChangedListener(fn);
-        firstName.setOnFocusChangeListener(fn);
-        lastName.addTextChangedListener(ln);
-        lastName.setOnFocusChangeListener(ln);
-        username.addTextChangedListener(un);
-        username.setOnFocusChangeListener(un);
-        password.addTextChangedListener(pa);
-        password.setOnFocusChangeListener(pa);
-        confirmPass.addTextChangedListener(cp);
-        confirmPass.setOnFocusChangeListener(cp);
     }
 
     /**
@@ -79,24 +60,15 @@ public class RegisterActivity extends AppCompatActivity implements AsyncHandler<
      * @param view the callback parameter
      */
     public void submitReg(View view) {
-        String firstN = firstName.getText().toString();
-        String lastN = lastName.getText().toString();
-        String user = username.getText().toString().toLowerCase();
-        String pass = password.getText().toString();
-        String conPass = confirmPass.getText().toString();
-        UserMode um = (UserMode) userOrAdmin.getSelectedItem();
-
-        if (!pass.equals(conPass)) {
-            confirmPass.setError("Passwords don't match!");
-        }
-
-        boolean isValid = firstName.getError() == null && lastName.getError() == null
-                && username.getError() == null && password.getError() == null
-                && confirmPass.getError() == null && !TextUtils.isEmpty(firstN)
-                && !TextUtils.isEmpty(lastN) && !TextUtils.isEmpty(user) && !TextUtils.isEmpty(pass)
-                && !TextUtils.isEmpty(conPass);
-
+        boolean isValid = Validator.validate(firstName, lastName, username, password, confirmPass);
+        isValid = Validator.checkPassword(password, confirmPass) && isValid;
         if (isValid) {
+            String firstN = firstName.getText().toString();
+            String lastN = lastName.getText().toString();
+            String user = username.getText().toString().toLowerCase();
+            String pass = password.getText().toString();
+            UserMode um = (UserMode) userOrAdmin.getSelectedItem();
+
             APIClient.getInstance().register(Model.getUser(firstN, lastN, user, pass, um),
                     new WeakReference<>(this));
         } else {
