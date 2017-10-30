@@ -27,6 +27,7 @@ import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.RatData;
 import edu.gatech.thethunderflyers.android.util.APIClient;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
+import edu.gatech.thethunderflyers.android.util.Navigator;
 
 public class GraphActivity extends AppCompatActivity implements AsyncHandler<List<RatData>> {
     private GraphView graph;
@@ -86,6 +87,12 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
         });
 
     }
+
+    /**
+     * The button activity to get a response for the date range
+     * to view the graph
+     * @param view the callback parameter
+     */
     public void submitDates(View view) {
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         try {
@@ -100,6 +107,15 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
             e.printStackTrace();
         }
     }
+
+    /**
+     * The button action to go back to main activity
+     * @param view the call back parameter
+     */
+    public void main(View view) {
+        Navigator.goToMainActivity(this);
+    }
+
     @Override
     public void handleResponse(List<RatData> response, Exception ex) {
         //list of dates

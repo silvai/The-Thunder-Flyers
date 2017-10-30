@@ -6,6 +6,7 @@ import android.content.Intent;
 import java.util.HashMap;
 
 import edu.gatech.thethunderflyers.android.controller.DetailRatDataActivity;
+import edu.gatech.thethunderflyers.android.controller.GraphActivity;
 import edu.gatech.thethunderflyers.android.controller.LoginActivity;
 import edu.gatech.thethunderflyers.android.controller.MainActivity;
 import edu.gatech.thethunderflyers.android.controller.MapsActivity;
@@ -41,5 +42,9 @@ public class Navigator {
 
     public static void goToWelcomeActivity(Context c) {
         c.startActivity(new Intent(c, WelcomeActivity.class));
+    }
+
+    public static void goToGraphActivity(Context c) {
+        c.startActivity(new Intent(c, GraphActivity.class));
     }
 }

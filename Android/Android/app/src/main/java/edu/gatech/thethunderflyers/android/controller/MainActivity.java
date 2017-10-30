@@ -1,6 +1,7 @@
 package edu.gatech.thethunderflyers.android.controller;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -91,9 +92,12 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
         Navigator.goToWelcomeActivity(this);
     }
 
+    /**
+     * Button pressed to go view the graph of rat reports
+     * @param view the callback parameter
+     */
     public void graphStart(View view) {
-        Intent intent = new Intent(this, GraphActivity.class);
-        startActivity(intent);
+        Navigator.goToGraphActivity(this);
     }
 
     @Override
