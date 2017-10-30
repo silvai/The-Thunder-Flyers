@@ -96,6 +96,11 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
         startActivity(intent);
     }
 
+    public void graphStart(View view) {
+        Intent intent = new Intent(this, GraphActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void handleResponse(List<RatData> response, Exception ex) {
         loading = false;

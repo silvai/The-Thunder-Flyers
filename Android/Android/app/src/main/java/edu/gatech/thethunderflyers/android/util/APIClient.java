@@ -3,6 +3,7 @@ package edu.gatech.thethunderflyers.android.util;
 import java.lang.ref.WeakReference;
 
 import edu.gatech.thethunderflyers.android.R;
+import edu.gatech.thethunderflyers.android.controller.GraphActivity;
 import edu.gatech.thethunderflyers.android.controller.LoginActivity;
 import edu.gatech.thethunderflyers.android.controller.MainActivity;
 import edu.gatech.thethunderflyers.android.controller.MapsActivity;
@@ -76,5 +77,16 @@ public class APIClient {
     public void getRatDataDateRange(long beginDate, long endDate, WeakReference<MapsActivity> ref) {
         MapsActivity ma = ref.get();
         new DataGetTask(ma.getString(R.string.get_data_date_url) + beginDate + "/" + endDate, ma).execute();
+    }
+
+    /**
+     * Executes the DataGetTask with the API getData (between dates) url.
+     * @param beginDate the datetime (Unix epoch) of the beginning of the range
+     * @param endDate the datetime (Unix epoch) of the end of the range
+     * @param ref a WeakReference to GraphActivity (to prevent memory leaks)
+     */
+    public void getRatDataDateRangeGraph(long beginDate, long endDate, WeakReference<GraphActivity> ref) {
+        GraphActivity ga = ref.get();
+        new DataGetTask(ga.getString(R.string.get_data_date_url) + beginDate + "/" + endDate, ga).execute();
     }
 }
