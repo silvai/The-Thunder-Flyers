@@ -1,7 +1,6 @@
 package edu.gatech.thethunderflyers.android.controller;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -18,6 +17,7 @@ import edu.gatech.thethunderflyers.android.model.RatData;
 import edu.gatech.thethunderflyers.android.util.APIClient;
 import edu.gatech.thethunderflyers.android.util.AlertDialogProvider;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
+import edu.gatech.thethunderflyers.android.util.Navigator;
 
 public class MainActivity extends AppCompatActivity implements AsyncHandler<List<RatData>> {
 
@@ -37,9 +37,7 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
         dataAdapter = new RatDataAdapter(new ArrayList<RatData>(), new RatDataAdapter.OnItemClickListener() {
             @Override public void onItemClick(RatData rat) {
                 Context context = dataView.getContext();
-                Intent intent = new Intent(context, DetailRatDataActivity.class);
-                intent.putExtra("rat", rat);
-                startActivity(intent);
+                Navigator.goToDetailRatDataActivity(context, rat);
             }
         });
 
@@ -75,8 +73,7 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
      * @param view the call back parameter
      */
     public void mapStart(View view) {
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
+        Navigator.goToMapsActivity(this);
     }
 
     /**
@@ -84,16 +81,14 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
      * @param view the callback parameter
      */
     public void report(View view) {
-        Intent intent = new Intent(this, ReportRatActivity.class);
-        startActivity(intent);
+        Navigator.goToReportRatActivity(this);
     }
     /**
      * Handles logout button click.
      * @param view the callback parameter
      */
     public void logout(View view) {
-        Intent intent = new Intent(this, WelcomeActivity.class);
-        startActivity(intent);
+        Navigator.goToWelcomeActivity(this);
     }
 
     public void graphStart(View view) {

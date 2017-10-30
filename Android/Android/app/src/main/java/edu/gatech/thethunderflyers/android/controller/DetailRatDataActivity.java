@@ -1,6 +1,5 @@
 package edu.gatech.thethunderflyers.android.controller;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,6 +10,7 @@ import java.util.Locale;
 
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.RatData;
+import edu.gatech.thethunderflyers.android.util.Navigator;
 
 public class DetailRatDataActivity extends AppCompatActivity {
     private RatData rd;
@@ -58,7 +58,6 @@ public class DetailRatDataActivity extends AppCompatActivity {
      * @param view the call back parameter
      */
     public void cancel(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        Navigator.goToMainActivity(this);
     }
 }

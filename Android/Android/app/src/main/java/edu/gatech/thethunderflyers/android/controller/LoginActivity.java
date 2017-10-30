@@ -1,9 +1,7 @@
 package edu.gatech.thethunderflyers.android.controller;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,7 +14,8 @@ import edu.gatech.thethunderflyers.android.model.Model;
 import edu.gatech.thethunderflyers.android.util.APIClient;
 import edu.gatech.thethunderflyers.android.util.AlertDialogProvider;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
-import edu.gatech.thethunderflyers.android.util.FormValidator;
+import edu.gatech.thethunderflyers.android.util.Navigator;
+import edu.gatech.thethunderflyers.android.util.Validator;
 
 public class LoginActivity extends AppCompatActivity implements AsyncHandler<APIMessage> {
     private EditText username;
@@ -30,14 +29,6 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
         setContentView(R.layout.activity_login);
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
-
-        FormValidator usernameFV = new FormValidator(username, "Username");
-        FormValidator passwordFV = new FormValidator(password, "Password");
-
-        username.addTextChangedListener(usernameFV);
-        username.setOnFocusChangeListener(usernameFV);
-        password.addTextChangedListener(passwordFV);
-        password.setOnFocusChangeListener(passwordFV);
     }
 
     /**
@@ -45,14 +36,10 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
      * @param v the call back parameter
      */
     public void submit(View v) {
-
-        String user = username.getText().toString();
-        String pass = password.getText().toString();
-
-        boolean isValid = username.getError() == null && password.getError() == null
-                && !TextUtils.isEmpty(user) && !TextUtils.isEmpty(pass);
-
+        boolean isValid = Validator.validate(username, password);
         if (isValid) {
+            String user = username.getText().toString();
+            String pass = password.getText().toString();
             APIClient.getInstance().login(Model.getLoginUser(user, pass), new WeakReference<>(this));
         } else {
             Toast.makeText(this, "One or more fields is invalid!", Toast.LENGTH_SHORT).show();
@@ -64,8 +51,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
      * @param v the call back parameter
      */
     public void cancel(View v) {
-        Intent intent = new Intent(this, WelcomeActivity.class);
-        startActivity(intent);
+        Navigator.goToWelcomeActivity(this);
     }
 
     @Override
@@ -76,8 +62,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
             AlertDialogProvider.getNotSuccessDialog(this, response.getMessage()).show();
         } else {
             userId = Integer.parseInt(response.getMessage());
-            Intent intent = new Intent(this, MapsActivity.class);
-            startActivity(intent);
+            Navigator.goToMapsActivity(this);
         }
     }
 }
