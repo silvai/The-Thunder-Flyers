@@ -152,6 +152,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
     @Override
     public void handleResponse(List<RatData> response, Exception ex) {
         if (response.size() == 0) {
+            Toast.makeText(this, "No reports in this Month and Year", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -173,35 +174,6 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
             entries[months - getMonthDiff(tempCal, d2) - 1] += 1;
         }
 
-        Graphs um = (Graphs) graphSpinner.getSelectedItem();
-
-        switch(um) {
-            case BARCHART:
-                relLay.removeAllViews();
-                graph = new BarChart(this);
-                relLay.addView(graph, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                ArrayList<BarEntry> entryBar = new ArrayList<>();
-                for (int j = 0; j < months; j++) {
-                    entryBar.add(new BarEntry(j, entries[j]));
-                }
-                BarDataSet bds = new BarDataSet(entryBar, "Reports");
-                BarData bd = new BarData(bds);
-                graph.setData(bd);
-                break;
-            case LINECHART:
-                relLay.removeAllViews();
-                lineChart = new LineChart(this);
-                relLay.addView(lineChart, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                ArrayList<Entry> entry = new ArrayList<>();
-                for (int j = 0; j < months; j++) {
-                    entry.add(new Entry(j, entries[j]));
-                }
-                LineDataSet lds = new LineDataSet(entry, "Reports");
-                LineData ld = new LineData(lds);
-                lineChart.setData(ld);
-                break;
-        }
-
 
         final String[] monthYears = new String[months];
         for (int k = 0; k < months; k++) {
@@ -216,12 +188,43 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
             }
         };
 
-        graph.getXAxis().setValueFormatter(iavf);
-        graph.getXAxis().setGranularity(1);
-        graph.getDescription().setEnabled(false);
-        graph.getXAxis().setLabelRotationAngle(-45);
-
-        graph.invalidate();
+        Graphs um = (Graphs) graphSpinner.getSelectedItem();
+        switch(um) {
+            case BARCHART:
+                relLay.removeAllViews();
+                graph = new BarChart(this);
+                relLay.addView(graph, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                ArrayList<BarEntry> entryBar = new ArrayList<>();
+                for (int j = 0; j < months; j++) {
+                    entryBar.add(new BarEntry(j, entries[j]));
+                }
+                BarDataSet bds = new BarDataSet(entryBar, "Reports");
+                BarData bd = new BarData(bds);
+                graph.setData(bd);
+                graph.getXAxis().setValueFormatter(iavf);
+                graph.getXAxis().setGranularity(1);
+                graph.getDescription().setEnabled(false);
+                graph.getXAxis().setLabelRotationAngle(-45);
+                graph.invalidate();
+                break;
+            case LINECHART:
+                relLay.removeAllViews();
+                lineChart = new LineChart(this);
+                relLay.addView(lineChart, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                ArrayList<Entry> entry = new ArrayList<>();
+                for (int j = 0; j < months; j++) {
+                    entry.add(new Entry(j, entries[j]));
+                }
+                LineDataSet lds = new LineDataSet(entry, "Reports");
+                LineData ld = new LineData(lds);
+                lineChart.setData(ld);
+                lineChart.getXAxis().setValueFormatter(iavf);
+                lineChart.getXAxis().setGranularity(1);
+                lineChart.getDescription().setEnabled(false);
+                lineChart.getXAxis().setLabelRotationAngle(-45);
+                lineChart.invalidate();
+                break;
+        }
     }
     public int getMonthDiff(Calendar d1, Calendar d2){
         int diff = (d2.get(Calendar.YEAR) - d1.get(Calendar.YEAR)) * 12
