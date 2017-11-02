@@ -1,6 +1,7 @@
 package edu.gatech.thethunderflyers.android.controller;
 
 import android.app.DatePickerDialog;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,9 +10,12 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
@@ -47,6 +51,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+        ConstraintLayout cl = (ConstraintLayout) findViewById(R.id.graphLayout);
         graph = (BarChart) findViewById(R.id.graph);
         submit = (Button) findViewById(R.id.submitDates);
         begin = (Button) findViewById(R.id.beginDate);
@@ -144,18 +149,20 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
 
         final Calendar d1 = Calendar.getInstance();
         final Calendar d2 = Calendar.getInstance();
+        final Calendar iterate = Calendar.getInstance();
 
         d1.setTime(beginDate);
         d2.setTime(endDate);
+        iterate.setTime(beginDate);
 
-        int months = getMonthDiff(d1, d2);
+        int months = getMonthDiff(d1, d2) + 1;
 
         int[] entries = new int[months];
         for (RatData rd: response) {
             Date tempDate = rd.getDate();
             Calendar tempCal = Calendar.getInstance();
             tempCal.setTime(tempDate);
-            entries[months - getMonthDiff(tempCal, d2)] += 1;
+            entries[months - getMonthDiff(tempCal, d2) - 1] += 1;
         }
 
         ArrayList<BarEntry> entryBar = new ArrayList<>();
@@ -163,10 +170,28 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
             entryBar.add(new BarEntry(j, entries[j]));
         }
 
+        final String[] monthYears = new String[months];
+        for (int k = 0; k < months; k++) {
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+            monthYears[k] = sdf.format(iterate.getTime());
+            iterate.add(Calendar.MONTH, 1);
+        }
+        IAxisValueFormatter iavf = new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return monthYears[(int)value];
+            }
+        };
+
+        graph.getXAxis().setValueFormatter(iavf);
+        graph.getXAxis().setGranularity(1);
+        graph.getDescription().setEnabled(false);
+        graph.getXAxis().setLabelRotationAngle(-45);
+
         BarDataSet bds = new BarDataSet(entryBar, "Reports");
         BarData bd = new BarData(bds);
         graph.setData(bd);
-        
+        graph.invalidate();
     }
     public int getMonthDiff(Calendar d1, Calendar d2){
         int diff = (d2.get(Calendar.YEAR) - d1.get(Calendar.YEAR)) * 12
