@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="edu.gatech.thethunderflyers.android.controller.GraphActivity">
 
-    <com.jjoe64.graphview.GraphView
+    <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/graph"
         android:layout_width="match_parent"
         android:layout_height="351dp"
@@ -15,7 +15,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
         android:id="@+id/beginDate"

@@ -8,6 +8,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
@@ -17,6 +21,7 @@ import com.jjoe64.graphview.series.DataPoint;
 import java.lang.ref.WeakReference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,13 +38,16 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
     private Button begin;
     private Button end;
     private Button submit;
-    private GraphView graph;
+    private BarChart graph;
+
+    private Date beginDate;
+    private Date endDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
-        graph = (GraphView) findViewById(R.id.graph);
+        graph = (BarChart) findViewById(R.id.graph);
         submit = (Button) findViewById(R.id.submitDates);
         begin = (Button) findViewById(R.id.beginDate);
         end = (Button) findViewById(R.id.endDate);
@@ -111,6 +119,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
             if (dateBegin.compareTo(dateEnd) > 0 || dateBegin == null ||dateEnd == null) {
                 Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT).show();
             } else {
+                beginDate = dateBegin;
+                endDate = dateEnd;
                 APIClient.getInstance().getRatDataDateRangeGraph(dateBegin.getTime(), dateEnd.getTime(), new WeakReference<>(this));
             }
         } catch (ParseException e) {
@@ -128,75 +138,39 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
 
     @Override
     public void handleResponse(List<RatData> response, Exception ex) {
-        graph.removeAllSeries();
-        final Calendar d1 = Calendar.getInstance();
-        final Calendar d2 = Calendar.getInstance();
-
-        final Calendar iter = Calendar.getInstance();
-
         if (response.size() == 0) {
             return;
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        Date beginDate = response.get(0).getDate();
-        Date endDate = response.get(response.size() - 1).getDate();
-        try {
-            endDate = sdf.parse((String) end.getText());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        final Calendar d1 = Calendar.getInstance();
+        final Calendar d2 = Calendar.getInstance();
 
         d1.setTime(beginDate);
         d2.setTime(endDate);
-        d2.set(Calendar.DATE, d2.getActualMaximum(Calendar.DATE));
 
-        int months = getMonthDiff(d1, d2) + 1;
+        int months = getMonthDiff(d1, d2);
 
-        final Date[] myears = new Date[months];
-
-        iter.setTime(beginDate);
-        iter.set(Calendar.DATE, iter.getActualMaximum(Calendar.DATE) / 2);
-
-        for (int j = 0; j < months; j++) {
-            myears[j] = iter.getTime();
-            iter.add(Calendar.MONTH, 1);
-        }
-
-        int[] yVals = new int[months];
+        int[] entries = new int[months];
         for (RatData rd: response) {
-            Calendar dateCal = Calendar.getInstance();
-            Date date = rd.getDate();
-            dateCal.setTime(date);
-            int arrayLocation = getMonthDiff(dateCal, d2);
-            yVals[months - arrayLocation - 1] += 1;
-        }
-        System.out.println(Arrays.toString(myears));
-        System.out.println(Arrays.toString(yVals));
-
-        BarGraphSeries barGraph = new BarGraphSeries();
-        for (int i = 0; i < yVals.length; i++) {
-            barGraph.appendData(new DataPoint(myears[i], yVals[i]), true, 100);
+            Date tempDate = rd.getDate();
+            Calendar tempCal = Calendar.getInstance();
+            tempCal.setTime(tempDate);
+            entries[months - getMonthDiff(tempCal, d2)] += 1;
         }
 
-        barGraph.setSpacing(15);
+        ArrayList<BarEntry> entryBar = new ArrayList<>();
+        for (int j = 0; j < months; j++) {
+            entryBar.add(new BarEntry(j, entries[j]));
+        }
 
-        graph.addSeries(barGraph);
-        graph.getGridLabelRenderer().setNumHorizontalLabels(3);
-        graph.getViewport().setMinX(myears[0].getTime());
-        graph.getViewport().setMaxX(myears[myears.length - 1].getTime());
-
-        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this, new SimpleDateFormat("MM/yyyy")));
-
-        graph.getViewport().setXAxisBoundsManual(true);
-
-        graph.getGridLabelRenderer().setHumanRounding(false);
-
-        graph.setTitle("Reports per Month");
+        BarDataSet bds = new BarDataSet(entryBar, "Reports");
+        BarData bd = new BarData(bds);
+        graph.setData(bd);
+        
     }
-
     public int getMonthDiff(Calendar d1, Calendar d2){
-        int diff = (d2.get(Calendar.YEAR) - d1.get(Calendar.YEAR)) * 12 + d2.get(Calendar.MONTH) - d1.get(Calendar.MONTH);
+        int diff = (d2.get(Calendar.YEAR) - d1.get(Calendar.YEAR)) * 12
+                + d2.get(Calendar.MONTH) - d1.get(Calendar.MONTH);
         return diff;
     }
 }
