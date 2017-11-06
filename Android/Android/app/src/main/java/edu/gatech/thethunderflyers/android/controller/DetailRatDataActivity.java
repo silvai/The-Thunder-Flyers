@@ -20,8 +20,8 @@ public class DetailRatDataActivity extends AppCompatActivity {
     private TextView zip;
     private TextView city;
     private TextView locationT;
-    private TextView boro;
-    private TextView latlong;
+    private TextView borough;
+    private TextView latLong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +43,13 @@ public class DetailRatDataActivity extends AppCompatActivity {
         city.setText(String.format(Locale.US, "City%n%s", rd.getCity()));
 
         locationT = (TextView) findViewById(R.id.dataLocationT);
-        locationT.setText(String.format(Locale.US, "Location Type%n%s", rd.getLocatType().toString()));
+        locationT.setText(String.format(Locale.US, "Location Type%n%s", rd.getLocationType().toString()));
 
-        boro = (TextView) findViewById(R.id.dataBorough);
-        boro.setText(String.format(Locale.US, "Borough%n%s", rd.getBorough().toString()));
+        borough = (TextView) findViewById(R.id.dataBorough);
+        borough.setText(String.format(Locale.US, "Borough%n%s", rd.getBorough().toString()));
 
-        latlong = (TextView) findViewById(R.id.dataLatLong);
-        latlong.setText(String.format(Locale.US, "Latitude, Longitude%n(%.3f, %.3f)",
+        latLong = (TextView) findViewById(R.id.dataLatLong);
+        latLong.setText(String.format(Locale.US, "Latitude, Longitude%n(%.3f, %.3f)",
                 rd.getLatitude(), rd.getLongitude()));
     }
 

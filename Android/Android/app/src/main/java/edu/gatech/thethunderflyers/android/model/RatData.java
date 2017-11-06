@@ -14,7 +14,7 @@ public class RatData implements Serializable {
     private Date date;
 
     @SerializedName("locationType")
-    private LocationType locatType;
+    private LocationType locationType;
 
     @SerializedName("incidentZip")
     private int zip;
@@ -37,9 +37,9 @@ public class RatData implements Serializable {
     @SerializedName("userId")
     private int userId;
 
-    public RatData(LocationType locatType, int zip, String address,
+    public RatData(LocationType locationType, int zip, String address,
                    String city, Borough borough, double latitude, double longitude) {
-        this.locatType = locatType;
+        this.locationType = locationType;
         this.zip = zip;
         this.address = address;
         this.city = city;
@@ -69,8 +69,8 @@ public class RatData implements Serializable {
      * Getter method
      * @return the location type of the report
      */
-    public LocationType getLocatType() {
-        return locatType;
+    public LocationType getLocationType() {
+        return locationType;
     }
 
     /**
@@ -139,10 +139,10 @@ public class RatData implements Serializable {
 
     /**
      * setter method
-     * @param locatType sets the locatType to the new one
+     * @param locationType sets the locationType to the new one
      */
-    public void setLocatType(LocationType locatType) {
-        this.locatType = locatType;
+    public void setLocationType(LocationType locationType) {
+        this.locationType = locationType;
     }
 
     /**
@@ -189,7 +189,7 @@ public class RatData implements Serializable {
 
     /**
      * setter method
-     * @param longitude sets the longinitude to the new one
+     * @param longitude sets the longitude to the new one
      */
     public void setLongitude(double longitude) {
         this.longitude = longitude;

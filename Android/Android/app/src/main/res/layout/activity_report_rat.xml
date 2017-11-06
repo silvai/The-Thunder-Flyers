@@ -77,7 +77,7 @@
         tools:layout_constraintTop_creator="1" />
 
     <Spinner
-        android:id="@+id/locatType"
+        android:id="@+id/locationType"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         tools:layout_constraintRight_creator="1"
@@ -96,12 +96,12 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="@+id/submitButton"
-        app:layout_constraintRight_toRightOf="@+id/locatType"
+        app:layout_constraintRight_toRightOf="@+id/locationType"
         android:layout_marginTop="125dp"
         app:layout_constraintTop_toBottomOf="@+id/lat"
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="123dp"
-        app:layout_constraintLeft_toLeftOf="@+id/locatType" />
+        app:layout_constraintLeft_toLeftOf="@+id/locationType" />
 
     <EditText
         android:id="@+id/lat"

@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName;
 
 class User implements Comparable<User>{
     @SerializedName("firstName")
-    private String fname;
+    private String firstName;
 
     @SerializedName("lastName")
-    private String lname;
+    private String lastName;
 
     @SerializedName("username")
-    private String usern;
+    private String userName;
 
     @SerializedName("password")
     private String pass;
@@ -22,42 +22,42 @@ class User implements Comparable<User>{
 
     /**
      * Constructor for User
-     * @param fname first name
-     * @param lname last name
-     * @param usern username
+     * @param firstName first name
+     * @param lastName last name
+     * @param userName username
      * @param pass password
-     * @param um usermode (admin or user)
+     * @param um userMode (admin or user)
      */
-    public User(String fname, String lname, String usern, String pass, UserMode um) {
-        this.fname = fname;
-        this.lname = lname;
-        this.usern = usern;
+    public User(String firstName, String lastName, String userName, String pass, UserMode um) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
         this.pass = pass;
         this.um = um;
     }
 
     /**
      * Setter for first name
-     * @param fname new first name
+     * @param firstName new first name
      */
-    public void setFname(String fname) {
-        this.fname = fname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     /**
      * Setter for last name
-     * @param lname new last name
+     * @param lastName new last name
      */
-    public void setLname(String lname) {
-        this.lname = lname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     /**
      * Setter for Username
-     * @param usern new username
+     * @param userName new username
      */
-    public void setUsern(String usern) {
-        this.usern = usern;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     /**
@@ -70,7 +70,7 @@ class User implements Comparable<User>{
 
     /**
      * Setter for user mode (admin or user)
-     * @param um the new usermode
+     * @param um the new userMode
      */
     public void setUserMode(UserMode um) {
         this.um = um;
@@ -80,16 +80,16 @@ class User implements Comparable<User>{
      * Getter for first name
      * @return the first name
      */
-    public String getFname() {
-        return fname;
+    public String getFirstName() {
+        return firstName;
     }
 
     /**
      * Getter for last name
      * @return the last name
      */
-    public String getLname() {
-        return lname;
+    public String getLastName() {
+        return lastName;
     }
 
     /**
@@ -97,7 +97,7 @@ class User implements Comparable<User>{
      * @return the username
      */
     public String getUsername() {
-        return usern;
+        return userName;
     }
 
     /**
@@ -109,7 +109,7 @@ class User implements Comparable<User>{
     }
 
     /**
-     * Getter for the usermode
+     * Getter for the userMode
      * @return returns user or admin
      */
     public UserMode getUserMode() {
@@ -118,7 +118,7 @@ class User implements Comparable<User>{
 
     @Override
     public int compareTo(@NonNull User user) {
-        return usern.compareTo(user.getUsername());
+        return userName.compareTo(user.getUsername());
     }
 
     @Override
@@ -133,8 +133,8 @@ class User implements Comparable<User>{
             return false;
         }
         User u = (User) obj;
-        return this.fname.equals(u.getFname()) && this.lname.equals(u.getLname())
-                && this.usern.equals(u.getUsername()) && this.pass.equals(u.getPassword())
+        return this.firstName.equals(u.getFirstName()) && this.lastName.equals(u.getLastName())
+                && this.userName.equals(u.getUsername()) && this.pass.equals(u.getPassword())
                 && this.um == u.getUserMode();
     }
 }

@@ -134,7 +134,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .position(new LatLng(rd.getLatitude(), rd.getLongitude()))
                     .title(rd.getId() + "")
                     .snippet(rd.getDate() + "\n"
-                    + rd.getLocatType());
+                    + rd.getLocationType());
             mMap.addMarker(mo);
         }
     }
