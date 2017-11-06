@@ -24,6 +24,9 @@ import edu.gatech.thethunderflyers.android.util.LocationProvider;
 import edu.gatech.thethunderflyers.android.util.Navigator;
 import edu.gatech.thethunderflyers.android.util.Validator;
 
+/**
+ * This is the activity to create a new rat report
+ */
 public class ReportRatActivity extends AppCompatActivity implements AsyncHandler<APIMessage>,
         LocationProvider.LocationCallback {
     private Button report;
@@ -42,15 +45,15 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_rat);
-        report = (Button) findViewById(R.id.cancelReport);
-        submit = (Button) findViewById(R.id.submitButton);
-        address = (EditText) findViewById(R.id.address);
-        city = (EditText) findViewById(R.id.city);
-        zip = (EditText) findViewById(R.id.zip);
-        lat = (EditText) findViewById(R.id.lat);
-        longitude = (EditText) findViewById(R.id.longitude);
-        locationType = (Spinner) findViewById(R.id.locationType);
-        borough = (Spinner) findViewById(R.id.borough);
+        report = findViewById(R.id.cancelReport);
+        submit = findViewById(R.id.submitButton);
+        address = findViewById(R.id.address);
+        city = findViewById(R.id.city);
+        zip = findViewById(R.id.zip);
+        lat = findViewById(R.id.lat);
+        longitude = findViewById(R.id.longitude);
+        locationType = findViewById(R.id.locationType);
+        borough = findViewById(R.id.borough);
 
         ArrayAdapter<LocationType> adapterLT = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LocationType.values());
         adapterLT.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -117,6 +120,7 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
         }
     }
 
+    @Override
     public void handleLocation(Location loc) {
         lat.setText(String.valueOf(loc.getLatitude()));
         longitude.setText(String.valueOf(loc.getLongitude()));

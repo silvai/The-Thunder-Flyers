@@ -8,6 +8,9 @@ import com.google.gson.annotations.SerializedName;
 
 import edu.gatech.thethunderflyers.android.controller.LoginActivity;
 
+/**
+ * The class for RatData
+ */
 public class RatData implements Serializable {
 
     @SerializedName("id")
@@ -39,6 +42,7 @@ public class RatData implements Serializable {
 
     @SerializedName("userId")
     private int userId;
+
 
     public RatData(LocationType locationType, int zip, String address,
                    String city, Borough borough, double latitude, double longitude) {
@@ -198,10 +202,18 @@ public class RatData implements Serializable {
         this.longitude = longitude;
     }
 
+    /**
+     * Gets the user ID
+     * @return the userId
+     */
     public int getUserId() {
         return userId;
     }
 
+    /**
+     * sets the user id
+     * @param userId the new userId to set userId
+     */
     public void setUserId(int userId) {
         this.userId = userId;
     }
@@ -209,10 +221,14 @@ public class RatData implements Serializable {
     private LatLng getMapLatLng() { return new LatLng(latitude, longitude); }
 
     private String getMapSnippet() { return this.getDate() + "\n"
-            + this.getLocatType(); }
+            + this.getLocationType(); }
 
     private String getMapTitle() { return this.getId() + ""; }
 
+    /**
+     * method for markers for maps
+     * @return returns the MarkerOptions for this ratData
+     */
     public MarkerOptions getMapMarkerOptions() {
         return new MarkerOptions()
                 .position(this.getMapLatLng())

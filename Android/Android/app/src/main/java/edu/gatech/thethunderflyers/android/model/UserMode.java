@@ -1,5 +1,8 @@
 package edu.gatech.thethunderflyers.android.model;
 
+/**
+ * The enum for userMode
+ */
 public enum UserMode {
     USER ("User"), ADMIN ("Admin");
 

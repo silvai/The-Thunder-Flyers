@@ -27,17 +27,17 @@ public class DetailRatDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_rat_data);
-        cancel = (Button) findViewById(R.id.cancelButton);
+        cancel = findViewById(R.id.cancelButton);
         rd = (RatData) getIntent().getSerializableExtra("rat");
         setFields(rd);
 
-        date = (TextView) findViewById(R.id.dataDate);
-        address = (TextView) findViewById(R.id.dataAddress);
-        zip = (TextView) findViewById(R.id.dataZip);
-        city = (TextView) findViewById(R.id.dataCity);
-        locationT = (TextView) findViewById(R.id.dataLocationT);
-        borough = (TextView) findViewById(R.id.dataBorough);
-        latLong = (TextView) findViewById(R.id.dataLatLong);
+        date = findViewById(R.id.dataDate);
+        address = findViewById(R.id.dataAddress);
+        zip = findViewById(R.id.dataZip);
+        city = findViewById(R.id.dataCity);
+        locationT = findViewById(R.id.dataLocationT);
+        borough = findViewById(R.id.dataBorough);
+        latLong = findViewById(R.id.dataLatLong);
     }
 
     private void setFields(RatData rd) {

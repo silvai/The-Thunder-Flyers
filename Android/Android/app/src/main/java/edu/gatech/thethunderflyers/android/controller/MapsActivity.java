@@ -13,7 +13,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.lang.ref.WeakReference;
 import java.text.ParseException;
@@ -93,7 +92,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 dpd.show();
             }
         });
-        searchReports = (Button) findViewById(R.id.searchReports);
+        searchReports = findViewById(R.id.searchReports);
     }
 
     public void search(View view) {

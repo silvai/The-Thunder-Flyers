@@ -12,11 +12,18 @@ import java.util.List;
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.RatData;
 
+/**
+ * Adapter to read RatReports
+ */
 public class RatDataAdapter extends RecyclerView.Adapter{
     private List<RatData> data;
     private Date date = new Date(0);
     private int lastId = 0;
 
+    /**
+     * Method to get the result
+     * @param response is the list of ratData
+     */
     public void result(List<RatData> response) {
         this.date = response.get(response.size() - 1).getDate();
         this.lastId = response.get(response.size() - 1).getId();
@@ -24,11 +31,20 @@ public class RatDataAdapter extends RecyclerView.Adapter{
         this.notifyDataSetChanged();
     }
 
+    /**
+     * ClickListener for the RatData item
+     */
     public interface OnItemClickListener {
         void onItemClick(RatData item);
     }
 
     private final OnItemClickListener listener;
+
+    /**
+     * Constructor for RatDataAdapter
+     * @param data the list of ratData
+     * @param listener the click listener
+     */
     public RatDataAdapter(List<RatData> data, OnItemClickListener listener) {
         this.data = data;
         this.listener = listener;
@@ -60,18 +76,34 @@ public class RatDataAdapter extends RecyclerView.Adapter{
         return data == null ? 0 : data.size();
     }
 
+    /**
+     * gets the list of RatData
+     * @return returns the list of reports
+     */
     public List<RatData> getData() {
         return data;
     }
 
+    /**
+     * gets the lastId
+     * @return the lastId
+     */
     public int getLastId() {
         return lastId;
     }
 
+    /**
+     * gets the date
+     * @return returns the date of the report
+     */
     public Date getDate() {
         return date;
     }
 
+    /**
+     * sets the date
+     * @param date the new date parameter
+     */
     public void setDate(Date date) {
         this.date = date;
     }
