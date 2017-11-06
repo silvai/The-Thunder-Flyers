@@ -35,10 +35,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private Button beginDate;
     private Button endDate;
-    private Button searchReports;
 
     private final LatLng DEFAULT_LATLNG_ZOOM = new LatLng(40.7, -74.0);
-    private final float DEFAULT_FLOAT_ZOOM = 6.0f;
     private final SimpleDateFormat FULL_DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
     @Override
@@ -93,14 +91,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 dpd.show();
             }
         });
-        searchReports = (Button) findViewById(R.id.searchReports);
+        Button searchReports = (Button) findViewById(R.id.searchReports);
     }
 
     public void search(View view) {
         try {
             Date dateBegin = FULL_DATE_FORMAT.parse((String) beginDate.getText());
             Date dateEnd = FULL_DATE_FORMAT.parse((String) endDate.getText());
-            if (dateBegin.compareTo(dateEnd) > 0 || dateEnd == null) {
+            if ((dateBegin.compareTo(dateEnd) > 0) || (dateEnd == null)) {
                 Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT).show();
             } else {
                 APIClient.getInstance().getRatDataDateRange(dateBegin.getTime(), dateEnd.getTime(), new WeakReference<>(this));
@@ -117,6 +115,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        float DEFAULT_FLOAT_ZOOM = 6.0f;
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LATLNG_ZOOM, DEFAULT_FLOAT_ZOOM));
     }
 

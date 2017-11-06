@@ -64,7 +64,7 @@ public enum LocationType {
     @SerializedName("Single Room Occupancy (SRO)")
     SINGLE_ROOM_OCCUPANCY ("Single Room Occupancy (SRO");
 
-    private String representation;
+    private final String representation;
 
     LocationType (String representation) {
         this.representation = representation;

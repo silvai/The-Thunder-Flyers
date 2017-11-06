@@ -13,8 +13,6 @@ import edu.gatech.thethunderflyers.android.model.RatData;
 import edu.gatech.thethunderflyers.android.util.Navigator;
 
 public class DetailRatDataActivity extends AppCompatActivity {
-    private RatData rd;
-    private Button cancel;
     private TextView date;
     private TextView address;
     private TextView zip;
@@ -27,8 +25,8 @@ public class DetailRatDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_rat_data);
-        cancel = (Button) findViewById(R.id.cancelButton);
-        rd = (RatData) getIntent().getSerializableExtra("rat");
+        Button cancel = (Button) findViewById(R.id.cancelButton);
+        RatData rd = (RatData) getIntent().getSerializableExtra("rat");
         setFields(rd);
 
         date = (TextView) findViewById(R.id.dataDate);

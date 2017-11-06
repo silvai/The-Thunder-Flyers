@@ -17,7 +17,7 @@ public enum Borough {
     @SerializedName("BRONX")
     BRONX ("Bronx");
 
-    private String representation;
+    private final String representation;
 
     Borough (String representation) {
         this.representation = representation;

@@ -3,7 +3,7 @@ package edu.gatech.thethunderflyers.android.model;
 public enum UserMode {
     USER ("User"), ADMIN ("Admin");
 
-    private String representation;
+    private final String representation;
 
     UserMode (String representation) {
         this.representation = representation;

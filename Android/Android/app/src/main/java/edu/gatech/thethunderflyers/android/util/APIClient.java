@@ -10,7 +10,7 @@ import edu.gatech.thethunderflyers.android.controller.MapsActivity;
 import edu.gatech.thethunderflyers.android.controller.RegisterActivity;
 import edu.gatech.thethunderflyers.android.controller.ReportRatActivity;
 
-public class APIClient {
+public final class APIClient {
     private static APIClient client;
 
     private APIClient() {}

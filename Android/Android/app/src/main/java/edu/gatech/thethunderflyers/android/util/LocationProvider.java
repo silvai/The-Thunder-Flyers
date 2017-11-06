@@ -22,8 +22,7 @@ public class LocationProvider implements
         void handleLocation(Location loc);
     }
 
-    private Context context;
-    private LocationCallback lc;
+    private final LocationCallback lc;
 
     private GoogleApiClient gac;
     private LocationRequest lrq;
@@ -44,7 +43,7 @@ public class LocationProvider implements
                     .setFastestInterval(1000);
         }
 
-        this.context = context;
+        Context context1 = context;
         this.lc = lc;
     }
 

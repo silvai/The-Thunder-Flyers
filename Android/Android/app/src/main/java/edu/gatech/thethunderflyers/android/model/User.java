@@ -80,7 +80,7 @@ class User implements Comparable<User>{
      * Getter for first name
      * @return the first name
      */
-    public String getFirstName() {
+    private String getFirstName() {
         return firstName;
     }
 
@@ -88,7 +88,7 @@ class User implements Comparable<User>{
      * Getter for last name
      * @return the last name
      */
-    public String getLastName() {
+    private String getLastName() {
         return lastName;
     }
 
@@ -96,7 +96,7 @@ class User implements Comparable<User>{
      * Getter for Username
      * @return the username
      */
-    public String getUsername() {
+    private String getUsername() {
         return userName;
     }
 
@@ -104,7 +104,7 @@ class User implements Comparable<User>{
      * Getter for password
      * @return the password
      */
-    public String getPassword() {
+    private String getPassword() {
         return pass;
     }
 
@@ -112,7 +112,7 @@ class User implements Comparable<User>{
      * Getter for the userMode
      * @return returns user or admin
      */
-    public UserMode getUserMode() {
+    private UserMode getUserMode() {
         return um;
     }
 
@@ -135,6 +135,6 @@ class User implements Comparable<User>{
         User u = (User) obj;
         return this.firstName.equals(u.getFirstName()) && this.lastName.equals(u.getLastName())
                 && this.userName.equals(u.getUsername()) && this.pass.equals(u.getPassword())
-                && this.um == u.getUserMode();
+                && (this.um == u.getUserMode());
     }
 }

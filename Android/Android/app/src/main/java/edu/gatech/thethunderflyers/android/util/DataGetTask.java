@@ -22,7 +22,7 @@ class DataGetTask extends AsyncTask<String, Void, List<RatData>> {
     private HttpURLConnection connection;
     private BufferedReader reader;
     private Exception ex;
-    private AsyncHandler<List<RatData>> ah;
+    private final AsyncHandler<List<RatData>> ah;
     private final String url;
 
     DataGetTask(String url, AsyncHandler<List<RatData>> ah) {

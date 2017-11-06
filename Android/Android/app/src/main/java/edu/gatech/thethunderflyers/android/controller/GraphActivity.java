@@ -48,17 +48,10 @@ import edu.gatech.thethunderflyers.android.util.Navigator;
 public class GraphActivity extends AppCompatActivity implements AsyncHandler<List<RatData>> {
     private Button begin;
     private Button end;
-    private Button submit;
     private RelativeLayout relLay;
-    private BarChart graph;
-    private LineChart lineChart;
-    private PieChart pieChart;
     private Spinner graphSpinner;
     private Date beginDate;
     private Date endDate;
-
-    private final int ROTATION_ANGLE = -45;
-    private final int MONTHS_IN_YEAR = 12;
 
     private final SimpleDateFormat FULL_DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
@@ -67,7 +60,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
         relLay = findViewById(R.id.graph);
-        submit = findViewById(R.id.submitDates);
+        Button submit = findViewById(R.id.submitDates);
         begin = findViewById(R.id.beginDate);
         end = findViewById(R.id.endDate);
         graphSpinner = findViewById(R.id.graphSpinner);
@@ -136,7 +129,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
             c2.setTime(dateEnd);
             c2.set(Calendar.DATE, c2.getActualMaximum(Calendar.DATE));
             dateEnd = c2.getTime();
-            if (dateBegin.compareTo(dateEnd) > 0 || dateEnd == null) {
+            if ((dateBegin.compareTo(dateEnd) > 0) || (dateEnd == null)) {
                 Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT).show();
             } else {
                 beginDate = dateBegin;
@@ -158,7 +151,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
 
     @Override
     public void handleResponse(List<RatData> response, Exception ex) {
-        if (response.size() == 0) {
+        if (response.isEmpty()) {
             Toast.makeText(this, "No reports in this Month and Year", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -199,7 +192,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
         switch(um) {
             case BARCHART:
                 relLay.removeAllViews();
-                graph = new BarChart(this);
+                BarChart graph = new BarChart(this);
                 relLay.addView(graph, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 ArrayList<BarEntry> entryBar = new ArrayList<>();
                 for (int j = 0; j < months; j++) {
@@ -211,12 +204,13 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 graph.getXAxis().setValueFormatter(valueFormatter);
                 graph.getXAxis().setGranularity(1);
                 graph.getDescription().setEnabled(false);
+                int ROTATION_ANGLE = -45;
                 graph.getXAxis().setLabelRotationAngle(ROTATION_ANGLE);
                 graph.invalidate();
                 break;
             case LINECHART:
                 relLay.removeAllViews();
-                lineChart = new LineChart(this);
+                LineChart lineChart = new LineChart(this);
                 relLay.addView(lineChart, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 ArrayList<Entry> entry = new ArrayList<>();
                 for (int j = 0; j < months; j++) {
@@ -233,7 +227,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 break;
             case PIECHART:
                 relLay.removeAllViews();
-                pieChart = new PieChart(this);
+                PieChart pieChart = new PieChart(this);
                 relLay.addView(pieChart, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 ArrayList<PieEntry> pieEntry = new ArrayList<>();
                 for (int j = 0; j < months; j++) {
@@ -249,8 +243,9 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
     }
 
 
-    public int getMonthDiff(Calendar d1, Calendar d2){
-        return (d2.get(Calendar.YEAR) - d1.get(Calendar.YEAR)) * MONTHS_IN_YEAR
-                + d2.get(Calendar.MONTH) - d1.get(Calendar.MONTH);
+    private int getMonthDiff(Calendar d1, Calendar d2){
+        int MONTHS_IN_YEAR = 12;
+        return (((d2.get(Calendar.YEAR) - d1.get(Calendar.YEAR)) * MONTHS_IN_YEAR)
+                + d2.get(Calendar.MONTH)) - d1.get(Calendar.MONTH);
     }
 }

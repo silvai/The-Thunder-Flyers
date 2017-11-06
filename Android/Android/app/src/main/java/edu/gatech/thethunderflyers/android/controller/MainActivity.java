@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
                 super.onScrolled(recyclerView, dx, dy);
                 itemCount = dataManager.getItemCount();
                 lastVisibleItem = dataManager.findLastVisibleItemPosition();
-                if (!loading && itemCount <= (lastVisibleItem + 5)) {
+                if (!loading && (itemCount <= (lastVisibleItem + 5))) {
                     loading = true;
                     APIClient.getInstance().getRatDataList(dataAdapter.getLastId(),
                             dataAdapter.getDate().getTime(), new WeakReference<>(MainActivity.this));

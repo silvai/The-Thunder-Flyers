@@ -26,8 +26,6 @@ import edu.gatech.thethunderflyers.android.util.Validator;
 
 public class ReportRatActivity extends AppCompatActivity implements AsyncHandler<APIMessage>,
         LocationProvider.LocationCallback {
-    private Button report;
-    private Button submit;
     private EditText address;
     private EditText city;
     private EditText zip;
@@ -42,8 +40,8 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_rat);
-        report = (Button) findViewById(R.id.cancelReport);
-        submit = (Button) findViewById(R.id.submitButton);
+        Button report = (Button) findViewById(R.id.cancelReport);
+        Button submit = (Button) findViewById(R.id.submitButton);
         address = (EditText) findViewById(R.id.address);
         city = (EditText) findViewById(R.id.city);
         zip = (EditText) findViewById(R.id.zip);
@@ -90,7 +88,8 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
         boolean isValid = Validator.validate(address, city, zip, lat, longitude);
         if (isValid) {
             int zi;
-            double la, lo;
+            double la;
+            double lo;
             String add = address.getText().toString();
             String cit = city.getText().toString();
             zi = Integer.parseInt(zip.getText().toString());

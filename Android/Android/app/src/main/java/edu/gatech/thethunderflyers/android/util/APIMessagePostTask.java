@@ -22,7 +22,7 @@ class APIMessagePostTask extends AsyncTask<String, Void, APIMessage> {
     private HttpURLConnection connection;
     private BufferedReader reader;
     private Exception ex;
-    private AsyncHandler<APIMessage> ah;
+    private final AsyncHandler<APIMessage> ah;
     private final String url;
 
     APIMessagePostTask(String url, AsyncHandler<APIMessage> ah) {

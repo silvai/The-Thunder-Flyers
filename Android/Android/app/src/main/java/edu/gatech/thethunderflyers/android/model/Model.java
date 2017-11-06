@@ -3,7 +3,7 @@ package edu.gatech.thethunderflyers.android.model;
 import com.google.gson.Gson;
 
 public class Model {
-    private static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
     /**
      * Creates a LoginUser object with the data from LoginActivity and converts it to JSON for APIClient.

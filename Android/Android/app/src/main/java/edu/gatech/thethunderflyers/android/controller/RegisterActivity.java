@@ -22,7 +22,6 @@ import edu.gatech.thethunderflyers.android.util.Navigator;
 import edu.gatech.thethunderflyers.android.util.Validator;
 
 public class RegisterActivity extends AppCompatActivity implements AsyncHandler<APIMessage> {
-    private Button cancel;
     private EditText firstName;
     private EditText lastName;
     private EditText username;
@@ -34,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity implements AsyncHandler<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        cancel = (Button) findViewById(R.id.cancelButton);
+        Button cancel = (Button) findViewById(R.id.cancelButton);
         firstName = (EditText) findViewById(R.id.firstName);
         lastName = (EditText) findViewById(R.id.lastName);
         username = (EditText) findViewById(R.id.regUserName);

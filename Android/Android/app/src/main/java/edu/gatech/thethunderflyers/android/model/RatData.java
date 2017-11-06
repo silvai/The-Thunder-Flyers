@@ -209,7 +209,7 @@ public class RatData implements Serializable {
     private LatLng getMapLatLng() { return new LatLng(latitude, longitude); }
 
     private String getMapSnippet() { return this.getDate() + "\n"
-            + this.getLocatType(); }
+            + this.getLocationType(); }
 
     private String getMapTitle() { return this.getId() + ""; }
 

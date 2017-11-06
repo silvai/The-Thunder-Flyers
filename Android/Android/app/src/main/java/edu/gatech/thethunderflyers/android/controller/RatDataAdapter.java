@@ -12,8 +12,8 @@ import java.util.List;
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.RatData;
 
-public class RatDataAdapter extends RecyclerView.Adapter{
-    private List<RatData> data;
+class RatDataAdapter extends RecyclerView.Adapter{
+    private final List<RatData> data;
     private Date date = new Date(0);
     private int lastId = 0;
 
@@ -47,7 +47,7 @@ public class RatDataAdapter extends RecyclerView.Adapter{
         DataViewHolder dvh = (DataViewHolder) holder;
         final RatData rd = data.get(position);
         dvh.dataDate.setText(String.format("%tc", rd.getDate()));
-        dvh.message.setText("CLICK FOR MORE INFO...");
+        dvh.message.setText(dvh.message.getContext().getString(R.string.dvh_message));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 listener.onItemClick(rd);
@@ -57,7 +57,7 @@ public class RatDataAdapter extends RecyclerView.Adapter{
 
     @Override
     public int getItemCount() {
-        return data == null ? 0 : data.size();
+        return (data == null) ? 0 : data.size();
     }
 
     public List<RatData> getData() {
@@ -77,8 +77,8 @@ public class RatDataAdapter extends RecyclerView.Adapter{
     }
 
     private static class DataViewHolder extends RecyclerView.ViewHolder {
-        private TextView dataDate;
-        private TextView message;
+        private final TextView dataDate;
+        private final TextView message;
 
         public DataViewHolder(View itemView) {
             super(itemView);
