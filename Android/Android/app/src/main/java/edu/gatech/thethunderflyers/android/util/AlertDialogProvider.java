@@ -29,7 +29,7 @@ public class AlertDialogProvider {
      * @param message the message extracted from the APIMessage sent by the API
      * @return an AlertDialog with message
      */
-    public static AlertDialog getNotSuccessDialog(Context c, String message) {
+    public static AlertDialog getNotSuccessDialog(Context c, CharSequence message) {
         return new AlertDialog.Builder(c)
                 .setMessage(message)
                 .setNeutralButton("OK", new DialogInterface.OnClickListener() {

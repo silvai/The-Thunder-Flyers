@@ -13,7 +13,7 @@
         android:layout_height="55dp"
         android:padding="15dp"
         android:layout_marginTop="27dp"
-        android:text="Main Screen"
+        android:text="@+string/main_screen"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,108 +25,102 @@
         android:id="@+id/dataDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="93dp"
-        android:text="Date"
+        android:text="@string/date"
         android:textColor="@android:color/black"
         android:textSize="18sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.0" />
+        tools:layout_constraintTop_creator="1" />
 
     <TextView
         android:id="@+id/dataAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:text="Address"
+        android:text="@string/address"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="@+id/dataDate"
         app:layout_constraintTop_toBottomOf="@+id/dataDate"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginLeft="0dp" />
+        tools:layout_constraintTop_creator="1" />
 
     <TextView
         android:id="@+id/dataZip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="115dp"
-        android:layout_marginStart="115dp"
-        android:text="Zip"
+        android:text="@string/zip"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/dataAddress"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintLeft_toLeftOf="@+id/cancelButton"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintBaseline_creator="1"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintHorizontal_bias="0.513" />
+        tools:layout_constraintRight_creator="1" />
 
     <TextView
         android:id="@+id/dataLocationT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginLeft="22dp"
         android:layout_marginTop="28dp"
-        android:text="Location Type"
+        android:text="@string/location_type"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dataCity"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginLeft="22dp" />
+        tools:layout_constraintTop_creator="1" />
 
     <TextView
         android:id="@+id/dataCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="-11dp"
         android:layout_marginTop="28dp"
-        android:text="City"
+        android:text="@string/city"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="@+id/dataAddress"
         app:layout_constraintTop_toBottomOf="@+id/dataAddress"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginLeft="-11dp" />
+        tools:layout_constraintTop_creator="1" />
 
     <TextView
         android:id="@+id/dataBorough"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
+        android:layout_marginLeft="-2dp"
         android:layout_marginTop="28dp"
-        android:text="Borough"
+        android:text="@string/borough"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="@+id/dataLocationT"
         app:layout_constraintTop_toBottomOf="@+id/dataLocationT"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginLeft="-2dp" />
+        tools:layout_constraintTop_creator="1" />
 
     <TextView
         android:id="@+id/dataLatLong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="-2dp"
         android:layout_marginTop="40dp"
-        android:text="Latitude / Longitude"
+        android:text="@string/latitude_longitude"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="@+id/dataBorough"
         app:layout_constraintTop_toBottomOf="@+id/dataBorough"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginLeft="-2dp" />
+        tools:layout_constraintTop_creator="1" />
 
 
 </android.support.constraint.ConstraintLayout>

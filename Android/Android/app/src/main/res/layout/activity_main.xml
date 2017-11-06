@@ -15,7 +15,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="16dp"
         android:onClick="logout"
-        android:text="Logout"
+        android:text="@string/logout"
         app:layout_constraintHorizontal_bias="0.161"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -30,7 +30,7 @@
         android:layout_marginTop="16dp"
         android:onClick="report"
         android:padding="20dp"
-        android:text="Report a Rat"
+        android:text="@string/report_a_rat"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/logoutButton"
         app:layout_constraintRight_toRightOf="parent"
@@ -57,7 +57,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:onClick="mapStart"
-        android:text="MAP"
+        android:text="@string/map"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,7 +68,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         android:onClick="graphStart"
-        android:text="Graph"
+        android:text="@string/graph"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

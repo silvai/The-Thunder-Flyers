@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/dataDate"
-            android:text="Date"
+            android:text="@string/date"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </TableRow>
 
@@ -30,19 +30,18 @@
 
         <TextView
             android:id="@+id/dataAddress"
-            android:text="Address"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_weight="1"
             android:paddingRight="5dp"
-            android:layout_weight="1"/>
+            android:text="@string/address"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
             android:id="@+id/dataZip"
-            android:text="Zip"
             android:layout_column="3"
-            android:paddingLeft="5dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_weight="1"
-            />
+            android:paddingLeft="5dp"
+            android:text="@string/zip"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
     </TableRow>
 
 
@@ -55,7 +54,7 @@
 
         <TextView
             android:id="@+id/dataCity"
-            android:text="City"
+            android:text="@string/city"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </TableRow>
 
@@ -71,7 +70,7 @@
 
         <TextView
             android:id="@+id/dataLocationType"
-            android:text="Location Type"
+            android:text="@string/location_type"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </TableRow>
 
@@ -84,7 +83,7 @@
 
         <TextView
             android:id="@+id/dataLatLong"
-            android:text="Latitude / Longitude"
+            android:text="@string/latitude_longitude"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </TableRow>
 
@@ -97,7 +96,7 @@
 
         <TextView
             android:id="@+id/dataBorough"
-            android:text="Borough"
+            android:text="@string/borough"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </TableRow>
 

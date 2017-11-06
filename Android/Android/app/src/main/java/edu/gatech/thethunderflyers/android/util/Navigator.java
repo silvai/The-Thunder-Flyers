@@ -3,6 +3,7 @@ package edu.gatech.thethunderflyers.android.util;
 import android.content.Context;
 import android.content.Intent;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import edu.gatech.thethunderflyers.android.controller.DetailRatDataActivity;
@@ -24,7 +25,7 @@ public class Navigator {
         c.startActivity(new Intent(c, RegisterActivity.class));
     }
 
-    public static void goToDetailRatDataActivity(Context c, RatData rd) {
+    public static void goToDetailRatDataActivity(Context c, Serializable rd) {
         c.startActivity(new Intent(c, DetailRatDataActivity.class).putExtra("rat", rd));
     }
 

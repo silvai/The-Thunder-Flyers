@@ -106,10 +106,7 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
         if (ex != null) {
             AlertDialogProvider.getExceptionDialog(this).show();
         } else {
-            dataAdapter.setDate(response.get(19).getDate());
-            dataAdapter.setLastId(response.get(19).getId());
-            dataAdapter.getData().addAll(response);
-            dataAdapter.notifyDataSetChanged();
+            dataAdapter.result(response);
         }
     }
 }

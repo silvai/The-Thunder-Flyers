@@ -36,6 +36,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.Graphs;
@@ -56,15 +57,20 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
     private Date beginDate;
     private Date endDate;
 
+    private final int ROTATION_ANGLE = -45;
+    private final int MONTHS_IN_YEAR = 12;
+
+    private final SimpleDateFormat FULL_DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
-        relLay = (RelativeLayout) findViewById(R.id.graph);
-        submit = (Button) findViewById(R.id.submitDates);
-        begin = (Button) findViewById(R.id.beginDate);
-        end = (Button) findViewById(R.id.endDate);
-        graphSpinner = (Spinner) findViewById(R.id.graphSpinner);
+        relLay = findViewById(R.id.graph);
+        submit = findViewById(R.id.submitDates);
+        begin = findViewById(R.id.beginDate);
+        end = findViewById(R.id.endDate);
+        graphSpinner = findViewById(R.id.graphSpinner);
         ArrayAdapter<Graphs> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Graphs.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         graphSpinner.setAdapter(adapter);
@@ -82,8 +88,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                         Calendar c = new GregorianCalendar();
                         c.set(i,i1,i2);
                         Date d = c.getTime();
-                        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-                        begin.setText(format.format(d));
+                        begin.setText(FULL_DATE_FORMAT.format(d));
                     }
                 }, year, month, day);
                 dp.getDatePicker().setMaxDate(new Date().getTime());
@@ -103,8 +108,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                         Calendar c = new GregorianCalendar();
                         c.set(i,i1,i2);
                         Date d = c.getTime();
-                        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-                        end.setText(format.format(d));
+                        end.setText(FULL_DATE_FORMAT.format(d));
                     }
 
                 }, year, month, day);
@@ -121,19 +125,18 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
      * @param view the callback parameter
      */
     public void submitDates(View view) {
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         try {
-            Date dateBegin = format.parse((String) begin.getText());
+            Date dateBegin = FULL_DATE_FORMAT.parse((String) begin.getText());
             Calendar c1 = Calendar.getInstance();
             c1.setTime(dateBegin);
             c1.set(Calendar.DATE, c1.getActualMinimum(Calendar.DATE));
             dateBegin = c1.getTime();
-            Date dateEnd = format.parse((String) end.getText());
+            Date dateEnd = FULL_DATE_FORMAT.parse((String) end.getText());
             Calendar c2= Calendar.getInstance();
             c2.setTime(dateEnd);
             c2.set(Calendar.DATE, c2.getActualMaximum(Calendar.DATE));
             dateEnd = c2.getTime();
-            if (dateBegin.compareTo(dateEnd) > 0 || dateBegin == null ||dateEnd == null) {
+            if (dateBegin.compareTo(dateEnd) > 0 || dateEnd == null) {
                 Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT).show();
             } else {
                 beginDate = dateBegin;
@@ -181,7 +184,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
 
         final String[] monthYears = new String[months];
         for (int k = 0; k < months; k++) {
-            SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy", Locale.US);
             monthYears[k] = sdf.format(iterate.getTime());
             iterate.add(Calendar.MONTH, 1);
         }
@@ -208,7 +211,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 graph.getXAxis().setValueFormatter(iavf);
                 graph.getXAxis().setGranularity(1);
                 graph.getDescription().setEnabled(false);
-                graph.getXAxis().setLabelRotationAngle(-45);
+                graph.getXAxis().setLabelRotationAngle(ROTATION_ANGLE);
                 graph.invalidate();
                 break;
             case LINECHART:
@@ -225,7 +228,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 lineChart.getXAxis().setValueFormatter(iavf);
                 lineChart.getXAxis().setGranularity(1);
                 lineChart.getDescription().setEnabled(false);
-                lineChart.getXAxis().setLabelRotationAngle(-45);
+                lineChart.getXAxis().setLabelRotationAngle(ROTATION_ANGLE);
                 lineChart.invalidate();
                 break;
             case PIECHART:
@@ -247,8 +250,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
 
 
     public int getMonthDiff(Calendar d1, Calendar d2){
-        int diff = (d2.get(Calendar.YEAR) - d1.get(Calendar.YEAR)) * 12
+        return (d2.get(Calendar.YEAR) - d1.get(Calendar.YEAR)) * MONTHS_IN_YEAR
                 + d2.get(Calendar.MONTH) - d1.get(Calendar.MONTH);
-        return diff;
     }
 }

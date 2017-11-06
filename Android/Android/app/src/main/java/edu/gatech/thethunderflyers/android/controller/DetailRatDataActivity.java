@@ -29,26 +29,24 @@ public class DetailRatDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_rat_data);
         cancel = (Button) findViewById(R.id.cancelButton);
         rd = (RatData) getIntent().getSerializableExtra("rat");
+        setFields(rd);
 
         date = (TextView) findViewById(R.id.dataDate);
-        date.setText(String.format(Locale.US, "Date of Report%n%s", rd.getDate().toString()));
-
         address = (TextView) findViewById(R.id.dataAddress);
-        address.setText(String.format(Locale.US, "Address%n%s", rd.getAddress()));
-
         zip = (TextView) findViewById(R.id.dataZip);
-        zip.setText(String.format(Locale.US, "Zip%n%d", rd.getZip()));
-
         city = (TextView) findViewById(R.id.dataCity);
-        city.setText(String.format(Locale.US, "City%n%s", rd.getCity()));
-
         locationT = (TextView) findViewById(R.id.dataLocationT);
-        locationT.setText(String.format(Locale.US, "Location Type%n%s", rd.getLocatType().toString()));
-
         boro = (TextView) findViewById(R.id.dataBorough);
-        boro.setText(String.format(Locale.US, "Borough%n%s", rd.getBorough().toString()));
-
         latlong = (TextView) findViewById(R.id.dataLatLong);
+    }
+
+    private void setFields(RatData rd) {
+        date.setText(String.format(Locale.US, "Date of Report%n%s", rd.getDate().toString()));
+        address.setText(String.format(Locale.US, "Address%n%s", rd.getAddress()));
+        zip.setText(String.format(Locale.US, "Zip%n%d", rd.getZip()));
+        city.setText(String.format(Locale.US, "City%n%s", rd.getCity()));
+        locationT.setText(String.format(Locale.US, "Location Type%n%s", rd.getLocatType().toString()));
+        boro.setText(String.format(Locale.US, "Borough%n%s", rd.getBorough().toString()));
         latlong.setText(String.format(Locale.US, "Latitude, Longitude%n(%.3f, %.3f)",
                 rd.getLatitude(), rd.getLongitude()));
     }

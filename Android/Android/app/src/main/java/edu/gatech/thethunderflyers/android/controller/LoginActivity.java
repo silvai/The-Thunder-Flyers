@@ -56,12 +56,13 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
 
     @Override
     public void handleResponse(APIMessage response, Exception ex) {
+        String message = response.getMessage();
         if (ex != null) {
             AlertDialogProvider.getExceptionDialog(this).show();
         } else if (!response.isSuccess()) {
-            AlertDialogProvider.getNotSuccessDialog(this, response.getMessage()).show();
+            AlertDialogProvider.getNotSuccessDialog(this, message).show();
         } else {
-            userId = Integer.parseInt(response.getMessage());
+            userId = Integer.parseInt(message);
             Navigator.goToMapsActivity(this);
         }
     }

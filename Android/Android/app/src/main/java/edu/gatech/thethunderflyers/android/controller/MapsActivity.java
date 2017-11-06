@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.RatData;
@@ -35,6 +36,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button beginDate;
     private Button endDate;
     private Button searchReports;
+
+    private final LatLng DEFAULT_LATLNG_ZOOM = new LatLng(40.7, -74.0);
+    private final float DEFAULT_FLOAT_ZOOM = 6.0f;
+    private final SimpleDateFormat FULL_DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Calendar c = new GregorianCalendar();
                         c.set(i,i1,i2);
                         Date d = c.getTime();
-                        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-                        beginDate.setText(format.format(d));
+                        beginDate.setText(FULL_DATE_FORMAT.format(d));
                     }
                 }, year, month, day);
                 dp.getDatePicker().setMaxDate(new Date().getTime());
@@ -81,8 +85,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Calendar c = new GregorianCalendar();
                         c.set(i,i1,i2);
                         Date d = c.getTime();
-                        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-                        endDate.setText(format.format(d));
+                        endDate.setText(FULL_DATE_FORMAT.format(d));
                     }
 
                 }, year, month, day);
@@ -94,11 +97,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void search(View view) {
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         try {
-            Date dateBegin = format.parse((String) beginDate.getText());
-            Date dateEnd = format.parse((String) endDate.getText());
-            if (dateBegin.compareTo(dateEnd) > 0 || dateBegin == null ||dateEnd == null) {
+            Date dateBegin = FULL_DATE_FORMAT.parse((String) beginDate.getText());
+            Date dateEnd = FULL_DATE_FORMAT.parse((String) endDate.getText());
+            if (dateBegin.compareTo(dateEnd) > 0 || dateEnd == null) {
                 Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT).show();
             } else {
                 APIClient.getInstance().getRatDataDateRange(dateBegin.getTime(), dateEnd.getTime(), new WeakReference<>(this));
@@ -115,7 +117,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(40.7,-74.0) , 6.0f) );
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LATLNG_ZOOM, DEFAULT_FLOAT_ZOOM));
     }
 
     /**
@@ -130,38 +132,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void handleResponse(List<RatData> response, Exception ex) {
         mMap.clear();
         for (RatData rd: response) {
-            MarkerOptions mo = new MarkerOptions()
-                    .position(new LatLng(rd.getLatitude(), rd.getLongitude()))
-                    .title(rd.getId() + "")
-                    .snippet(rd.getDate() + "\n"
-                    + rd.getLocatType());
-            mMap.addMarker(mo);
+            mMap.addMarker(rd.getMapMarkerOptions());
         }
     }
-//
-//    class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
-//
-//        private final View myContentsView;
-//
-//        CustomInfoWindowAdapter() {
-//            myContentsView = getLayoutInflater().inflate(R.layout.marker_content, null);
-//        }
-//
-//        @Override
-//        public View getInfoContents(Marker marker) {
-//
-//            TextView tvTitle = ((TextView) myContentsView.findViewById(R.id.title));
-//            tvTitle.setText(marker.getTitle());
-//            TextView tvSnippet = ((TextView) myContentsView.findViewById(R.id.snippet));
-//            tvSnippet.setText(marker.getSnippet());
-//
-//            return myContentsView;
-//        }
-
-//        @Override
-//        public View getInfoWindow(Marker marker) {
-//            // TODO Auto-generated method stub
-//            return null;
-//        }
-//    }
 }

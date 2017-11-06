@@ -17,6 +17,13 @@ public class RatDataAdapter extends RecyclerView.Adapter{
     private Date date = new Date(0);
     private int lastId = 0;
 
+    public void result(List<RatData> response) {
+        this.date = response.get(response.size() - 1).getDate();
+        this.lastId = response.get(response.size() - 1).getId();
+        this.data.addAll(response);
+        this.notifyDataSetChanged();
+    }
+
     public interface OnItemClickListener {
         void onItemClick(RatData item);
     }
@@ -59,10 +66,6 @@ public class RatDataAdapter extends RecyclerView.Adapter{
 
     public int getLastId() {
         return lastId;
-    }
-
-    public void setLastId(int lastId) {
-        this.lastId = lastId;
     }
 
     public Date getDate() {
