@@ -188,7 +188,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
             monthYears[k] = sdf.format(iterate.getTime());
             iterate.add(Calendar.MONTH, 1);
         }
-        IAxisValueFormatter iavf = new IAxisValueFormatter() {
+        IAxisValueFormatter valueFormatter = new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 return monthYears[(int)value];
@@ -208,7 +208,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 BarDataSet bds = new BarDataSet(entryBar, "Reports");
                 BarData bd = new BarData(bds);
                 graph.setData(bd);
-                graph.getXAxis().setValueFormatter(iavf);
+                graph.getXAxis().setValueFormatter(valueFormatter);
                 graph.getXAxis().setGranularity(1);
                 graph.getDescription().setEnabled(false);
                 graph.getXAxis().setLabelRotationAngle(ROTATION_ANGLE);
@@ -225,7 +225,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 LineDataSet lds = new LineDataSet(entry, "Reports");
                 LineData ld = new LineData(lds);
                 lineChart.setData(ld);
-                lineChart.getXAxis().setValueFormatter(iavf);
+                lineChart.getXAxis().setValueFormatter(valueFormatter);
                 lineChart.getXAxis().setGranularity(1);
                 lineChart.getDescription().setEnabled(false);
                 lineChart.getXAxis().setLabelRotationAngle(ROTATION_ANGLE);
@@ -235,11 +235,11 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 relLay.removeAllViews();
                 pieChart = new PieChart(this);
                 relLay.addView(pieChart, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                ArrayList<PieEntry> pieentry = new ArrayList<>();
+                ArrayList<PieEntry> pieEntry = new ArrayList<>();
                 for (int j = 0; j < months; j++) {
-                    pieentry.add(new PieEntry(j, entries[j]));
+                    pieEntry.add(new PieEntry(j, entries[j]));
                 }
-                PieDataSet pds = new PieDataSet(pieentry, "Reports");
+                PieDataSet pds = new PieDataSet(pieEntry, "Reports");
                 PieData pd = new PieData(pds);
                 pieChart.setData(pd);
                 pieChart.getDescription().setEnabled(false);

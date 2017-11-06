@@ -10,15 +10,15 @@ import edu.gatech.thethunderflyers.android.util.Navigator;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    private Button loginbutton;
-    private Button registerbutton;
+    private Button loginButton;
+    private Button registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        loginbutton = (Button) findViewById(R.id.loginbutton);
-        registerbutton = (Button) findViewById(R.id.registerButton);
+        loginButton = (Button) findViewById(R.id.loginButton);
+        registerButton = (Button) findViewById(R.id.registerButton);
     }
 
     /**

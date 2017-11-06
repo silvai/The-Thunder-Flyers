@@ -33,8 +33,8 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
     private EditText zip;
     private EditText lat;
     private EditText longitude;
-    private Spinner locatType;
-    private Spinner boro;
+    private Spinner locationType;
+    private Spinner borough;
 
     private LocationProvider lp;
 
@@ -49,15 +49,15 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
         zip = (EditText) findViewById(R.id.zip);
         lat = (EditText) findViewById(R.id.lat);
         longitude = (EditText) findViewById(R.id.longitude);
-        locatType = (Spinner) findViewById(R.id.locatType);
-        boro = (Spinner) findViewById(R.id.borough);
+        locationType = (Spinner) findViewById(R.id.locationType);
+        borough = (Spinner) findViewById(R.id.borough);
 
         ArrayAdapter<LocationType> adapterLT = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LocationType.values());
         adapterLT.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        locatType.setAdapter(adapterLT);
+        locationType.setAdapter(adapterLT);
         ArrayAdapter<Borough> adapterB = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Borough.values());
         adapterB.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        boro.setAdapter(adapterB);
+        borough.setAdapter(adapterB);
 
         lp = new LocationProvider(this, this);
     }
@@ -96,8 +96,8 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
             zi = Integer.parseInt(zip.getText().toString());
             la = Double.parseDouble(lat.getText().toString());
             lo = Double.parseDouble(longitude.getText().toString());
-            LocationType lt = (LocationType) locatType.getSelectedItem();
-            Borough bor = (Borough) boro.getSelectedItem();
+            LocationType lt = (LocationType) locationType.getSelectedItem();
+            Borough bor = (Borough) borough.getSelectedItem();
             APIClient.getInstance().submitRatReport(Model.getRatData(lt, zi, cit, add, bor, la, lo),
                     new WeakReference<>(this));
         } else {

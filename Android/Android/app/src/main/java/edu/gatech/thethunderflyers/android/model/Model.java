@@ -17,7 +17,7 @@ public class Model {
 
     /**
      * Creates a RatData object with the data from ReportRatActivity and converts it to JSON for APIClient.
-     * @param locatType the RatData's location type
+     * @param locationType the RatData's location type
      * @param zip the RatData's zip code
      * @param address the RatData's address
      * @param city the RatData's city
@@ -26,9 +26,9 @@ public class Model {
      * @param longitude the RatData's longitude
      * @return JSON representing the newly created RatData
      */
-    public static String getRatData(LocationType locatType, int zip, String address,
+    public static String getRatData(LocationType locationType, int zip, String address,
                                      String city, Borough borough, double latitude, double longitude) {
-        return gson.toJson(new RatData(locatType, zip, address, city, borough, latitude, longitude));
+        return gson.toJson(new RatData(locationType, zip, address, city, borough, latitude, longitude));
     }
 
     /**
