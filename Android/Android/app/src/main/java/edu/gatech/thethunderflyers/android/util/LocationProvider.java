@@ -43,7 +43,6 @@ public class LocationProvider implements
                     .setFastestInterval(1000);
         }
 
-        Context context1 = context;
         this.lc = lc;
     }
 

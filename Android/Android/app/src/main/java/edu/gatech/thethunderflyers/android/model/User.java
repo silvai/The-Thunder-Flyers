@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName;
 
 class User implements Comparable<User>{
     @SerializedName("firstName")
-    private String firstName;
+    private final String firstName;
 
     @SerializedName("lastName")
-    private String lastName;
+    private final String lastName;
 
     @SerializedName("username")
-    private String userName;
+    private final String userName;
 
     @SerializedName("password")
-    private String pass;
+    private final String pass;
 
     @SerializedName("userType")
-    private UserMode um;
+    private final UserMode um;
 
 
     /**
@@ -33,46 +33,6 @@ class User implements Comparable<User>{
         this.lastName = lastName;
         this.userName = userName;
         this.pass = pass;
-        this.um = um;
-    }
-
-    /**
-     * Setter for first name
-     * @param firstName new first name
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * Setter for last name
-     * @param lastName new last name
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
-     * Setter for Username
-     * @param userName new username
-     */
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    /**
-     * Setter for password
-     * @param pass new password
-     */
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    /**
-     * Setter for user mode (admin or user)
-     * @param um the new userMode
-     */
-    public void setUserMode(UserMode um) {
         this.um = um;
     }
 

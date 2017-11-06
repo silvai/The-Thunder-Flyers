@@ -90,7 +90,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 dpd.show();
             }
         });
-        Button searchReports = (Button) findViewById(R.id.searchReports);
     }
 
     public void search(View view) {

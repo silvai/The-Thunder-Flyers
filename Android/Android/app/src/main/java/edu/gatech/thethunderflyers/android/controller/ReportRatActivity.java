@@ -2,10 +2,11 @@ package edu.gatech.thethunderflyers.android.controller;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -91,28 +92,41 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
             int zi;
             double la;
             double lo;
-            String add = address.getText().toString();
-            String cit = city.getText().toString();
-            zi = Integer.parseInt(zip.getText().toString());
-            la = Double.parseDouble(lat.getText().toString());
-            lo = Double.parseDouble(longitude.getText().toString());
+
+            Editable addressEditable = address.getText();
+            Editable cityEditable = city.getText();
+            Editable zipEditable = zip.getText();
+            Editable latEditable = lat.getText();
+            Editable longitudeEditable = longitude.getText();
+
+            APIClient apic = APIClient.getInstance();
+
+            String add = addressEditable.toString();
+            String cit = cityEditable.toString();
+            zi = Integer.parseInt(zipEditable.toString());
+            la = Double.parseDouble(latEditable.toString());
+            lo = Double.parseDouble(longitudeEditable.toString());
             LocationType lt = (LocationType) locationType.getSelectedItem();
             Borough bor = (Borough) borough.getSelectedItem();
-            APIClient.getInstance().submitRatReport(Model.getRatData(lt, zi, cit, add, bor, la, lo),
+            apic.submitRatReport(Model.getRatData(lt, zi, cit, add, bor, la, lo),
                     new WeakReference<>(this));
         } else {
-            Toast.makeText(this, "One or more fields invalid", Toast.LENGTH_SHORT).show();
+            Toast t = Toast.makeText(this, "One or more fields invalid", Toast.LENGTH_SHORT);
+            t.show();
         }
     }
 
     @Override
     public void handleResponse(APIMessage response, Exception ex) {
         if (ex != null) {
-            AlertDialogProvider.getExceptionDialog(this).show();
-        } else if (!response.isSuccess()) {
-            AlertDialogProvider.getNotSuccessDialog(this, response.getMessage()).show();
+            AlertDialog ed = AlertDialogProvider.getExceptionDialog(this);
+            ed.show();
+        } else if (response.isSuccess()) {
+            AlertDialog nsd = AlertDialogProvider.getNotSuccessDialog(this, response.getMessage());
+            nsd.show();
         } else {
-            Toast.makeText(this, "Successfully reported rat!", Toast.LENGTH_SHORT).show();
+            Toast t = Toast.makeText(this, "Successfully reported rat!", Toast.LENGTH_SHORT);
+            t.show();
             Navigator.goToMainActivity(this);
         }
     }

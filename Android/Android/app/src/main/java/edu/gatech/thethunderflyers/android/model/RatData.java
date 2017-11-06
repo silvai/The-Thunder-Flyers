@@ -20,28 +20,28 @@ public class RatData implements Serializable {
     private Date date;
 
     @SerializedName("locationType")
-    private LocationType locationType;
+    private final LocationType locationType;
 
     @SerializedName("incidentZip")
-    private int zip;
+    private final int zip;
 
     @SerializedName("incidentAddress")
-    private String address;
+    private final String address;
 
     @SerializedName("city")
-    private String city;
+    private final String city;
 
     @SerializedName("borough")
-    private Borough borough;
+    private final Borough borough;
 
     @SerializedName("latitude")
-    private double latitude;
+    private final double latitude;
 
     @SerializedName("longitude")
-    private double longitude;
+    private final double longitude;
 
     @SerializedName("userId")
-    private int userId;
+    private final int userId;
 
 
     public RatData(LocationType locationType, int zip, String address,
@@ -144,79 +144,6 @@ public class RatData implements Serializable {
         this.date = date;
     }
 
-    /**
-     * setter method
-     * @param locationType sets the locationType to the new one
-     */
-    public void setLocationType(LocationType locationType) {
-        this.locationType = locationType;
-    }
-
-    /**
-     * setter method
-     * @param zip sets the zip to the new one
-     */
-    public void setZip(int zip) {
-        this.zip = zip;
-    }
-
-    /**
-     * setter method
-     * @param address sets the address to the new one
-     */
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-
-    /**
-     * setter method
-     * @param city sets the city to the new one
-     */
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    /**
-     * setter method
-     * @param borough sets the borough to the new one
-     */
-    public void setBorough(Borough borough) {
-        this.borough = borough;
-    }
-
-    /**
-     * setter method
-     * @param latitude sets the latitude to the new one
-     */
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-
-    /**
-     * setter method
-     * @param longitude sets the longitude to the new one
-     */
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    /**
-     * Gets the user ID
-     * @return the userId
-     */
-    public int getUserId() {
-        return userId;
-    }
-
-    /**
-     * sets the user id
-     * @param userId the new userId to set userId
-     */
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     private LatLng getMapLatLng() { return new LatLng(latitude, longitude); }
 

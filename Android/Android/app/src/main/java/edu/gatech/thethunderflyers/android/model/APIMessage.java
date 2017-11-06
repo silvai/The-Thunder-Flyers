@@ -10,11 +10,7 @@ public class APIMessage {
     private String message;
 
     public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
+        return !success;
     }
 
     public String getMessage() {

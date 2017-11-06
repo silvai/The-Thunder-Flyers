@@ -53,13 +53,13 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
     private Date endDate;
 
     private final SimpleDateFormat FULL_DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+    private final float ROTATION_ANGLE = -45;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
         relLay = findViewById(R.id.graph);
-        Button submit = findViewById(R.id.submitDates);
         begin = findViewById(R.id.beginDate);
         end = findViewById(R.id.endDate);
         graphSpinner = findViewById(R.id.graphSpinner);
@@ -203,7 +203,6 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 graph.getXAxis().setValueFormatter(valueFormatter);
                 graph.getXAxis().setGranularity(1);
                 graph.getDescription().setEnabled(false);
-                int ROTATION_ANGLE = -45;
                 graph.getXAxis().setLabelRotationAngle(ROTATION_ANGLE);
                 graph.invalidate();
                 break;

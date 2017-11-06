@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
         String message = response.getMessage();
         if (ex != null) {
             AlertDialogProvider.getExceptionDialog(this).show();
-        } else if (!response.isSuccess()) {
+        } else if (response.isSuccess()) {
             AlertDialogProvider.getNotSuccessDialog(this, message).show();
         } else {
             userId = Integer.parseInt(message);

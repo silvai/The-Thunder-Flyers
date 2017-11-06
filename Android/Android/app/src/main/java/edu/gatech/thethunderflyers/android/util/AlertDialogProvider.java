@@ -12,14 +12,15 @@ public class AlertDialogProvider {
      * @return an AlertDialog with an appropriate message
      */
     public static AlertDialog getExceptionDialog(Context c) {
-        return new AlertDialog.Builder(c)
-                .setMessage("An unexpected error occurred. Please try again later.")
-                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+        AlertDialog.Builder adb = new AlertDialog.Builder(c);
+        adb.setMessage("An unexpected error occurred. Please try again later.");
+        adb.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
-                    }
-                }).create();
+            }
+        });
+        return adb.create();
     }
 
     /**
@@ -30,13 +31,14 @@ public class AlertDialogProvider {
      * @return an AlertDialog with message
      */
     public static AlertDialog getNotSuccessDialog(Context c, CharSequence message) {
-        return new AlertDialog.Builder(c)
-                .setMessage(message)
-                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+        AlertDialog.Builder adb = new AlertDialog.Builder(c);
+        adb.setMessage(message);
+        adb.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
-                    }
-                }).create();
+            }
+        });
+        return adb.create();
     }
 }

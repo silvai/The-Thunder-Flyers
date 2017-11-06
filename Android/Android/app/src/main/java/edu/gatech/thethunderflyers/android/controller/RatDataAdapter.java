@@ -21,7 +21,7 @@ class RatDataAdapter extends RecyclerView.Adapter{
      * Method to get the result
      * @param response is the list of ratData
      */
-    public void result(List<RatData> response) {
+    void result(List<RatData> response) {
         this.date = response.get(response.size() - 1).getDate();
         this.lastId = response.get(response.size() - 1).getId();
         this.data.addAll(response);
@@ -85,7 +85,7 @@ class RatDataAdapter extends RecyclerView.Adapter{
      * gets the lastId
      * @return the lastId
      */
-    public int getLastId() {
+    int getLastId() {
         return lastId;
     }
 
@@ -109,7 +109,7 @@ class RatDataAdapter extends RecyclerView.Adapter{
         private final TextView dataDate;
         private final TextView message;
 
-        public DataViewHolder(View itemView) {
+        DataViewHolder(View itemView) {
             super(itemView);
             dataDate = itemView.findViewById(R.id.reportDate);
             message = itemView.findViewById(R.id.message);

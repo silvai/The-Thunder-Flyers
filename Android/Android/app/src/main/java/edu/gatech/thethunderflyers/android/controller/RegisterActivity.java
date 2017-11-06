@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -81,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity implements AsyncHandler<
     public void handleResponse(APIMessage response, Exception ex) {
         if (ex != null) {
             AlertDialogProvider.getExceptionDialog(this).show();
-        } else if (!response.isSuccess()) {
+        } else if (response.isSuccess()) {
             AlertDialogProvider.getNotSuccessDialog(this, response.getMessage()).show();
         } else {
             Toast.makeText(this, "Successfully registered user!", Toast.LENGTH_SHORT).show();
