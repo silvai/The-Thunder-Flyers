@@ -1,7 +1,6 @@
 package edu.gatech.thethunderflyers.android.controller;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dataView = (RecyclerView) findViewById(R.id.dataView);
+        dataView = findViewById(R.id.dataView);
         dataAdapter = new RatDataAdapter(new ArrayList<RatData>(), new RatDataAdapter.OnItemClickListener() {
             @Override public void onItemClick(RatData rat) {
                 Context context = dataView.getContext();

@@ -27,8 +27,8 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        username = (EditText) findViewById(R.id.username);
-        password = (EditText) findViewById(R.id.password);
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
     }
 
     /**

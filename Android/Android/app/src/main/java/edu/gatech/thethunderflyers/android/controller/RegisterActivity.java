@@ -21,6 +21,9 @@ import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 import edu.gatech.thethunderflyers.android.util.Navigator;
 import edu.gatech.thethunderflyers.android.util.Validator;
 
+/**
+ * Activity to register a new account
+ */
 public class RegisterActivity extends AppCompatActivity implements AsyncHandler<APIMessage> {
     private EditText firstName;
     private EditText lastName;
@@ -33,13 +36,12 @@ public class RegisterActivity extends AppCompatActivity implements AsyncHandler<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        Button cancel = (Button) findViewById(R.id.cancelButton);
-        firstName = (EditText) findViewById(R.id.firstName);
-        lastName = (EditText) findViewById(R.id.lastName);
-        username = (EditText) findViewById(R.id.regUserName);
-        password = (EditText) findViewById(R.id.password);
-        confirmPass = (EditText) findViewById(R.id.confirmPass);
-        userOrAdmin = (Spinner) findViewById(R.id.userOrAdmin);
+        firstName = findViewById(R.id.firstName);
+        lastName = findViewById(R.id.lastName);
+        username = findViewById(R.id.regUserName);
+        password = findViewById(R.id.password);
+        confirmPass = findViewById(R.id.confirmPass);
+        userOrAdmin = findViewById(R.id.userOrAdmin);
         ArrayAdapter<UserMode> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, UserMode.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userOrAdmin.setAdapter(adapter);

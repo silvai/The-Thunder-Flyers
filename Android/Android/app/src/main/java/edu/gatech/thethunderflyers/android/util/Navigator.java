@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import java.io.Serializable;
-import java.util.HashMap;
 
 import edu.gatech.thethunderflyers.android.controller.DetailRatDataActivity;
 import edu.gatech.thethunderflyers.android.controller.GraphActivity;
@@ -14,7 +13,6 @@ import edu.gatech.thethunderflyers.android.controller.MapsActivity;
 import edu.gatech.thethunderflyers.android.controller.RegisterActivity;
 import edu.gatech.thethunderflyers.android.controller.ReportRatActivity;
 import edu.gatech.thethunderflyers.android.controller.WelcomeActivity;
-import edu.gatech.thethunderflyers.android.model.RatData;
 
 public class Navigator {
     public static void goToLoginActivity(Context c) {
