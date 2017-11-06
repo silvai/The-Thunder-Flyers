@@ -1,7 +1,7 @@
 package edu.gatech.thethunderflyers.android.model;
 
 public enum Graphs {
-    BARCHART ("Bar Chart"), LINECHART ("Line Chart");
+    BARCHART ("Bar Chart"), LINECHART ("Line Chart"), PIECHART("Pie Chart");
 
     private String representation;
 

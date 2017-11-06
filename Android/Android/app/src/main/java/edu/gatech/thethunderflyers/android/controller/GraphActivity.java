@@ -13,7 +13,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -21,8 +23,10 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.jjoe64.graphview.series.DataPoint;
 
 import java.lang.ref.WeakReference;
 import java.text.ParseException;
@@ -36,7 +40,6 @@ import java.util.List;
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.Graphs;
 import edu.gatech.thethunderflyers.android.model.RatData;
-import edu.gatech.thethunderflyers.android.model.UserMode;
 import edu.gatech.thethunderflyers.android.util.APIClient;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 import edu.gatech.thethunderflyers.android.util.Navigator;
@@ -48,6 +51,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
     private RelativeLayout relLay;
     private BarChart graph;
     private LineChart lineChart;
+    private PieChart pieChart;
     private Spinner graphSpinner;
     private Date beginDate;
     private Date endDate;
@@ -224,8 +228,24 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 lineChart.getXAxis().setLabelRotationAngle(-45);
                 lineChart.invalidate();
                 break;
+            case PIECHART:
+                relLay.removeAllViews();
+                pieChart = new PieChart(this);
+                relLay.addView(pieChart, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                ArrayList<PieEntry> pieentry = new ArrayList<>();
+                for (int j = 0; j < months; j++) {
+                    pieentry.add(new PieEntry(j, entries[j]));
+                }
+                PieDataSet pds = new PieDataSet(pieentry, "Reports");
+                PieData pd = new PieData(pds);
+                pieChart.setData(pd);
+                pieChart.getDescription().setEnabled(false);
+                pieChart.invalidate();
+                break;
         }
     }
+
+
     public int getMonthDiff(Calendar d1, Calendar d2){
         int diff = (d2.get(Calendar.YEAR) - d1.get(Calendar.YEAR)) * 12
                 + d2.get(Calendar.MONTH) - d1.get(Calendar.MONTH);
