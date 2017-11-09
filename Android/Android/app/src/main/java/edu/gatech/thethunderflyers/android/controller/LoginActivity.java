@@ -72,8 +72,9 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
         } else {
             String message = response.getMessage();
             if (response.isSuccess()) {
-                NotSuccessAlertDialog nsad = new NotSuccessAlertDialog(message, this);
-                nsad.show();
+                NotSuccessAlertDialog notSuccessAlertDialog = new NotSuccessAlertDialog(message,
+                        this);
+                notSuccessAlertDialog.show();
             } else {
                 userId = Integer.parseInt(message);
                 Navigator.goToMapsActivity(this);

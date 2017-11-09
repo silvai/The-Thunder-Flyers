@@ -70,7 +70,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
         begin = findViewById(R.id.beginDate);
         end = findViewById(R.id.endDate);
         graphSpinner = findViewById(R.id.graphSpinner);
-        ArrayAdapter<Graphs> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Graphs.values());
+        ArrayAdapter<Graphs> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, Graphs.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         graphSpinner.setAdapter(adapter);
 
@@ -81,7 +82,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dp = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dp = new DatePickerDialog(view.getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         Calendar c = new GregorianCalendar();
@@ -103,7 +105,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dpd = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dpd = new DatePickerDialog(view.getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         Calendar c = new GregorianCalendar();
@@ -145,7 +148,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
             } else {
                 beginDate = dateBegin;
                 endDate = dateEnd;
-                API_CLIENT.getRatDataDateRangeGraph(dateBegin.getTime(), dateEnd.getTime(), new WeakReference<>(this));
+                API_CLIENT.getRatDataDateRangeGraph(dateBegin.getTime(), dateEnd.getTime(),
+                        new WeakReference<>(this));
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -163,7 +167,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
     @Override
     public void handleResponse(List<RatData> response, Exception ex) {
         if (response.isEmpty()) {
-            Toast toast = Toast.makeText(this, "No reports in this Month and Year", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "No reports in this Month and Year",
+                    Toast.LENGTH_SHORT);
             toast.show();
         }
 
@@ -201,10 +206,12 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
 
         Graphs um = (Graphs) graphSpinner.getSelectedItem();
         switch(um) {
-            case BARCHART:
+            case BAR_CHART:
                 relLay.removeAllViews();
                 BarChart graph = new BarChart(this);
-                relLay.addView(graph, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                relLay.addView(graph,
+                        new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT));
 
                 ArrayList<BarEntry> entryBar = new ArrayList<>();
                 for (int j = 0; j < months; j++) {
@@ -224,10 +231,12 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 desc.setEnabled(false);
                 graph.invalidate();
                 break;
-            case LINECHART:
+            case LINE_CHART:
                 relLay.removeAllViews();
                 LineChart lineChart = new LineChart(this);
-                relLay.addView(lineChart, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                relLay.addView(lineChart,
+                        new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT));
 
                 ArrayList<Entry> entry = new ArrayList<>();
                 for (int j = 0; j < months; j++) {
@@ -243,14 +252,16 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 lcxAxis.setGranularity(1);
                 lcxAxis.setLabelRotationAngle(ROTATION_ANGLE);
 
-                Description lcdesc = lineChart.getDescription();
-                lcdesc.setEnabled(false);
+                Description lineChartDescription = lineChart.getDescription();
+                lineChartDescription.setEnabled(false);
                 lineChart.invalidate();
                 break;
-            case PIECHART:
+            case PIE_CHART:
                 relLay.removeAllViews();
                 PieChart pieChart = new PieChart(this);
-                relLay.addView(pieChart, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                relLay.addView(pieChart,
+                        new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT));
 
                 ArrayList<PieEntry> pieEntry = new ArrayList<>();
                 for (int j = 0; j < months; j++) {
@@ -261,8 +272,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 PieData pd = new PieData(pds);
                 pieChart.setData(pd);
 
-                Description pdesc = pieChart.getDescription();
-                pdesc.setEnabled(false);
+                Description pieChartDescription = pieChart.getDescription();
+                pieChartDescription.setEnabled(false);
                 pieChart.invalidate();
                 break;
         }

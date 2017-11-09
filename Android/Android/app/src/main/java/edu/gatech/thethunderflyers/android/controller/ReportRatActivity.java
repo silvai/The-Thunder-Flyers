@@ -53,10 +53,12 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
         locationType = findViewById(R.id.locationType);
         borough = findViewById(R.id.borough);
 
-        ArrayAdapter<LocationType> adapterLT = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, LocationType.values());
+        ArrayAdapter<LocationType> adapterLT = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, LocationType.values());
         adapterLT.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         locationType.setAdapter(adapterLT);
-        ArrayAdapter<Borough> adapterB = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Borough.values());
+        ArrayAdapter<Borough> adapterB = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, Borough.values());
         adapterB.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         borough.setAdapter(adapterB);
 
@@ -123,8 +125,8 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
             ead.show();
         } else if (response.isSuccess()) {
             String message = response.getMessage();
-            NotSuccessAlertDialog nsad = new NotSuccessAlertDialog(message, this);
-            nsad.show();
+            NotSuccessAlertDialog notSuccessAlertDialog = new NotSuccessAlertDialog(message, this);
+            notSuccessAlertDialog.show();
         } else {
             Toast t = Toast.makeText(this, "Successfully reported rat!", Toast.LENGTH_SHORT);
             t.show();

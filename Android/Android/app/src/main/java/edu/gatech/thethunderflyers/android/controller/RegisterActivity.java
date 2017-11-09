@@ -44,7 +44,8 @@ public class RegisterActivity extends AppCompatActivity implements AsyncHandler<
         password = findViewById(R.id.password);
         confirmPass = findViewById(R.id.confirmPass);
         userOrAdmin = findViewById(R.id.userOrAdmin);
-        ArrayAdapter<UserMode> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, UserMode.values());
+        ArrayAdapter<UserMode> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, UserMode.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userOrAdmin.setAdapter(adapter);
     }
@@ -94,8 +95,8 @@ public class RegisterActivity extends AppCompatActivity implements AsyncHandler<
             ead.show();
         } else if (response.isSuccess()) {
             String message = response.getMessage();
-            NotSuccessAlertDialog nsad = new NotSuccessAlertDialog(message, this);
-            nsad.show();
+            NotSuccessAlertDialog notSuccessAlertDialog = new NotSuccessAlertDialog(message, this);
+            notSuccessAlertDialog.show();
         } else {
             Toast t = Toast.makeText(this, "Successfully registered user!", Toast.LENGTH_SHORT);
             t.show();

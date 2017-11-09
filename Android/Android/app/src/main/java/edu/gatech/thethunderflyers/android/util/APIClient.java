@@ -25,8 +25,8 @@ public final class APIClient {
      */
     public void login(String lu, WeakReference<LoginActivity> ref) {
         LoginActivity a = ref.get();
-        APIMessagePostTask ampt = new APIMessagePostTask(a.getString(R.string.login_url), a);
-        ampt.execute(lu);
+        APIMessagePostTask task = new APIMessagePostTask(a.getString(R.string.login_url), a);
+        task.execute(lu);
     }
 
     /**
@@ -36,21 +36,22 @@ public final class APIClient {
      */
     public void register(String u, WeakReference<RegisterActivity> ref) {
         RegisterActivity r = ref.get();
-        APIMessagePostTask ampt = new APIMessagePostTask(r.getString(R.string.register_url), r);
-        ampt.execute(u);
+        APIMessagePostTask task = new APIMessagePostTask(r.getString(R.string.register_url), r);
+        task.execute(u);
     }
 
     /**
      * Executes the DataGetTask with the API getData (by date/id) url.
      * @param lastId the id of the last RatData in the previously returned list of RatData
-     * @param millis the datetime (Unix epoch) of the last RatData in the previously returned list of RatData
+     * @param millis the datetime (Unix epoch) of the last RatData in the previously returned list
+     *               of RatData
      * @param ref a WeakReference to MainActivity (to prevent memory leaks)
      */
     public void getRatDataList(int lastId, long millis, WeakReference<MainActivity> ref) {
         MainActivity m = ref.get();
-        DataGetTask dgt = new DataGetTask(m.getString(R.string.get_data_url) + lastId + "/"
+        DataGetTask task = new DataGetTask(m.getString(R.string.get_data_url) + lastId + "/"
                 + millis + "/", m);
-        dgt.execute();
+        task.execute();
     }
 
     /**
@@ -60,8 +61,9 @@ public final class APIClient {
      */
     public void submitRatReport(String rd, WeakReference<ReportRatActivity> ref) {
         ReportRatActivity rra = ref.get();
-        APIMessagePostTask ampt = new APIMessagePostTask(rra.getString(R.string.post_rat_data_url), rra);
-        ampt.execute(rd);
+        APIMessagePostTask task =
+                new APIMessagePostTask(rra.getString(R.string.post_rat_data_url), rra);
+        task.execute(rd);
     }
 
     /**
@@ -72,8 +74,10 @@ public final class APIClient {
      */
     public void getRatDataDateRange(long beginDate, long endDate, WeakReference<MapsActivity> ref) {
         MapsActivity ma = ref.get();
-        DataGetTask dgt = new DataGetTask(ma.getString(R.string.get_data_date_url) + beginDate + "/" + endDate, ma);
-        dgt.execute();
+        DataGetTask task =
+                new DataGetTask(ma.getString(R.string.get_data_date_url) + beginDate + "/"
+                        + endDate, ma);
+        task.execute();
     }
 
     /**
@@ -82,9 +86,12 @@ public final class APIClient {
      * @param endDate the datetime (Unix epoch) of the end of the range
      * @param ref a WeakReference to GraphActivity (to prevent memory leaks)
      */
-    public void getRatDataDateRangeGraph(long beginDate, long endDate, WeakReference<GraphActivity> ref) {
+    public void getRatDataDateRangeGraph(long beginDate, long endDate,
+                                         WeakReference<GraphActivity> ref) {
         GraphActivity ga = ref.get();
-        DataGetTask dgt = new DataGetTask(ga.getString(R.string.get_data_date_url) + beginDate + "/" + endDate, ga);
-        dgt.execute();
+        DataGetTask task =
+                new DataGetTask(ga.getString(R.string.get_data_date_url) + beginDate + "/"
+                        + endDate, ga);
+        task.execute();
     }
 }

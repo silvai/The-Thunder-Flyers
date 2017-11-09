@@ -38,7 +38,8 @@ public class LocationProvider implements
     /**
      * Constructor for LocationProvider
      * @param context the Context of the Activity implementing LocationCallback
-     * @param lc a LocationCallback object (really the Activity that has implemented LocationCallback)
+     * @param lc a LocationCallback object (really the Activity that has implemented
+     *           LocationCallback)
      */
     public LocationProvider(Context context, LocationCallback lc) {
         if (gac == null) {
@@ -71,8 +72,8 @@ public class LocationProvider implements
      */
     public void disconnect() {
         if (gac.isConnected()) {
-            FusedLocationProviderApi flpa = LocationServices.FusedLocationApi;
-            flpa.removeLocationUpdates(gac, this);
+            FusedLocationProviderApi fusedLocationProviderApi = LocationServices.FusedLocationApi;
+            fusedLocationProviderApi.removeLocationUpdates(gac, this);
             gac.disconnect();
         }
     }
@@ -80,10 +81,10 @@ public class LocationProvider implements
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         try {
-            FusedLocationProviderApi flpa = LocationServices.FusedLocationApi;
-            Location loc = flpa.getLastLocation(gac);
+            FusedLocationProviderApi fusedLocationProviderApi = LocationServices.FusedLocationApi;
+            Location loc = fusedLocationProviderApi.getLastLocation(gac);
             if (loc == null) {
-                flpa.requestLocationUpdates(gac, lrq, this);
+                fusedLocationProviderApi.requestLocationUpdates(gac, lrq, this);
             } else {
                 lc.handleLocation(loc);
             }

@@ -9,14 +9,14 @@ import android.widget.EditText;
  * the fields are valid.
  */
 public class Validator {
-    private EditText[] editTexts;
+    private final EditText[] editTexts;
 
     /**
      * Basic constructor for Validator
      * @param editTexts the EditTexts to be validated.
      */
     public Validator(EditText... editTexts) {
-        this.editTexts = editTexts;
+        this.editTexts = editTexts.clone();
     }
 
     /**

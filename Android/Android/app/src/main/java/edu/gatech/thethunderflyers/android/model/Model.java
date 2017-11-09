@@ -9,7 +9,8 @@ public class Model {
     private static final Gson gson = new Gson();
 
     /**
-     * Creates a LoginUser object with the data from LoginActivity and converts it to JSON for APIClient.
+     * Creates a LoginUser object with the data from LoginActivity and converts it to JSON for
+     * APIClient.
      * @param username the LoginUser's username
      * @param password the LoginUser's password
      * @return JSON representing the newly created LoginUser
@@ -19,7 +20,8 @@ public class Model {
     }
 
     /**
-     * Creates a RatData object with the data from ReportRatActivity and converts it to JSON for APIClient.
+     * Creates a RatData object with the data from ReportRatActivity and converts it to JSON for
+     * APIClient.
      * @param locationType the RatData's location type
      * @param zip the RatData's zip code
      * @param address the RatData's address
@@ -30,12 +32,15 @@ public class Model {
      * @return JSON representing the newly created RatData
      */
     public static String getRatData(LocationType locationType, int zip, String address,
-                                     String city, Borough borough, double latitude, double longitude) {
-        return gson.toJson(new RatData(locationType, zip, address, city, borough, latitude, longitude));
+                                    String city, Borough borough, double latitude,
+                                    double longitude) {
+        return gson.toJson(new RatData(locationType, zip, address, city, borough, latitude,
+                longitude));
     }
 
     /**
-     * Creates a User object with the data from RegisterActivity and converts it to JSON for APIClient.
+     * Creates a User object with the data from RegisterActivity and converts it to JSON for
+     * APIClient.
      * @param firstName the User's first name
      * @param lastName the User's last name
      * @param username the User's username
@@ -43,8 +48,8 @@ public class Model {
      * @param userMode the User's user mode
      * @return JSON representing the newly created User
      */
-    public static String getUser(String firstName, String lastName, String username, String password,
-                               UserMode userMode) {
+    public static String getUser(String firstName, String lastName, String username,
+                                 String password, UserMode userMode) {
         return gson.toJson(new User(firstName, lastName, username, password, userMode));
     }
 }

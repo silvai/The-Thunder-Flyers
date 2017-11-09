@@ -9,7 +9,7 @@ public enum Borough {
     MANHATTAN ("Manhattan"),
 
     @SerializedName("STATEN ISLAND")
-    STATENISLAND ("Staten Island"),
+    STATEN_ISLAND ("Staten Island"),
 
     @SerializedName("QUEENS")
     QUEENS ("Queens"),

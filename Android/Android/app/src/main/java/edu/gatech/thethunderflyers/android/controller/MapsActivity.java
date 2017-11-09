@@ -32,16 +32,17 @@ import edu.gatech.thethunderflyers.android.util.Navigator;
 import static edu.gatech.thethunderflyers.android.util.APIClient.API_CLIENT;
 
 /**
- * MapsActivity: an Activity to show a Google Map with markers representing rat sightings over a period
- * of time.
+ * MapsActivity: an Activity to show a Google Map with markers representing rat sightings over a
+ * period of time.
  */
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, AsyncHandler<List<RatData>> {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+        AsyncHandler<List<RatData>> {
 
     private GoogleMap mMap;
     private Button beginDate;
     private Button endDate;
 
-    private final LatLng DEFAULT_LATLNG_ZOOM = new LatLng(40.7, -74.0);
+    private final LatLng DEFAULT_LATITUDE_LONGITUDE_ZOOM = new LatLng(40.7, -74.0);
     private final float DEFAULT_FLOAT_ZOOM = 6.0f;
     private final SimpleDateFormat FULL_DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
@@ -51,7 +52,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used
         FragmentManager fragmentManager = getSupportFragmentManager();
-        SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         beginDate = findViewById(R.id.beginDate);
@@ -63,7 +65,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dp = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dp = new DatePickerDialog(view.getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         Calendar c = new GregorianCalendar();
@@ -86,7 +89,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dpd = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dpd = new DatePickerDialog(view.getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         Calendar c = new GregorianCalendar();
@@ -105,8 +109,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
-     * Makes an API request given a start date and an end date to find the rat sightings between those
-     * times
+     * Makes an API request given a start date and an end date to find the rat sightings between
+     * those times
      * @param view represents the button clicked to trigger the method
      */
     public void search(View view) {
@@ -117,7 +121,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast t = Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT);
                 t.show();
             } else {
-                API_CLIENT.getRatDataDateRange(dateBegin.getTime(), dateEnd.getTime(), new WeakReference<>(this));
+                API_CLIENT.getRatDataDateRange(dateBegin.getTime(), dateEnd.getTime(),
+                        new WeakReference<>(this));
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -131,7 +136,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LATLNG_ZOOM, DEFAULT_FLOAT_ZOOM));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LATITUDE_LONGITUDE_ZOOM,
+                DEFAULT_FLOAT_ZOOM));
     }
 
     /**

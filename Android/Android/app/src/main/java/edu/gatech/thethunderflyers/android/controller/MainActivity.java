@@ -22,8 +22,8 @@ import edu.gatech.thethunderflyers.android.util.Navigator;
 import static edu.gatech.thethunderflyers.android.util.APIClient.API_CLIENT;
 
 /**
- * MainActivity: Activity to show a list of rat sightings and allow users to access other application
- * functionality.
+ * MainActivity: Activity to show a list of rat sightings and allow users to access other
+ * application functionality.
  */
 public class MainActivity extends AppCompatActivity implements AsyncHandler<List<RatData>> {
 
@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dataView = findViewById(R.id.dataView);
-        dataAdapter = new RatDataAdapter(new ArrayList<RatData>(), new RatDataAdapter.OnItemClickListener() {
+        dataAdapter = new RatDataAdapter(new ArrayList<RatData>(),
+                new RatDataAdapter.OnItemClickListener() {
             @Override public void onItemClick(RatData rat) {
                 Context context = dataView.getContext();
                 Navigator.goToDetailRatDataActivity(context, rat);
