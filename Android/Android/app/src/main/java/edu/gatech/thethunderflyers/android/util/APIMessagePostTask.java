@@ -54,13 +54,14 @@ class APIMessagePostTask extends AsyncTask<String, Void, APIMessage> {
                 reader = new BufferedReader(new InputStreamReader(is));
                 String input;
                 while((input = reader.readLine()) != null) {
-                    sb.append(input).append("\n");
+                    sb.append(String.format("%s%n", input));
                 }
                 if (sb.length() == 0) {
                     return null;
                 }
                 Log.i("APIMessagePostTask", "Successful request");
-                return new Gson().fromJson(sb.toString(), APIMessage.class);
+                Gson gson = new Gson();
+                return gson.fromJson(sb.toString(), APIMessage.class);
             }
         } catch (IOException e) {
             Log.e("APIMessagePostTask", e.getMessage());

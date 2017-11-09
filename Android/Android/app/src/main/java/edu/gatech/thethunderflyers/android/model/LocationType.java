@@ -2,6 +2,9 @@ package edu.gatech.thethunderflyers.android.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * LocationType: enum representing the location types found in New York City.
+ */
 public enum LocationType {
     //location type (select from: 1-
     // 2 Family Dwelling, 3+ Family Apt. Building, 3+ Family Mixed Use Building,

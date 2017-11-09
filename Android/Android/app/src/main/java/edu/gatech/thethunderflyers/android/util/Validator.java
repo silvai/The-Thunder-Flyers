@@ -9,14 +9,23 @@ import android.widget.EditText;
  * the fields are valid.
  */
 public class Validator {
+    private EditText[] editTexts;
+
+    /**
+     * Basic constructor for Validator
+     * @param editTexts the EditTexts to be validated.
+     */
+    public Validator(EditText... editTexts) {
+        this.editTexts = editTexts;
+    }
+
     /**
      * this method is to see if any of the editTexts are null
-     * @param editText the editText parameters
      * @return returns if they're valid or not
      */
-    public static boolean validate(EditText... editText) {
+    public boolean validate() {
         boolean isValid = true;
-        for (EditText et : editText) {
+        for (EditText et : editTexts) {
             Editable e = et.getText();
             if (TextUtils.isEmpty(e.toString())) {
                 isValid = false;
@@ -32,7 +41,7 @@ public class Validator {
      * @param repeat the second editText for password
      * @return returns whether or not they match
      */
-    public static boolean checkPassword(EditText password, EditText repeat) {
+    public boolean checkPassword(EditText password, EditText repeat) {
         Editable re = repeat.getText();
         String res = re.toString();
         Editable pe = password.getText();

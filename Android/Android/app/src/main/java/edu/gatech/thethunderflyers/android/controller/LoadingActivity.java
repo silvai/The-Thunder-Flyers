@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import edu.gatech.thethunderflyers.android.R;
 
+/**
+ * LoadingActivity: an Activity to be shown while something is loading
+ */
 public class LoadingActivity extends AppCompatActivity {
 
     @Override

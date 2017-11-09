@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
@@ -45,14 +46,16 @@ class DataGetTask extends AsyncTask<String, Void, List<RatData>> {
                 reader = new BufferedReader(new InputStreamReader(is));
                 String input;
                 while ((input = reader.readLine()) != null) {
-                    sb.append(input).append("\n");
+                    sb.append(String.format("%s%n", input));
                 }
                 if (sb.length() == 0) {
                     return null;
                 }
                 Log.i("DataGetTask", "Successful request");
-                return new Gson().fromJson(sb.toString(),
-                        new TypeToken<List<RatData>>(){}.getType());
+                TypeToken<List<RatData>> t = new TypeToken<List<RatData>>(){};
+                Type type = t.getType();
+                Gson gson = new Gson();
+                return gson.fromJson(sb.toString(), type);
             }
         } catch (IOException e) {
             Log.e("DataGetTask", e.getMessage());

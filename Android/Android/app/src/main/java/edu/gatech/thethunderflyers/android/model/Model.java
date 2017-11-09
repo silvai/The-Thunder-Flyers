@@ -2,6 +2,9 @@ package edu.gatech.thethunderflyers.android.model;
 
 import com.google.gson.Gson;
 
+/**
+ * Model: facade for various model classes
+ */
 public class Model {
     private static final Gson gson = new Gson();
 

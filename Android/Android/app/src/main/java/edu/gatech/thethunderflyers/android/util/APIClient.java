@@ -10,21 +10,13 @@ import edu.gatech.thethunderflyers.android.controller.MapsActivity;
 import edu.gatech.thethunderflyers.android.controller.RegisterActivity;
 import edu.gatech.thethunderflyers.android.controller.ReportRatActivity;
 
+/**
+ * APIClient: helper class to facilitate calling the API
+ */
 public final class APIClient {
-    private static APIClient client;
+    public static final APIClient API_CLIENT = new APIClient();
 
     private APIClient() {}
-
-    /**
-     * Returns the instance of APIClient (makes sure only one such instance exists)
-     * @return the instance of APIClient
-     */
-    public static APIClient getInstance() {
-        if (client == null) {
-            client = new APIClient();
-        }
-        return client;
-    }
 
     /**
      * Executes the APIMessagePostTask with the API login url.
@@ -33,7 +25,8 @@ public final class APIClient {
      */
     public void login(String lu, WeakReference<LoginActivity> ref) {
         LoginActivity a = ref.get();
-        new APIMessagePostTask(a.getString(R.string.login_url), a).execute(lu);
+        APIMessagePostTask ampt = new APIMessagePostTask(a.getString(R.string.login_url), a);
+        ampt.execute(lu);
     }
 
     /**
@@ -43,7 +36,8 @@ public final class APIClient {
      */
     public void register(String u, WeakReference<RegisterActivity> ref) {
         RegisterActivity r = ref.get();
-        new APIMessagePostTask(r.getString(R.string.register_url), r).execute(u);
+        APIMessagePostTask ampt = new APIMessagePostTask(r.getString(R.string.register_url), r);
+        ampt.execute(u);
     }
 
     /**
@@ -54,8 +48,9 @@ public final class APIClient {
      */
     public void getRatDataList(int lastId, long millis, WeakReference<MainActivity> ref) {
         MainActivity m = ref.get();
-        new DataGetTask(m.getString(R.string.get_data_url) + lastId + "/"
-                + millis + "/", m).execute();
+        DataGetTask dgt = new DataGetTask(m.getString(R.string.get_data_url) + lastId + "/"
+                + millis + "/", m);
+        dgt.execute();
     }
 
     /**
@@ -65,7 +60,8 @@ public final class APIClient {
      */
     public void submitRatReport(String rd, WeakReference<ReportRatActivity> ref) {
         ReportRatActivity rra = ref.get();
-        new APIMessagePostTask(rra.getString(R.string.post_rat_data_url), rra).execute(rd);
+        APIMessagePostTask ampt = new APIMessagePostTask(rra.getString(R.string.post_rat_data_url), rra);
+        ampt.execute(rd);
     }
 
     /**
@@ -76,7 +72,8 @@ public final class APIClient {
      */
     public void getRatDataDateRange(long beginDate, long endDate, WeakReference<MapsActivity> ref) {
         MapsActivity ma = ref.get();
-        new DataGetTask(ma.getString(R.string.get_data_date_url) + beginDate + "/" + endDate, ma).execute();
+        DataGetTask dgt = new DataGetTask(ma.getString(R.string.get_data_date_url) + beginDate + "/" + endDate, ma);
+        dgt.execute();
     }
 
     /**
@@ -87,6 +84,7 @@ public final class APIClient {
      */
     public void getRatDataDateRangeGraph(long beginDate, long endDate, WeakReference<GraphActivity> ref) {
         GraphActivity ga = ref.get();
-        new DataGetTask(ga.getString(R.string.get_data_date_url) + beginDate + "/" + endDate, ga).execute();
+        DataGetTask dgt = new DataGetTask(ga.getString(R.string.get_data_date_url) + beginDate + "/" + endDate, ga);
+        dgt.execute();
     }
 }

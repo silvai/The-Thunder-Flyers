@@ -3,11 +3,13 @@ package edu.gatech.thethunderflyers.android.controller;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.util.Navigator;
 
+/**
+ * WelcomeActivity: the first Activity of the application.
+ */
 public class WelcomeActivity extends AppCompatActivity {
 
     @Override

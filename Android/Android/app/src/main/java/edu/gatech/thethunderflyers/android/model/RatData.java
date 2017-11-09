@@ -1,4 +1,5 @@
 package edu.gatech.thethunderflyers.android.model;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -44,8 +45,8 @@ public class RatData implements Serializable {
     private final int userId;
 
 
-    public RatData(LocationType locationType, int zip, String address,
-                   String city, Borough borough, double latitude, double longitude) {
+    RatData(LocationType locationType, int zip, String address,
+            String city, Borough borough, double latitude, double longitude) {
         this.locationType = locationType;
         this.zip = zip;
         this.address = address;
@@ -157,9 +158,10 @@ public class RatData implements Serializable {
      * @return returns the MarkerOptions for this ratData
      */
     public MarkerOptions getMapMarkerOptions() {
-        return new MarkerOptions()
-                .position(this.getMapLatLng())
-                .title(this.getMapTitle())
-                .snippet(this.getMapSnippet());
+        MarkerOptions mo = new MarkerOptions();
+        mo.position(this.getMapLatLng());
+        mo.title(this.getMapTitle());
+        mo.snippet(this.getMapSnippet());
+        return mo;
     }
 }

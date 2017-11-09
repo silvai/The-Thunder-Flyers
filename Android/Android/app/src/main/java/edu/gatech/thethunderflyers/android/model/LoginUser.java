@@ -9,7 +9,7 @@ class LoginUser {
     @SerializedName("password")
     private final String password;
 
-    public LoginUser(String username, String password) {
+    LoginUser(String username, String password) {
         this.username = username;
         this.password = password;
     }

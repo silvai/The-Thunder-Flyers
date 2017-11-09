@@ -10,15 +10,21 @@ import android.view.View;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.RatData;
-import edu.gatech.thethunderflyers.android.util.APIClient;
-import edu.gatech.thethunderflyers.android.util.AlertDialogProvider;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
+import edu.gatech.thethunderflyers.android.util.ExceptionAlertDialog;
 import edu.gatech.thethunderflyers.android.util.Navigator;
 
+import static edu.gatech.thethunderflyers.android.util.APIClient.API_CLIENT;
+
+/**
+ * MainActivity: Activity to show a list of rat sightings and allow users to access other application
+ * functionality.
+ */
 public class MainActivity extends AppCompatActivity implements AsyncHandler<List<RatData>> {
 
     private RecyclerView dataView;
@@ -54,8 +60,9 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
                 lastVisibleItem = dataManager.findLastVisibleItemPosition();
                 if (!loading && (itemCount <= (lastVisibleItem + 5))) {
                     loading = true;
-                    APIClient.getInstance().getRatDataList(dataAdapter.getLastId(),
-                            dataAdapter.getDate().getTime(), new WeakReference<>(MainActivity.this));
+                    Date lastDate = dataAdapter.getDate();
+                    API_CLIENT.getRatDataList(dataAdapter.getLastId(),
+                            lastDate.getTime(), new WeakReference<>(MainActivity.this));
                 }
             }
         });
@@ -64,8 +71,9 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
     @Override
     public void onResume() {
         super.onResume();
-        APIClient.getInstance().getRatDataList(dataAdapter.getLastId(),
-                dataAdapter.getDate().getTime(), new WeakReference<>(MainActivity.this));
+        Date lastDate = dataAdapter.getDate();
+        API_CLIENT.getRatDataList(dataAdapter.getLastId(),
+                lastDate.getTime(), new WeakReference<>(MainActivity.this));
     }
 
     /**
@@ -103,7 +111,8 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
     public void handleResponse(List<RatData> response, Exception ex) {
         loading = false;
         if (ex != null) {
-            AlertDialogProvider.getExceptionDialog(this).show();
+            ExceptionAlertDialog ead = new ExceptionAlertDialog(ex, this);
+            ead.show();
         } else {
             dataAdapter.result(response);
         }

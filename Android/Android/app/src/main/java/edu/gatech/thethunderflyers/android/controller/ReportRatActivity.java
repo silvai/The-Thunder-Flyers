@@ -2,7 +2,6 @@ package edu.gatech.thethunderflyers.android.controller;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.view.View;
@@ -18,12 +17,14 @@ import edu.gatech.thethunderflyers.android.model.APIMessage;
 import edu.gatech.thethunderflyers.android.model.Borough;
 import edu.gatech.thethunderflyers.android.model.LocationType;
 import edu.gatech.thethunderflyers.android.model.Model;
-import edu.gatech.thethunderflyers.android.util.APIClient;
-import edu.gatech.thethunderflyers.android.util.AlertDialogProvider;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
+import edu.gatech.thethunderflyers.android.util.ExceptionAlertDialog;
 import edu.gatech.thethunderflyers.android.util.LocationProvider;
 import edu.gatech.thethunderflyers.android.util.Navigator;
+import edu.gatech.thethunderflyers.android.util.NotSuccessAlertDialog;
 import edu.gatech.thethunderflyers.android.util.Validator;
+
+import static edu.gatech.thethunderflyers.android.util.APIClient.API_CLIENT;
 
 /**
  * This is the activity to create a new rat report
@@ -87,7 +88,8 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
      * @param view the call back parameter
      */
     public void submit(View view) {
-        boolean isValid = Validator.validate(address, city, zip, lat, longitude);
+        Validator validator = new Validator(address, city, zip, lat, longitude);
+        boolean isValid = validator.validate();
         if (isValid) {
             int zi;
             double la;
@@ -99,8 +101,6 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
             Editable latEditable = lat.getText();
             Editable longitudeEditable = longitude.getText();
 
-            APIClient apic = APIClient.getInstance();
-
             String add = addressEditable.toString();
             String cit = cityEditable.toString();
             zi = Integer.parseInt(zipEditable.toString());
@@ -108,7 +108,7 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
             lo = Double.parseDouble(longitudeEditable.toString());
             LocationType lt = (LocationType) locationType.getSelectedItem();
             Borough bor = (Borough) borough.getSelectedItem();
-            apic.submitRatReport(Model.getRatData(lt, zi, cit, add, bor, la, lo),
+            API_CLIENT.submitRatReport(Model.getRatData(lt, zi, cit, add, bor, la, lo),
                     new WeakReference<>(this));
         } else {
             Toast t = Toast.makeText(this, "One or more fields invalid", Toast.LENGTH_SHORT);
@@ -119,11 +119,12 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
     @Override
     public void handleResponse(APIMessage response, Exception ex) {
         if (ex != null) {
-            AlertDialog ed = AlertDialogProvider.getExceptionDialog(this);
-            ed.show();
+            ExceptionAlertDialog ead = new ExceptionAlertDialog(ex, this);
+            ead.show();
         } else if (response.isSuccess()) {
-            AlertDialog nsd = AlertDialogProvider.getNotSuccessDialog(this, response.getMessage());
-            nsd.show();
+            String message = response.getMessage();
+            NotSuccessAlertDialog nsad = new NotSuccessAlertDialog(message, this);
+            nsad.show();
         } else {
             Toast t = Toast.makeText(this, "Successfully reported rat!", Toast.LENGTH_SHORT);
             t.show();

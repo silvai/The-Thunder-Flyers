@@ -1,6 +1,9 @@
 package edu.gatech.thethunderflyers.android.model;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Borough: enum representing the five boroughs of New York City
+ */
 public enum Borough {
     @SerializedName("MANHATTAN")
     MANHATTAN ("Manhattan"),

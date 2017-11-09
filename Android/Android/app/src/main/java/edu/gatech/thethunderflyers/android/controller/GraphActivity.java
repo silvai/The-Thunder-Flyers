@@ -16,6 +16,8 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -40,10 +42,14 @@ import java.util.Locale;
 import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.Graphs;
 import edu.gatech.thethunderflyers.android.model.RatData;
-import edu.gatech.thethunderflyers.android.util.APIClient;
 import edu.gatech.thethunderflyers.android.util.AsyncHandler;
 import edu.gatech.thethunderflyers.android.util.Navigator;
 
+import static edu.gatech.thethunderflyers.android.util.APIClient.API_CLIENT;
+
+/**
+ * GraphActivity: an Activity to show a graph of rat sightings over time
+ */
 public class GraphActivity extends AppCompatActivity implements AsyncHandler<List<RatData>> {
     private Button begin;
     private Button end;
@@ -54,6 +60,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
 
     private final SimpleDateFormat FULL_DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private final float ROTATION_ANGLE = -45;
+    private final int MONTHS_IN_YEAR = 12;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +90,9 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                         begin.setText(FULL_DATE_FORMAT.format(d));
                     }
                 }, year, month, day);
-                dp.getDatePicker().setMaxDate(new Date().getTime());
+                DatePicker datePicker = dp.getDatePicker();
+                Date date = new Date();
+                datePicker.setMaxDate(date.getTime());
                 dp.show();
             }
         });
@@ -104,7 +113,9 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                     }
 
                 }, year, month, day);
-                dpd.getDatePicker().setMaxDate(new Date().getTime());
+                DatePicker datePicker = dpd.getDatePicker();
+                Date date = new Date();
+                datePicker.setMaxDate(date.getTime());
                 dpd.show();
             }
         });
@@ -129,11 +140,12 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
             c2.set(Calendar.DATE, c2.getActualMaximum(Calendar.DATE));
             dateEnd = c2.getTime();
             if ((dateBegin.compareTo(dateEnd) > 0) || (dateEnd == null)) {
-                Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT).show();
+                Toast toast = Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT);
+                toast.show();
             } else {
                 beginDate = dateBegin;
                 endDate = dateEnd;
-                APIClient.getInstance().getRatDataDateRangeGraph(dateBegin.getTime(), dateEnd.getTime(), new WeakReference<>(this));
+                API_CLIENT.getRatDataDateRangeGraph(dateBegin.getTime(), dateEnd.getTime(), new WeakReference<>(this));
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -151,8 +163,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
     @Override
     public void handleResponse(List<RatData> response, Exception ex) {
         if (response.isEmpty()) {
-            Toast.makeText(this, "No reports in this Month and Year", Toast.LENGTH_SHORT).show();
-            return;
+            Toast toast = Toast.makeText(this, "No reports in this Month and Year", Toast.LENGTH_SHORT);
+            toast.show();
         }
 
         final Calendar d1 = Calendar.getInstance();
@@ -193,48 +205,64 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
                 relLay.removeAllViews();
                 BarChart graph = new BarChart(this);
                 relLay.addView(graph, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
                 ArrayList<BarEntry> entryBar = new ArrayList<>();
                 for (int j = 0; j < months; j++) {
                     entryBar.add(new BarEntry(j, entries[j]));
                 }
+
                 BarDataSet bds = new BarDataSet(entryBar, "Reports");
                 BarData bd = new BarData(bds);
                 graph.setData(bd);
-                graph.getXAxis().setValueFormatter(valueFormatter);
-                graph.getXAxis().setGranularity(1);
-                graph.getDescription().setEnabled(false);
-                graph.getXAxis().setLabelRotationAngle(ROTATION_ANGLE);
+
+                XAxis xAxis = graph.getXAxis();
+                xAxis.setValueFormatter(valueFormatter);
+                xAxis.setGranularity(1);
+                xAxis.setLabelRotationAngle(ROTATION_ANGLE);
+
+                Description desc = graph.getDescription();
+                desc.setEnabled(false);
                 graph.invalidate();
                 break;
             case LINECHART:
                 relLay.removeAllViews();
                 LineChart lineChart = new LineChart(this);
                 relLay.addView(lineChart, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
                 ArrayList<Entry> entry = new ArrayList<>();
                 for (int j = 0; j < months; j++) {
                     entry.add(new Entry(j, entries[j]));
                 }
+
                 LineDataSet lds = new LineDataSet(entry, "Reports");
                 LineData ld = new LineData(lds);
                 lineChart.setData(ld);
-                lineChart.getXAxis().setValueFormatter(valueFormatter);
-                lineChart.getXAxis().setGranularity(1);
-                lineChart.getDescription().setEnabled(false);
-                lineChart.getXAxis().setLabelRotationAngle(ROTATION_ANGLE);
+
+                XAxis lcxAxis = lineChart.getXAxis();
+                lcxAxis.setValueFormatter(valueFormatter);
+                lcxAxis.setGranularity(1);
+                lcxAxis.setLabelRotationAngle(ROTATION_ANGLE);
+
+                Description lcdesc = lineChart.getDescription();
+                lcdesc.setEnabled(false);
                 lineChart.invalidate();
                 break;
             case PIECHART:
                 relLay.removeAllViews();
                 PieChart pieChart = new PieChart(this);
                 relLay.addView(pieChart, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
                 ArrayList<PieEntry> pieEntry = new ArrayList<>();
                 for (int j = 0; j < months; j++) {
                     pieEntry.add(new PieEntry(j, entries[j]));
                 }
+
                 PieDataSet pds = new PieDataSet(pieEntry, "Reports");
                 PieData pd = new PieData(pds);
                 pieChart.setData(pd);
-                pieChart.getDescription().setEnabled(false);
+
+                Description pdesc = pieChart.getDescription();
+                pdesc.setEnabled(false);
                 pieChart.invalidate();
                 break;
         }
@@ -242,7 +270,6 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
 
 
     private int getMonthDiff(Calendar d1, Calendar d2){
-        int MONTHS_IN_YEAR = 12;
         return (((d2.get(Calendar.YEAR) - d1.get(Calendar.YEAR)) * MONTHS_IN_YEAR)
                 + d2.get(Calendar.MONTH)) - d1.get(Calendar.MONTH);
     }

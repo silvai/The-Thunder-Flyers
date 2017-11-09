@@ -1,5 +1,8 @@
 package edu.gatech.thethunderflyers.android.model;
 
+/**
+ * Graphs: an enum representing the types of charts supported by the application
+ */
 public enum Graphs {
     BARCHART ("Bar Chart"), LINECHART ("Line Chart"), PIECHART("Pie Chart");
 

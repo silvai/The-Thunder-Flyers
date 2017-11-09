@@ -1,11 +1,14 @@
 package edu.gatech.thethunderflyers.android.controller;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +16,7 @@ import edu.gatech.thethunderflyers.android.R;
 import edu.gatech.thethunderflyers.android.model.RatData;
 
 class RatDataAdapter extends RecyclerView.Adapter{
-    private final List<RatData> data;
+    private final List<RatData> data = new ArrayList<>();
     private Date date = new Date(0);
     private int lastId = 0;
 
@@ -22,8 +25,9 @@ class RatDataAdapter extends RecyclerView.Adapter{
      * @param response is the list of ratData
      */
     void result(List<RatData> response) {
-        this.date = response.get(response.size() - 1).getDate();
-        this.lastId = response.get(response.size() - 1).getId();
+        RatData rd = response.get(response.size() - 1);
+        this.date = rd.getDate();
+        this.lastId = rd.getId();
         this.data.addAll(response);
         this.notifyDataSetChanged();
     }
@@ -42,8 +46,8 @@ class RatDataAdapter extends RecyclerView.Adapter{
      * @param data the list of ratData
      * @param listener the click listener
      */
-    public RatDataAdapter(List<RatData> data, OnItemClickListener listener) {
-        this.data = data;
+    RatDataAdapter(Collection<RatData> data, OnItemClickListener listener) {
+        this.data.addAll(data);
         this.listener = listener;
     }
 
@@ -60,7 +64,8 @@ class RatDataAdapter extends RecyclerView.Adapter{
         DataViewHolder dvh = (DataViewHolder) holder;
         final RatData rd = data.get(position);
         dvh.dataDate.setText(String.format("%tc", rd.getDate()));
-        dvh.message.setText(dvh.message.getContext().getString(R.string.dvh_message));
+        Context c = dvh.message.getContext();
+        dvh.message.setText(c.getString(R.string.dvh_message));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 listener.onItemClick(rd);
@@ -73,15 +78,7 @@ class RatDataAdapter extends RecyclerView.Adapter{
         return (data == null) ? 0 : data.size();
     }
 
-    /**
-     * gets the list of RatData
-     * @return returns the list of reports
-     */
-    public List<RatData> getData() {
-        return data;
-    }
-
-    /**
+     /**
      * gets the lastId
      * @return the lastId
      */
@@ -95,14 +92,6 @@ class RatDataAdapter extends RecyclerView.Adapter{
      */
     public Date getDate() {
         return date;
-    }
-
-    /**
-     * sets the date
-     * @param date the new date parameter
-     */
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     private static class DataViewHolder extends RecyclerView.ViewHolder {
