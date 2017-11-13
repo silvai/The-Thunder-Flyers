@@ -17,15 +17,37 @@ import java.net.URL;
 
 import edu.gatech.thethunderflyers.android.model.APIMessage;
 
-class APIMessagePostTask extends AsyncTask<String, Void, APIMessage> {
+public class APIMessagePostTask extends AsyncTask<String, Void, APIMessage> {
+
+    public HttpURLConnection getConnection() {
+        return connection;
+    }
 
     private HttpURLConnection connection;
+
+    public BufferedReader getReader() {
+        return reader;
+    }
+
     private BufferedReader reader;
+
+    public Exception getEx() {
+        return ex;
+    }
+
+    public AsyncHandler<APIMessage> getAh() {
+        return ah;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
     private Exception ex;
     private final AsyncHandler<APIMessage> ah;
     private final String url;
 
-    APIMessagePostTask(String url, AsyncHandler<APIMessage> ah) {
+    public APIMessagePostTask(String url, AsyncHandler<APIMessage> ah) {
         this.ah = ah;
         this.url = url;
     }

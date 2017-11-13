@@ -17,7 +17,7 @@ import java.util.List;
 
 import edu.gatech.thethunderflyers.android.model.RatData;
 
-class DataGetTask extends AsyncTask<String, Void, List<RatData>> {
+public class DataGetTask extends AsyncTask<String, Void, List<RatData>> {
 
     private HttpURLConnection connection;
     private BufferedReader reader;
