@@ -27,4 +27,11 @@ public class ExampleInstrumentedTest {
 
         assertEquals("edu.gatech.thethunderflyers.android", appContext.getPackageName());
     }
+
+    //Ella's Tests for GraphActivity submitDates(View view) method
+    @Test
+    public void testSubmission() throws Exception {
+
+    }
+
 }
