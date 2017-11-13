@@ -28,9 +28,10 @@ public class ExampleInstrumentedTest {
         assertEquals("edu.gatech.thethunderflyers.android", appContext.getPackageName());
     }
 
-    //Ella's Tests for GraphActivity submitDates(View view) method
+    //Ella's Tests for handleResponse(List<RatData> response, Exception ex)
+    //  method in GraphActivity
     @Test
-    public void testSubmission() throws Exception {
+    public void testHandleResponse() {
 
     }
 
