@@ -59,8 +59,6 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
     private Date endDate;
 
     private final SimpleDateFormat FULL_DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-    private final float ROTATION_ANGLE = -45;
-    private final int MONTHS_IN_YEAR = 12;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +164,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
 
     @Override
     public void handleResponse(List<RatData> response, Exception ex) {
+        final float ROTATION_ANGLE = -45;
+
         if (response.isEmpty()) {
             Toast toast = Toast.makeText(this, "No reports in this Month and Year",
                     Toast.LENGTH_SHORT);
@@ -281,6 +281,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
 
 
     private int getMonthDiff(Calendar d1, Calendar d2){
+        final int MONTHS_IN_YEAR = 12;
+
         return (((d2.get(Calendar.YEAR) - d1.get(Calendar.YEAR)) * MONTHS_IN_YEAR)
                 + d2.get(Calendar.MONTH)) - d1.get(Calendar.MONTH);
     }

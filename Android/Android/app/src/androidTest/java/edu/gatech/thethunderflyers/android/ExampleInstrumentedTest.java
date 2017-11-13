@@ -37,4 +37,11 @@ public class ExampleInstrumentedTest {
         boolean ans = v.validate();
         assertTrue(ans);
     }
+
+    //Ella's Tests for GraphActivity submitDates(View view) method
+    @Test
+    public void testSubmission() throws Exception {
+
+    }
+
 }
