@@ -88,6 +88,7 @@ public class RegisterActivity extends AppCompatActivity implements AsyncHandler<
         }
     }
 
+
     @Override
     public void handleResponse(APIMessage response, Exception ex) {
         if (ex != null) {
