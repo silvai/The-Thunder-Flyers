@@ -3,9 +3,12 @@ package edu.gatech.thethunderflyers.android;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.EditText;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import edu.gatech.thethunderflyers.android.util.Validator;
 
 import static org.junit.Assert.*;
 
@@ -16,16 +19,19 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
-    /**
-     * Example test provided by Android Studio
-     * @throws Exception in order to satisfy checked exception
-     */
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
+        EditText username = new EditText(appContext);
+        EditText password = new EditText(appContext);
 
-        assertEquals("edu.gatech.thethunderflyers.android", appContext.getPackageName());
+        username.setText("Ritvik");
+        password.setText("Ritvik123");
+
+        Validator v = new Validator(username, password);
+        boolean ans = v.validate();
+        assertTrue(ans);
     }
 
 }

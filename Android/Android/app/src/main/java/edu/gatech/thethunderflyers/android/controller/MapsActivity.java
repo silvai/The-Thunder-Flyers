@@ -117,7 +117,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         try {
             Date dateBegin = FULL_DATE_FORMAT.parse((String) beginDate.getText());
             Date dateEnd = FULL_DATE_FORMAT.parse((String) endDate.getText());
-            if ((dateBegin.compareTo(dateEnd) > 0) || (dateEnd == null)) {
+            if ((dateBegin.compareTo(dateEnd) > 0) || (dateEnd == null) || (dateBegin == null)) {
                 Toast t = Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT);
                 t.show();
             } else {
@@ -125,6 +125,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         new WeakReference<>(this));
             }
         } catch (ParseException e) {
+            Toast t = Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT);
+            t.show();
             e.printStackTrace();
         }
     }
