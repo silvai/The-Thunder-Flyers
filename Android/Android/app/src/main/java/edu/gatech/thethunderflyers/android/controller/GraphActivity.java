@@ -197,6 +197,8 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
             monthYears[k] = sdf.format(iterate.getTime());
             iterate.add(Calendar.MONTH, 1);
         }
+
+
         IAxisValueFormatter valueFormatter = new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
