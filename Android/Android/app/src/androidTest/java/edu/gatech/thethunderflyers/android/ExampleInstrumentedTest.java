@@ -19,10 +19,6 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
-    /**
-     * Example test provided by Android Studio
-     * @throws Exception in order to satisfy checked exception
-     */
     @Test
     public void useAppContext() throws Exception {
         // Context of the app under test.
