@@ -34,9 +34,10 @@ public class ExampleInstrumentedTest {
         assertTrue(ans);
     }
 
-    //Ella's Tests for GraphActivity submitDates(View view) method
+    //Ella's Tests for handleResponse(List<RatData> response, Exception ex)
+    //  method in GraphActivity
     @Test
-    public void testSubmission() throws Exception {
+    public void testHandleResponse() {
 
     }
 
