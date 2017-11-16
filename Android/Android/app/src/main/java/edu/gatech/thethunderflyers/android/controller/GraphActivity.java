@@ -122,7 +122,6 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
         });
 
     }
-
     /**
      * The button activity to get a response for the date range
      * to view the graph
