@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 //Testing GraphActivity submitDates(View view)
 
 @RunWith(AndroidJUnit4.class)
-public class EllaTest {
+public class submitDatesTest {
     @Test
     public void testSubmitDates() {
 
