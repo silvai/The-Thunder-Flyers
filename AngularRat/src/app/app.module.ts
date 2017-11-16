@@ -10,6 +10,9 @@ import { AppRoutingModule } from './/app-routing.module';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 
+import { UserService } from "./user.service";
+import { RatdataService } from "./ratdata.service";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +25,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [UserService, RatdataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
