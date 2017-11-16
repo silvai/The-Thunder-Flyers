@@ -1,4 +1,4 @@
-enum LocationType {
+export enum LocationType {
     THREE_FAMILY_MIXED_USE = "3+ Family Mixed Use Building",
     COMMERCIAL_BUILDING = "Commercial Building",
     ONE_TWO_FAMILY_DWELLING = "1-2 Family Dwelling",
