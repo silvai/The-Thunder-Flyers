@@ -1,0 +1,21 @@
+export enum LocationType {
+    THREE_FAMILY_MIXED_USE = "3+ Family Mixed Use Building",
+    COMMERCIAL_BUILDING = "Commercial Building",
+    ONE_TWO_FAMILY_DWELLING = "1-2 Family Dwelling",
+    THREEPLUS_FAMILY_APT = "3+ Family Apt. Building",
+    PUBLIC_STAIRS = "Public Stairs",
+    OTHER = "Other (Explain Below)",
+    HOSPITAL = "Hospital",
+    CONSTRUCTION_SITE = "Construction Site",
+    VACANT_LOT = "Vacant Lot",
+    VACANT_BUILDING = "Vacant Building",
+    PARKING_LOT_GARAGE = "Parking Lot/Garage",
+    PUBLIC_GARDEN = "Public Garden",
+    ONE_TWO_FAMILY_MIXED_USE = "1-2 Family Mixed Use Building",
+    CATCH_BASIN_SEWER = "Catch Basin/Sewer",
+    DAY_CARE_NURSERY = "Day Care/Nursery",
+    GOVERNMENT_BUILDING = "Government Building",
+    OFFICE_BUILDING = "Office Building",
+    SCHOOL_PRE_SCHOOL = "School/Pre-School",
+    SINGLE_ROOM_OCCUPANCY = "Single Room Occupancy (SRO)"
+}
