@@ -1,6 +1,7 @@
 package edu.gatech.thethunderflyers.android.controller;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -62,8 +63,14 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
                 if (!loading && (itemCount <= (lastVisibleItem + 5))) {
                     loading = true;
                     Date lastDate = dataAdapter.getDate();
+
+                    SharedPreferences sp = getSharedPreferences(getString(R.string.token_file),
+                            Context.MODE_PRIVATE);
+                    String token = sp.getString(getString(R.string.token_field), "");
+
                     API_CLIENT.getRatDataList(dataAdapter.getLastId(),
-                            lastDate.getTime(), new WeakReference<>(MainActivity.this));
+                            lastDate.getTime(), new WeakReference<>(MainActivity.this),
+                            token);
                 }
             }
         });
@@ -73,8 +80,13 @@ public class MainActivity extends AppCompatActivity implements AsyncHandler<List
     public void onResume() {
         super.onResume();
         Date lastDate = dataAdapter.getDate();
+
+        SharedPreferences sp = getSharedPreferences(getString(R.string.token_file),
+                Context.MODE_PRIVATE);
+        String token = sp.getString(getString(R.string.token_field), "");
+
         API_CLIENT.getRatDataList(dataAdapter.getLastId(),
-                lastDate.getTime(), new WeakReference<>(MainActivity.this));
+                lastDate.getTime(), new WeakReference<>(MainActivity.this), token);
     }
 
     /**

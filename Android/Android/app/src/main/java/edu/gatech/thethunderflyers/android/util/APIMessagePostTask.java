@@ -63,6 +63,9 @@ public class APIMessagePostTask extends AsyncTask<String, Void, APIMessage> {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
+            if (strings.length == 2) {
+                connection.setRequestProperty("Authorization", "Bearer " + strings[1]);
+            }
 
             Writer w = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(),
                     "UTF-8"));

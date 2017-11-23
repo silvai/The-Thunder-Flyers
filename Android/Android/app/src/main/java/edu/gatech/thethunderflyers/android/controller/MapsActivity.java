@@ -1,6 +1,8 @@
 package edu.gatech.thethunderflyers.android.controller;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -121,8 +123,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast t = Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT);
                 t.show();
             } else {
+                SharedPreferences sp = getSharedPreferences(getString(R.string.token_file),
+                        Context.MODE_PRIVATE);
+                String token = sp.getString(getString(R.string.token_field), "");
+
                 API_CLIENT.getRatDataDateRange(dateBegin.getTime(), dateEnd.getTime(),
-                        new WeakReference<>(this));
+                        new WeakReference<>(this), token);
             }
         } catch (ParseException e) {
             Toast t = Toast.makeText(this, "Dates invalid!", Toast.LENGTH_SHORT);

@@ -1,9 +1,9 @@
-<form (ngSubmit)="onSubmit()" #loginform="ngForm">
+<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
   <label for="username">Username</label>
-  <input type="text" id="username" required [(ngModel)]="model.username">
-  <br><br>
+  <input type="text" id="username" required [(ngModel)]="model.username" name="username">
+  <br/>
   <label for="password">Password</label>
-  <input type="password" id="password" required [(ngModel)]="model.pass">
+  <input type="password" id="password" required [(ngModel)]="model.password" name="password">
   <br><br>
   <button type="submit">Submit</button>
 </form>

@@ -33,9 +33,9 @@ public class Model {
      */
     public static String getRatData(LocationType locationType, int zip, String address,
                                     String city, Borough borough, double latitude,
-                                    double longitude) {
+                                    double longitude, int userId) {
         return gson.toJson(new RatData(locationType, zip, address, city, borough, latitude,
-                longitude));
+                longitude, userId));
     }
 
     /**
