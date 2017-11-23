@@ -15,7 +15,7 @@ export class UserService {
   login (user: User) : Observable<APIMessage> {
     return this.http.post<APIMessage>("http://localhost:3000/auth/login", user).pipe(
       tap(apimessage => {
-        if (apimessage.status) {
+        if (apimessage.success === true) {
           localStorage.setItem("token", apimessage.message);
           var decoded = jwt.decode(apimessage.message);
           localStorage.setItem("userid", decoded.sub);

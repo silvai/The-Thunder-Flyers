@@ -138,8 +138,7 @@ app.post("/auth/login", (req, res) => {
                 success: false,
                 message: "Wrong username."
             });
-        }
-        if (results[0].lockout >= 3) {
+        } else if (results[0].lockout >= 3) {
             res.json({
                 success: false,
                 message: "You have been locked out of your account. Please contact an admin to get back in."
