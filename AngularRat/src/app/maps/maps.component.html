@@ -1,6 +1,6 @@
 <div #map id="map"></div>
 <label for="begindate">Begin Date</label>
-<input type="date" id="begindate" required [(ngModel)]="beginDate" name="begindate" #bdate="ngModel">
+<input type="date" id="begindate" required [(ngModel)]="beginDate" name="begindate" [max]="endDate" #bdate="ngModel">
 <br/>
 <div *ngIf="bdate.invalid && (bdate.dirty || bdate.touched)">
   <div *ngIf="bdate.errors.required">
@@ -9,7 +9,7 @@
 </div>
 <br/>
 <label for="enddate">End Date</label>
-<input type="date" id="enddate" required [(ngModel)]="endDate" name="enddate" #edate="ngModel">
+<input type="date" id="enddate" required [(ngModel)]="endDate" name="enddate" [min]="beginDate" [max]="todayDate" #edate="ngModel">
 <br/>
 <div *ngIf="edate.invalid && (edate.dirty || edate.touched)">
   <div *ngIf="edate.errors.required">
@@ -17,5 +17,5 @@
   </div>
 </div>
 <br/><br/>
-<button type="submit" (click)="getMapData()">Submit</button>
+<button type="submit" [disabled]="bdate.invalid || bdate.badInput || edate.invalid || edate.badInput" (click)="getMapData()">Submit</button>
 

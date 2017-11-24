@@ -4,6 +4,7 @@ import {Borough} from "./borough";
 export class RatData {
     constructor (
         public locationType: LocationType,
+        public createdDate: Date,
         public zip: number,
         public address: string,
         public city: string,

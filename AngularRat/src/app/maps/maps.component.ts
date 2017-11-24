@@ -14,6 +14,7 @@ export class MapsComponent implements OnInit {
 
   private beginDate: string;
   private endDate: string;
+  private todayDate: string = new Date().toISOString().slice(0, 10);
 
   private map: any;
   private markers: any[] = [];
@@ -25,9 +26,9 @@ export class MapsComponent implements OnInit {
   }
 
   initMap() {
-    var uluru = {lat: 40.7128, lng: -74.0060};
+    var nyc = {lat: 40.7128, lng: -74.0060};
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
-      center: uluru,
+      center: nyc,
       zoom: 15
     });
   }
