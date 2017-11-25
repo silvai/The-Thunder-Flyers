@@ -17,6 +17,8 @@ import { MapsComponent } from './maps/maps.component';
 import { AuthInterceptor } from "./authinterceptor";
 import { GraphComponent } from './graph/graph.component';
 import { RatdatadisplayComponent } from './ratdatadisplay/ratdatadisplay.component';
+import { RatdataentryComponent, NgbdModalContent } from './ratdataentry/ratdataentry.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -27,19 +29,23 @@ import { RatdatadisplayComponent } from './ratdatadisplay/ratdatadisplay.compone
     WelcomeComponent,
     MapsComponent,
     GraphComponent,
-    RatdatadisplayComponent
+    RatdatadisplayComponent,
+    RatdataentryComponent,
+    NgbdModalContent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    NgbModule.forRoot()
   ],
   providers: [UserService, RatdataService, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
   }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [NgbdModalContent]
 })
 export class AppModule { }
