@@ -39,7 +39,7 @@ app.use(bodyParser.json());
 
 // Add headers
 app.use(function (req, res, next) {
-    
+        
         // Website you wish to allow to connect
         res.setHeader('Access-Control-Allow-Origin', '*');
     
@@ -65,12 +65,6 @@ app.get("/user/:id", express_jwt({ secret: RSA_PUBLIC_KEY }), (req, res) => {
         if (error) { throw error; }
         res.json(result[0]);
     });
-});
-
-// PUT (update) user by id
-// Take params from passed JSON and call function in user to update user information
-app.put("/user/:id", express_jwt({ secret: RSA_PUBLIC_KEY }), (req, res) => {
-
 });
 
 // POST (create) user
@@ -175,6 +169,15 @@ app.post("/auth/login", (req, res) => {
     });
 });
 
+app.get("/data/page/:page", express_jwt({ secret: RSA_PUBLIC_KEY }), (req, res) => {
+    let page = req.params.page;
+    let offset = (page - 1) * 20;
+    connection.query("SELECT * FROM data LIMIT 20 OFFSET ?", [offset], (err, results, fields) => {
+        if (err) { throw err; }
+        res.json(results);
+    });
+});
+
 // GET rat data from database by page
 // Need to use pages because we cannot pass all 100000+ rows to user
 // Take page param and call function in data to get rows
@@ -205,6 +208,20 @@ app.get("/data/search/:minDate/:maxDate", express_jwt({ secret: RSA_PUBLIC_KEY }
     })
 });
 
+app.get("/data/pagination", express_jwt({ secret: RSA_PUBLIC_KEY }), (req, res) => {
+    connection.query("SELECT COUNT(`id`) AS count FROM data", (err, results, fields) => {
+        if (err) { throw err; }
+        let count = results[0].count;
+        let perPage = 20;
+        let numPages = Math.ceil(count / perPage);
+        res.json({
+            count: count,
+            perPage: perPage,
+            numPages: numPages
+        });
+    });
+});
+
 // POST (create) rat data
 // Take params from passed JSON and call function in data to create
 app.post("/data/add", express_jwt({ secret: RSA_PUBLIC_KEY }), (req, res) => {
@@ -230,12 +247,6 @@ app.post("/data/add", express_jwt({ secret: RSA_PUBLIC_KEY }), (req, res) => {
             });
         }
      });
-});
-
-// PUT (update) data by id
-// Take params from passed JSON and call function in data to update data
-app.put("/data/:id", express_jwt({ secret: RSA_PUBLIC_KEY }), (req, res) => {
-
 });
 
 // DELETE rat data

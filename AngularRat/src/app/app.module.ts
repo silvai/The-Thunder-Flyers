@@ -16,6 +16,7 @@ import { MapsComponent } from './maps/maps.component';
 
 import { AuthInterceptor } from "./authinterceptor";
 import { GraphComponent } from './graph/graph.component';
+import { RatdatadisplayComponent } from './ratdatadisplay/ratdatadisplay.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { GraphComponent } from './graph/graph.component';
     DashboardComponent,
     WelcomeComponent,
     MapsComponent,
-    GraphComponent
+    GraphComponent,
+    RatdatadisplayComponent
   ],
   imports: [
     BrowserModule,

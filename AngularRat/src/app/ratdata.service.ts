@@ -5,6 +5,7 @@ import { tap, catchError } from "rxjs/operators";
 import { of } from "rxjs/observable/of";
 import { APIMessage } from "./apimessage";
 import { RatData } from "./ratdata";
+import { Pagination } from "./pagination";
 
 @Injectable()
 export class RatdataService {
@@ -28,6 +29,20 @@ export class RatdataService {
     return this.http.post<APIMessage>("http://localhost:3000/data/add", data).pipe(
       tap(apimessage => console.dir(apimessage)),
       catchError(this.handleError<APIMessage>("addRatData"))
+    );
+  }
+
+  getRatDataPagination(): Observable<Pagination> {
+    return this.http.get<Pagination>("http://localhost:3000/data/pagination").pipe(
+      tap(pagination => console.dir(pagination)),
+      catchError(this.handleError<Pagination>("getRatDataPagination"))
+    );
+  }
+
+  getRatDataByPage(page: number): Observable<RatData[]> {
+    return this.http.get<RatData[]>("http://localhost:3000/data/page/" + page + "/").pipe(
+      tap(ratDataArray => console.dir(ratDataArray)),
+      catchError(this.handleError("getRatDataByDateRange", []))
     );
   }
 

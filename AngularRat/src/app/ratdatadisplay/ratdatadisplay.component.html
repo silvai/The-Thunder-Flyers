@@ -1,0 +1,14 @@
+<ul>
+  <li *ngFor="let data of displayedData">
+    {{  data.id  }}, {{ data.createdDate  }}
+  </li>
+</ul>
+<div *ngIf="count > 0">
+  <span>{{ getMinDataIndex() }} - {{ getMaxDataIndex() }} of {{ count }}</span>
+  <button (click)="goToPage(1)" [disabled]="loading">First</button>
+  <button (click)="prev()" [disabled]="currPage == 1 || loading">Prev</button>
+  <button *ngFor="let pageNum of getPages()" (click)="goToPage(pageNum)">{{ pageNum }}</button>
+  <button (click)="next()" [disabled]="lastPage() || loading">Next</button>
+  <button (click)="goToPage(totalPages)" [disabled]="loading">Last</button>
+  <span>{{ totalPages }} pages</span>
+</div>
