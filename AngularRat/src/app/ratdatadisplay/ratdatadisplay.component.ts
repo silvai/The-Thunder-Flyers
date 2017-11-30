@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { RatdataService } from '../ratdata.service';
 import { RatData } from '../ratdata';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-ratdatadisplay',
@@ -18,7 +19,9 @@ export class RatdatadisplayComponent implements OnInit {
   totalPages: number;
   displayedData: RatData[];
 
-  constructor(private rs: RatdataService) { }
+  openModal: NgbModalRef;
+
+  constructor(private rs: RatdataService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.currPage = 1;
@@ -94,5 +97,13 @@ export class RatdatadisplayComponent implements OnInit {
       this.loading = false;
       this.displayedData = data;
     });
+  }
+
+  open(ratdatamodal) : void {
+    this.openModal = this.modalService.open(ratdatamodal);
+  }
+
+  dismiss(reason): void {
+    this.openModal.close(reason);
   }
 }

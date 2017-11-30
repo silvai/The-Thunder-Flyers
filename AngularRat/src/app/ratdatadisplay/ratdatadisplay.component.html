@@ -1,6 +1,24 @@
 <ul>
   <li *ngFor="let data of displayedData">
-    {{  data.id  }}, {{ data.createdDate  }}
+    <ng-template #ratdatamodal>
+      <div class="modal-header">
+        <h4 class="modal-title">{{ data.id }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Created On: {{ data.createdDate.toLocaleString() }}</p>
+        <p>Location Type: {{ data.locationType }}</p>
+        <p>Address: {{ data.incidentAddress }}</p>
+        <p>City: {{ data.city }}</p>
+        <p>Zip: {{ data.incidentZip }}</p>
+        <p>Borough: {{ data.borough }}</p>
+        <p>Latitude: {{ data.latitude }}</p>
+        <p>Longitude: {{ data.longitude }}</p>
+      </div>
+    </ng-template>
+    <button class="btn btn-lg btn-outline-primary" (click)="open(ratdatamodal)">{{ data.id }}, {{ data.createdDate.toLocaleString() }}</button>
   </li>
 </ul>
 <div *ngIf="count > 0">
