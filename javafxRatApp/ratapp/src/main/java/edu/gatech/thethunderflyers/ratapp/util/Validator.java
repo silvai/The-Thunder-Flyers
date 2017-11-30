@@ -20,7 +20,8 @@ public class Validator {
      */
     public boolean validate() {
         for (TextField temp: texts) {
-            if (temp == null) {
+            String textTemp = temp.getText().replaceAll(" ", "");
+            if (textTemp.equals("")) {
                 return false;
             }
         }
