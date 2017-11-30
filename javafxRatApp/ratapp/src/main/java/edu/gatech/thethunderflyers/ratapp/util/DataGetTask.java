@@ -1,44 +1,38 @@
-package edu.gatech.thethunderflyers.android.util;
-
-import android.os.AsyncTask;
-import android.util.Log;
+package edu.gatech.thethunderflyers.ratapp.util;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import edu.gatech.thethunderflyers.ratapp.model.RatData;
+import javafx.concurrent.Task;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
-import edu.gatech.thethunderflyers.android.model.RatData;
-
-public class DataGetTask extends AsyncTask<String, Void, List<RatData>> {
+public class DataGetTask extends Task<RatData[]> {
 
     private HttpURLConnection connection;
     private BufferedReader reader;
-    private Exception ex;
-    private final AsyncHandler<List<RatData>> ah;
-    private final String url;
 
-    public DataGetTask(String url, AsyncHandler<List<RatData>> ah) {
-        this.ah = ah;
+    private final String url;
+    private final String token;
+
+    public DataGetTask(String url, String token) {
+        this.token = token;
         this.url = url;
     }
 
     @Override
-    protected List<RatData> doInBackground(String... strings) {
+    protected RatData[] call() throws Exception {
         try {
             URL url = new URL(this.url);
             connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(1000);
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Authorization", "Bearer " + strings[0]);
+            connection.setRequestProperty("Authorization", "Bearer " + token);
 
             InputStream is = connection.getInputStream();
             StringBuilder sb = new StringBuilder();
@@ -53,15 +47,11 @@ public class DataGetTask extends AsyncTask<String, Void, List<RatData>> {
                 if (sb.length() == 0) {
                     return null;
                 }
-                Log.i("DataGetTask", "Successful request");
-                TypeToken<List<RatData>> t = new TypeToken<List<RatData>>(){};
-                Type type = t.getType();
                 Gson gson = new Gson();
-                return gson.fromJson(sb.toString(), type);
+                return gson.fromJson(sb.toString(), RatData[].class);
             }
         } catch (IOException e) {
-            Log.e("DataGetTask", e.getMessage());
-            ex = e;
+            return null;
         } finally {
             if (connection != null) {
                 connection.disconnect();
@@ -70,21 +60,10 @@ public class DataGetTask extends AsyncTask<String, Void, List<RatData>> {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    Log.e("DataGetTask", e.getMessage());
-                    ex = e;
+                    reader = null;
                 }
             }
         }
-        return null;
-    }
-
-    public String getURL() {
-        return this.url;
-    }
-
-    @Override
-    protected void onPostExecute(List<RatData> ratData) {
-        ah.handleResponse(ratData, ex);
     }
 }
 

@@ -26,6 +26,8 @@ public class APIMessage {
         return !success;
     }
 
+    public void setSuccess(boolean success) { this.success = success; }
+
     /**
      * Method to get the message returned from the API
      * @return the message returned from the API
