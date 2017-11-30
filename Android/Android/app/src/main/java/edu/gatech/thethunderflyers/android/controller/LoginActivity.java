@@ -1,8 +1,11 @@
 package edu.gatech.thethunderflyers.android.controller;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,6 +22,10 @@ import edu.gatech.thethunderflyers.android.util.ExceptionAlertDialog;
 import edu.gatech.thethunderflyers.android.util.Navigator;
 import edu.gatech.thethunderflyers.android.util.NotSuccessAlertDialog;
 import edu.gatech.thethunderflyers.android.util.Validator;
+
+import com.auth0.android.jwt.Claim;
+import com.auth0.android.jwt.DecodeException;
+import com.auth0.android.jwt.JWT;
 
 /**
  * LoginActivity: Activity to allow users to login to the application.
@@ -76,8 +83,25 @@ public class LoginActivity extends AppCompatActivity implements AsyncHandler<API
                         this);
                 notSuccessAlertDialog.show();
             } else {
-                userId = Integer.parseInt(message);
-                Navigator.goToMapsActivity(this);
+                try {
+                    JWT jwt = new JWT(message);
+                    String subject = jwt.getSubject();
+                    SharedPreferences sp = getSharedPreferences(getString(R.string.userid_file),
+                            Context.MODE_PRIVATE);
+                    SharedPreferences.Editor spe = sp.edit();
+                    spe.putInt(getString(R.string.userid_field), Integer.parseInt(subject));
+                    spe.apply();
+
+                    sp = getSharedPreferences(getString(R.string.token_file), Context.MODE_PRIVATE);
+                    spe = sp.edit();
+                    spe.putString(getString(R.string.token_field), message);
+                    spe.apply();
+
+                    Navigator.goToMapsActivity(this);
+                } catch (DecodeException de) {
+                    Log.e("LoginActivity", "Bad JWT");
+                }
+                //userId = Integer.parseInt(message);
             }
         }
     }

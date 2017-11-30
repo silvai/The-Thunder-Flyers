@@ -47,11 +47,11 @@ public final class APIClient {
      *               of RatData
      * @param ref a WeakReference to MainActivity (to prevent memory leaks)
      */
-    public void getRatDataList(int lastId, long millis, WeakReference<MainActivity> ref) {
+    public void getRatDataList(int lastId, long millis, WeakReference<MainActivity> ref, String token) {
         MainActivity m = ref.get();
         DataGetTask task = new DataGetTask(m.getString(R.string.get_data_url) + lastId + "/"
                 + millis + "/", m);
-        task.execute();
+        task.execute(token);
     }
 
     /**
@@ -59,11 +59,11 @@ public final class APIClient {
      * @param rd JSON representing the new rat report
      * @param ref a WeakReference to ReportRatActivity (to prevent memory leaks)
      */
-    public void submitRatReport(String rd, WeakReference<ReportRatActivity> ref) {
+    public void submitRatReport(String rd, WeakReference<ReportRatActivity> ref, String token) {
         ReportRatActivity rra = ref.get();
         APIMessagePostTask task =
                 new APIMessagePostTask(rra.getString(R.string.post_rat_data_url), rra);
-        task.execute(rd);
+        task.execute(rd, token);
     }
 
     /**
@@ -72,12 +72,13 @@ public final class APIClient {
      * @param endDate the datetime (Unix epoch) of the end of the range
      * @param ref a WeakReference to MapsActivity (to prevent memory leaks)
      */
-    public void getRatDataDateRange(long beginDate, long endDate, WeakReference<MapsActivity> ref) {
+    public void getRatDataDateRange(long beginDate, long endDate, WeakReference<MapsActivity> ref,
+                                    String token) {
         MapsActivity ma = ref.get();
         DataGetTask task =
                 new DataGetTask(ma.getString(R.string.get_data_date_url) + beginDate + "/"
                         + endDate, ma);
-        task.execute();
+        task.execute(token);
     }
 
     /**
@@ -87,11 +88,11 @@ public final class APIClient {
      * @param ref a WeakReference to GraphActivity (to prevent memory leaks)
      */
     public void getRatDataDateRangeGraph(long beginDate, long endDate,
-                                         WeakReference<GraphActivity> ref) {
+                                         WeakReference<GraphActivity> ref, String token) {
         GraphActivity ga = ref.get();
         DataGetTask task =
                 new DataGetTask(ga.getString(R.string.get_data_date_url) + beginDate + "/"
                         + endDate, ga);
-        task.execute();
+        task.execute(token);
     }
 }

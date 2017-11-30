@@ -1,6 +1,8 @@
 package edu.gatech.thethunderflyers.android.controller;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -146,8 +148,13 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
             } else {
                 beginDate = dateBegin;
                 endDate = dateEnd;
+
+                SharedPreferences sp = getSharedPreferences(getString(R.string.token_file),
+                        Context.MODE_PRIVATE);
+                String token = sp.getString(getString(R.string.token_field), "");
+
                 API_CLIENT.getRatDataDateRangeGraph(dateBegin.getTime(), dateEnd.getTime(),
-                        new WeakReference<>(this));
+                        new WeakReference<>(this), token);
             }
         } catch (ParseException e) {
             e.printStackTrace();

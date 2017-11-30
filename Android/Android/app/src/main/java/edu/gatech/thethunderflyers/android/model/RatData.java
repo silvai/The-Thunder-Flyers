@@ -1,5 +1,7 @@
 package edu.gatech.thethunderflyers.android.model;
 
+import android.content.SharedPreferences;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -46,7 +48,7 @@ public class RatData implements Serializable {
 
 
     RatData(LocationType locationType, int zip, String address,
-            String city, Borough borough, double latitude, double longitude) {
+            String city, Borough borough, double latitude, double longitude, int userId) {
         this.locationType = locationType;
         this.zip = zip;
         this.address = address;
@@ -54,7 +56,7 @@ public class RatData implements Serializable {
         this.borough = borough;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.userId = LoginActivity.userId;
+        this.userId = userId;
     }
 
     /**

@@ -1,3 +1,27 @@
-<p>
-  login works!
-</p>
+<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+  <label for="username">Username</label>
+  <input type="text" id="username" required [(ngModel)]="username" name="username" #uname="ngModel">
+  <br/>
+
+  <div *ngIf="uname.invalid && (uname.dirty || uname.touched)">
+    <div *ngIf="uname.errors.required">
+      Username is required.
+    </div>
+  </div>
+
+  <label for="password">Password</label>
+  <input type="password" id="password" required [(ngModel)]="password" name="password" #pass="ngModel">
+  <br/>
+
+  <div *ngIf="pass.invalid && (pass.dirty || pass.touched)">
+    <div *ngIf="pass.errors.required">
+      Password is required.
+    </div>
+  </div>
+
+  <p name="status">{{status}}</p>
+
+  <br><br>
+
+  <button type="submit" [disabled]="!loginForm.form.valid" >Submit</button>
+</form>

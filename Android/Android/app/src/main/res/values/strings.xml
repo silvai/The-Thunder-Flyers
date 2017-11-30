@@ -43,4 +43,9 @@
     <string name="message">Message</string>
 
     <string name="dvh_message">CLICK FOR MORE INFO…</string>
+
+    <string name="userid_file">edu.gatech.thethunderflyers.android.userid</string>
+    <string name="userid_field">id</string>
+    <string name="token_file">edu.gatech.thethunderflyers.android.token</string>
+    <string name="token_field">token</string>
 </resources>

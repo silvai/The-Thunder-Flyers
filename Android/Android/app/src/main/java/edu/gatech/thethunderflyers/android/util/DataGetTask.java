@@ -38,6 +38,8 @@ public class DataGetTask extends AsyncTask<String, Void, List<RatData>> {
             connection.setConnectTimeout(1000);
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("Authorization", "Bearer " + strings[0]);
+
             InputStream is = connection.getInputStream();
             StringBuilder sb = new StringBuilder();
             if (is == null) {

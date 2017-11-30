@@ -1,3 +1,57 @@
-<p>
-  register works!
-</p>
+<form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+  <label for="firstname">First Name</label>
+  <input type="text" id="firstname" required [(ngModel)]="firstname" name="firstname" #fname="ngModel">
+  <br/>
+
+  <div *ngIf="fname.invalid && (fname.dirty || fname.touched)">
+    <div *ngIf="fname.errors.required">
+      First name is required.
+    </div>
+  </div>
+
+  <label for="lastname">Last Name</label>
+  <input type="text" id="lastname" required [(ngModel)]="lastname" name="lastname" #lname="ngModel">
+  <br/>
+
+  <div *ngIf="lname.invalid && (lname.dirty || lname.touched)">
+    <div *ngIf="lname.errors.required">
+      Last name is required.
+    </div>
+  </div>
+
+  <label for="username">Username</label>
+  <input type="text" id="username" required [(ngModel)]="username" name="username" #uname="ngModel">
+  <br/>
+
+  <div *ngIf="uname.invalid && (uname.dirty || uname.touched)">
+    <div *ngIf="uname.errors.required">
+      Username is required.
+    </div>
+  </div>
+
+  <label for="password">Password</label>
+  <input type="password" id="password" required [(ngModel)]="password" name="password" #pass="ngModel">
+  <br/>
+
+  <div *ngIf="pass.invalid && (pass.dirty || pass.touched)">
+    <div *ngIf="pass.errors.required">
+      Password is required.
+    </div>
+  </div>  
+
+  <label for="usermode">User Mode</label>
+  <select id="usermode" required [(ngModel)]="usermode" name="usermode" #mode="ngModel">
+    <option *ngFor="let um of usermodes" [value]="um">{{um}}</option>
+  </select>
+
+  <div *ngIf="mode.invalid && (mode.dirty || mode.touched)">
+    <div *ngIf="mode.errors.required">
+      User mode is required.
+    </div>
+  </div>  
+
+  <p name="status">{{status}}</p>
+
+  <br><br>
+  <button type="submit" [disabled]="!registerForm.form.valid">Submit</button>
+</form>

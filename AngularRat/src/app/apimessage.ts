@@ -1,4 +1,4 @@
 export class APIMessage {
-    public status: boolean;
+    public success: boolean;
     public message: string;
 }

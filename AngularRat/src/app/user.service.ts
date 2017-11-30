@@ -6,19 +6,27 @@ import { tap, catchError } from "rxjs/operators";
 import { of } from "rxjs/observable/of";
 import { APIMessage } from "./apimessage";
 
+import jwt from "jsonwebtoken";
+
 @Injectable()
 export class UserService {
   constructor(private http: HttpClient) { }
   
   login (user: User) : Observable<APIMessage> {
-    return this.http.post<APIMessage>("/auth/login", user).pipe(
-      tap(apimessage => console.dir(apimessage)),
+    return this.http.post<APIMessage>("http://localhost:3000/auth/login", user).pipe(
+      tap(apimessage => {
+        if (apimessage.success === true) {
+          localStorage.setItem("token", apimessage.message);
+          var decoded = jwt.decode(apimessage.message);
+          localStorage.setItem("userid", decoded.sub);
+        }
+      }),
       catchError(this.handleError<APIMessage>("login"))
     )
   }
 
   register (user: User) : Observable<APIMessage> {
-    return this.http.post<APIMessage>("/auth/register", user).pipe(
+    return this.http.post<APIMessage>("http://localhost:3000/auth/register", user).pipe(
       tap(apimessage => console.dir(apimessage)),
       catchError(this.handleError<APIMessage>("register"))
     )

@@ -1,5 +1,7 @@
 package edu.gatech.thethunderflyers.android.controller;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -110,8 +112,17 @@ public class ReportRatActivity extends AppCompatActivity implements AsyncHandler
             lo = Double.parseDouble(longitudeEditable.toString());
             LocationType lt = (LocationType) locationType.getSelectedItem();
             Borough bor = (Borough) borough.getSelectedItem();
-            API_CLIENT.submitRatReport(Model.getRatData(lt, zi, cit, add, bor, la, lo),
-                    new WeakReference<>(this));
+
+            SharedPreferences sp = getSharedPreferences(getString(R.string.userid_file),
+                    Context.MODE_PRIVATE);
+            int userid = sp.getInt(getString(R.string.userid_field), 0);
+
+            SharedPreferences sp2 = getSharedPreferences(getString(R.string.token_file),
+                    Context.MODE_PRIVATE);
+            String token = sp2.getString(getString(R.string.token_field), "");
+
+            API_CLIENT.submitRatReport(Model.getRatData(lt, zi, cit, add, bor, la, lo, userid),
+                    new WeakReference<>(this), token);
         } else {
             Toast t = Toast.makeText(this, "One or more fields invalid", Toast.LENGTH_SHORT);
             t.show();
