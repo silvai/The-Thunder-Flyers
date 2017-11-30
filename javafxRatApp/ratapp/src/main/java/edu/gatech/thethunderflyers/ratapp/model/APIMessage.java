@@ -18,13 +18,7 @@ public class APIMessage {
     @SerializedName("message")
     private String message;
 
-    /**
-     * Method to check if the response was successful
-     * @return whether or not the method was successful
-     */
-    public boolean isSuccess() {
-        return !success;
-    }
+    public boolean getSuccess() { return this.success; }
 
     public void setSuccess(boolean success) { this.success = success; }
 
