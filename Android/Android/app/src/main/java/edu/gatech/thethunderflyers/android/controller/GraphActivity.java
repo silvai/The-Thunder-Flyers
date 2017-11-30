@@ -122,6 +122,7 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
         });
 
     }
+
     /**
      * The button activity to get a response for the date range
      * to view the graph
@@ -151,6 +152,10 @@ public class GraphActivity extends AppCompatActivity implements AsyncHandler<Lis
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public void validateDates(Date start, Date end) {
+
     }
 
     /**

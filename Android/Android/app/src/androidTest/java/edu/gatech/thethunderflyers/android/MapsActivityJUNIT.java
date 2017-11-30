@@ -29,7 +29,7 @@ public class MapsActivityJUNIT {
      * Sets the date to the dates passed through
      * This will try to a parseException
      * although
-     * --in this case, the dates will not through an error
+     * --in this case, the dates will not throw an error
      * --because it's picked from a calendar view, so all dates
      * --passed will be valid;
      * but we test it here just in case

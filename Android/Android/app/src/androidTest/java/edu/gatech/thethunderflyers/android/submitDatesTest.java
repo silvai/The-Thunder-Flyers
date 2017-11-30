@@ -16,7 +16,7 @@ import java.util.Locale;
 import static org.junit.Assert.*;
 
 /**
- * Created by isabellasilva on 11/13/17.
+ * Created by isabellasilva on 11/09/17.
  */
 
 //Testing GraphActivity submitDates(View view)
@@ -27,6 +27,12 @@ public class submitDatesTest {
     private final SimpleDateFormat FULL_DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
     private Date start;
     private Date end;
+
+    //break up method to create a start date and end date
+    //then call the method to test
+    //Call validate dates
+
+    //validateDates(start, end);
 
     /**
      * Test to see if the range of the dates goes from a previous time to a later time
@@ -45,8 +51,6 @@ public class submitDatesTest {
         }
         assertTrue(begin.compareTo(end) < 0);
         assertFalse(begin.compareTo(end) > 0);
-
-
     }
 
     /*
@@ -66,7 +70,6 @@ public class submitDatesTest {
         }
         assertTrue(begin.compareTo(end) < 0);
         assertFalse(begin.compareTo(end) > 0);
-
 
     }
 }
