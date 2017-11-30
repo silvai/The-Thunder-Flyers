@@ -1,6 +1,5 @@
-package edu.gatech.thethunderflyers.android.model;
+package edu.gatech.thethunderflyers.ratapp.model;
 
-import android.support.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
 class User implements Comparable<User>{
@@ -77,7 +76,7 @@ class User implements Comparable<User>{
     }
 
     @Override
-    public int compareTo(@NonNull User user) {
+    public int compareTo(User user) {
         return userName.compareTo(user.getUsername());
     }
 

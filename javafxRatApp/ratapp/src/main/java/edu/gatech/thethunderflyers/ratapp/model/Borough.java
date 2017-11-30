@@ -1,4 +1,4 @@
-package edu.gatech.thethunderflyers.android.model;
+package edu.gatech.thethunderflyers.ratapp.model;
 import com.google.gson.annotations.SerializedName;
 
 /**

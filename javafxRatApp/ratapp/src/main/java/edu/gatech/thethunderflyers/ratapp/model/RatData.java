@@ -1,15 +1,9 @@
-package edu.gatech.thethunderflyers.android.model;
+package edu.gatech.thethunderflyers.ratapp.model;
 
-import android.content.SharedPreferences;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.Date;
-
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.annotations.SerializedName;
-
-import edu.gatech.thethunderflyers.android.controller.LoginActivity;
 
 /**
  * The class for RatData
@@ -145,25 +139,5 @@ public class RatData implements Serializable {
      */
     public void setDate(Date date) {
         this.date = date;
-    }
-
-
-    private LatLng getMapLatLng() { return new LatLng(latitude, longitude); }
-
-    private String getMapSnippet() { return this.getDate() + "\n"
-            + this.getLocationType(); }
-
-    private String getMapTitle() { return this.getId() + ""; }
-
-    /**
-     * method for markers for maps
-     * @return returns the MarkerOptions for this ratData
-     */
-    public MarkerOptions getMapMarkerOptions() {
-        MarkerOptions mo = new MarkerOptions();
-        mo.position(this.getMapLatLng());
-        mo.title(this.getMapTitle());
-        mo.snippet(this.getMapSnippet());
-        return mo;
     }
 }
