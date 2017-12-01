@@ -2,8 +2,11 @@ package edu.gatech.thethunderflyers.ratapp.controller;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
+import com.lynden.gmapsfx.javascript.event.UIEventHandler;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
+import edu.gatech.thethunderflyers.ratapp.model.APIMessage;
+import edu.gatech.thethunderflyers.ratapp.model.Model;
 import edu.gatech.thethunderflyers.ratapp.model.RatData;
 import edu.gatech.thethunderflyers.ratapp.util.APIClient;
 import edu.gatech.thethunderflyers.ratapp.util.AsyncHandler;
@@ -11,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import netscape.javascript.JSObject;
 import tornadofx.control.DateTimePicker;
 
 import java.net.URL;
@@ -37,10 +41,17 @@ public class MapsActivity implements Initializable, AsyncHandler<ObservableList<
     }
 
     public void submitDates() {
-        APIClient.API_CLIENT.getRatDataDateRange(beginDateTimePicker.getDateTimeValue()
-                        .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
-                endDateTimePicker.getDateTimeValue().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
-                "", this);
+        if (beginDateTimePicker.getDateTimeValue().compareTo(endDateTimePicker.getDateTimeValue()) > 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Incorrect Dates");
+            alert.show();
+        } else {
+            APIClient.API_CLIENT.getRatDataDateRange(beginDateTimePicker.getDateTimeValue()
+                            .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
+                    endDateTimePicker.getDateTimeValue().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
+                    LoginActivity.apiMessage.getMessage(), this);
+        }
     }
 
     protected void configureMap() {
@@ -60,12 +71,20 @@ public class MapsActivity implements Initializable, AsyncHandler<ObservableList<
 
     @Override
     public void handleResponse(ObservableList<RatData> response) {
-        System.out.println(response);
         map.clearMarkers();
         for (RatData rd: response) {
-            Marker marker = new Marker(new MarkerOptions()
-                    .position(new LatLong(rd.getLatitude(), rd.getLongitude())));
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(new LatLong(rd.getLatitude(), rd.getLongitude()))
+                    .title(rd.getDate().toString());
+            Marker marker = new Marker(markerOptions);
             map.addMarker(marker);
+            map.addUIEventHandler(marker, UIEventType.click, jsObject -> {
+                //displays the information window
+                InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                infoWindowOptions.content("ZIP: " + rd.getZip() + "<br>" + rd.getDate().toString());
+                InfoWindow infoWindow = new InfoWindow(infoWindowOptions);
+                infoWindow.open(map, marker);
+            });
         }
     }
 }

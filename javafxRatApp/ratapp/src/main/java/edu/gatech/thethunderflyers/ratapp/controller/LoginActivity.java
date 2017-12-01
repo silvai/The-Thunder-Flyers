@@ -25,6 +25,8 @@ public class LoginActivity implements AsyncHandler<APIMessage> {
     @FXML
     private Button cancelButton;
 
+    public static APIMessage apiMessage;
+
     public void submit(ActionEvent actionEvent) {
         Validator validator = new Validator(username, password);
         if (validator.validate()) {
@@ -57,6 +59,7 @@ public class LoginActivity implements AsyncHandler<APIMessage> {
 
     @Override
     public void handleResponse(APIMessage response) {
+        apiMessage = response;
         if (response.getSuccess()) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("res/mapsView.fxml"));
