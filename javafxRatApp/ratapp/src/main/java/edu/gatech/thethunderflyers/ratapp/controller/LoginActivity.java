@@ -59,11 +59,11 @@ public class LoginActivity implements AsyncHandler<APIMessage> {
     public void handleResponse(APIMessage response) {
         if (response.getSuccess()) {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("res/welcomeView.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("res/mapsView.fxml"));
                 Parent root1 = fxmlLoader.load();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root1));
-                stage.setTitle("Welcome!");
+                stage.setTitle("Rat Map");
                 stage.setResizable(false);
                 ((Stage) this.cancelButton.getScene().getWindow()).close();
                 stage.show();

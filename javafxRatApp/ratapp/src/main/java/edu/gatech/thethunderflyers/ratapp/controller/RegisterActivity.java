@@ -1,6 +1,10 @@
 package edu.gatech.thethunderflyers.ratapp.controller;
 
+import edu.gatech.thethunderflyers.ratapp.model.APIMessage;
+import edu.gatech.thethunderflyers.ratapp.model.Model;
 import edu.gatech.thethunderflyers.ratapp.model.UserMode;
+import edu.gatech.thethunderflyers.ratapp.util.APIClient;
+import edu.gatech.thethunderflyers.ratapp.util.AsyncHandler;
 import edu.gatech.thethunderflyers.ratapp.util.Validator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +20,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RegisterActivity implements Initializable {
+public class RegisterActivity implements Initializable, AsyncHandler<APIMessage> {
 
     @FXML
     private Button submitButton;
@@ -29,32 +33,20 @@ public class RegisterActivity implements Initializable {
     private ChoiceBox<UserMode> userModeBox;
 
     public void register() {
-        boolean registerSuccess = false;
+        boolean passwordsMatch;
         Validator validator = new Validator(firstNameText, lastNameText,
                 usernameText, passwordText, confirmPasswordText);
-
-        //validate the text fields to see if it's null or not
         if (validator.validate()) {
-
-
-            if (registerSuccess) {
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("res/loginView.fxml"));
-                    Parent root1 = fxmlLoader.load();
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(root1));
-                    stage.setTitle("Login Screen");
-                    stage.setResizable(false);
-                    ((Stage) this.submitButton.getScene().getWindow()).close();
-                    stage.show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            passwordsMatch = (validator.passwordsMatch(passwordText.getText(), confirmPasswordText.getText()));
+            if (passwordsMatch) {
+                APIClient.API_CLIENT.register(Model.getUser(firstNameText.getText(),
+                        lastNameText.getText(), usernameText.getText(), passwordText.getText(),
+                        userModeBox.getValue()), this);
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Unable to register!");
+            alert.setHeaderText("One or more fields incorrect!");
             alert.show();
         }
     }
@@ -78,5 +70,34 @@ public class RegisterActivity implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         userModeBox.getItems().setAll(UserMode.values());
         userModeBox.getSelectionModel().selectFirst();
+    }
+
+    @Override
+    public void handleResponse(APIMessage response) {
+        Alert alert;
+        if (response.getSuccess()) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("res/loginView.fxml"));
+                Parent root1 = fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root1));
+                stage.setTitle("Login Screen");
+                stage.setResizable(false);
+                ((Stage) this.submitButton.getScene().getWindow()).close();
+                stage.show();
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success!");
+                alert.setHeaderText("Account registered successfully!");
+                alert.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Unable to register!");
+            alert.setContentText("User may already be registered");
+            alert.show();
+        }
     }
 }

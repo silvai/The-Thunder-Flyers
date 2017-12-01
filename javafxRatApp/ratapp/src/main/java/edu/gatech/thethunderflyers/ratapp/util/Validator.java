@@ -28,6 +28,10 @@ public class Validator {
         return true;
     }
 
+    public boolean passwordsMatch(String s, String s2) {
+        return s.equals(s2);
+    }
+
     /**
      * this method is to check if the passwords match
      * @return returns whether or not they match
