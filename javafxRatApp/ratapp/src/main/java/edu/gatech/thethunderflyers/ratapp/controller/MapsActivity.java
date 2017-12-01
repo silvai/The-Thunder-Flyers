@@ -3,11 +3,7 @@ package edu.gatech.thethunderflyers.ratapp.controller;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
-import com.lynden.gmapsfx.javascript.object.LatLong;
-import com.lynden.gmapsfx.javascript.object.MapOptions;
-import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
-import edu.gatech.thethunderflyers.ratapp.model.APIMessage;
+import com.lynden.gmapsfx.javascript.object.*;
 import edu.gatech.thethunderflyers.ratapp.model.RatData;
 import edu.gatech.thethunderflyers.ratapp.util.APIClient;
 import edu.gatech.thethunderflyers.ratapp.util.AsyncHandler;
@@ -23,7 +19,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class MapsActivity implements Initializable, AsyncHandler<APIMessage> {
+public class MapsActivity implements Initializable, AsyncHandler<ObservableList<RatData>> {
     @FXML
     private GoogleMapView mapView;
     private GoogleMap map;
@@ -32,10 +28,6 @@ public class MapsActivity implements Initializable, AsyncHandler<APIMessage> {
     private DateTimePicker beginDateTimePicker;
     @FXML
     private DateTimePicker endDateTimePicker;
-
-    private DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-    private ObservableList<RatData> ratData;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -49,7 +41,6 @@ public class MapsActivity implements Initializable, AsyncHandler<APIMessage> {
                         .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
                 endDateTimePicker.getDateTimeValue().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
                 "", this);
-        System.out.println(ratData);
     }
 
     protected void configureMap() {
@@ -68,14 +59,13 @@ public class MapsActivity implements Initializable, AsyncHandler<APIMessage> {
     }
 
     @Override
-    public void handleResponse(APIMessage response) {
-        if (response.getSuccess()) {
-            //plot points
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error!");
-            alert.setHeaderText(response.getMessage());
-            alert.show();
+    public void handleResponse(ObservableList<RatData> response) {
+        System.out.println(response);
+        map.clearMarkers();
+        for (RatData rd: response) {
+            Marker marker = new Marker(new MarkerOptions()
+                    .position(new LatLong(rd.getLatitude(), rd.getLongitude())));
+            map.addMarker(marker);
         }
     }
 }
