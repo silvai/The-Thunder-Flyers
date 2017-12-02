@@ -1,5 +1,6 @@
 package edu.gatech.thethunderflyers.ratapp.controller;
 
+import edu.gatech.thethunderflyers.ratapp.util.Navigator;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,32 +26,12 @@ public class WelcomeScreenActivity extends Application {
     }
 
     public void login() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("res/loginView.fxml"));
-            Parent root1 = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root1));
-            stage.setTitle("Login Screen");
-            stage.setResizable(false);
-            ((Stage) this.login.getScene().getWindow()).close();
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Stage current = (Stage) this.login.getScene().getWindow();
+        new Navigator().navigate("res/loginView.fxml", "Login Screen", current);
     }
 
     public void register() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("res/registerView.fxml"));
-            Parent root1 = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root1));
-            stage.setTitle("Register Screen");
-            stage.setResizable(false);
-            ((Stage) this.register.getScene().getWindow()).close();
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Stage current = (Stage) this.register.getScene().getWindow();
+        new Navigator().navigate("res/registerView.fxml", "Register Screen", current);
     }
 }

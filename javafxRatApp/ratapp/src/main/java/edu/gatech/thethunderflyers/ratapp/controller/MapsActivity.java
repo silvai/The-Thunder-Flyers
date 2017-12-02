@@ -2,25 +2,27 @@ package edu.gatech.thethunderflyers.ratapp.controller;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
-import com.lynden.gmapsfx.javascript.event.UIEventHandler;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
-import edu.gatech.thethunderflyers.ratapp.model.APIMessage;
-import edu.gatech.thethunderflyers.ratapp.model.Model;
 import edu.gatech.thethunderflyers.ratapp.model.RatData;
 import edu.gatech.thethunderflyers.ratapp.util.APIClient;
 import edu.gatech.thethunderflyers.ratapp.util.AsyncHandler;
+import edu.gatech.thethunderflyers.ratapp.util.Navigator;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import netscape.javascript.JSObject;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import tornadofx.control.DateTimePicker;
 
+import javax.print.attribute.standard.MediaSize;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class MapsActivity implements Initializable, AsyncHandler<ObservableList<RatData>> {
@@ -32,12 +34,19 @@ public class MapsActivity implements Initializable, AsyncHandler<ObservableList<
     private DateTimePicker beginDateTimePicker;
     @FXML
     private DateTimePicker endDateTimePicker;
+    @FXML
+    private Button mainButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mapView.addMapInitializedListener(() -> configureMap());
         beginDateTimePicker.valueProperty().setValue(LocalDate.from(beginDateTimePicker.getDateTimeValue()));
         endDateTimePicker.valueProperty().setValue(LocalDate.from(endDateTimePicker.getDateTimeValue()));
+    }
+
+    public void main() {
+        Stage current = (Stage) this.mainButton.getScene().getWindow();
+        new Navigator().navigate("res/mainMenuView.fxml", "Main Menu", current);
     }
 
     public void submitDates() {

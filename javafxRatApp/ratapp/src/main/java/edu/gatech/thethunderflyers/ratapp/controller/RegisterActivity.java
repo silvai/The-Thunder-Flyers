@@ -5,6 +5,7 @@ import edu.gatech.thethunderflyers.ratapp.model.Model;
 import edu.gatech.thethunderflyers.ratapp.model.UserMode;
 import edu.gatech.thethunderflyers.ratapp.util.APIClient;
 import edu.gatech.thethunderflyers.ratapp.util.AsyncHandler;
+import edu.gatech.thethunderflyers.ratapp.util.Navigator;
 import edu.gatech.thethunderflyers.ratapp.util.Validator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,18 +53,8 @@ public class RegisterActivity implements Initializable, AsyncHandler<APIMessage>
     }
 
     public void cancel() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("res/welcomeView.fxml"));
-            Parent root1 = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root1));
-            stage.setTitle("Welcome!");
-            stage.setResizable(false);
-            ((Stage) this.cancelButton.getScene().getWindow()).close();
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Stage current = (Stage) this.cancelButton.getScene().getWindow();
+        new Navigator().navigate("res/welcomeView.fxml", "Welcome!", current);
     }
 
     @Override
@@ -76,22 +67,12 @@ public class RegisterActivity implements Initializable, AsyncHandler<APIMessage>
     public void handleResponse(APIMessage response) {
         Alert alert;
         if (response.getSuccess()) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("res/loginView.fxml"));
-                Parent root1 = fxmlLoader.load();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root1));
-                stage.setTitle("Login Screen");
-                stage.setResizable(false);
-                ((Stage) this.submitButton.getScene().getWindow()).close();
-                stage.show();
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success!");
-                alert.setHeaderText("Account registered successfully!");
-                alert.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            Stage current = (Stage) this.submitButton.getScene().getWindow();
+            new Navigator().navigate("res/loginView.fxml", "Login Screen", current);
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success!");
+            alert.setHeaderText("Account registered successfully!");
+            alert.show();
         } else {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
