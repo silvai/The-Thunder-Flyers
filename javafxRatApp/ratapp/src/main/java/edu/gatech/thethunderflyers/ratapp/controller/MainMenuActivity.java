@@ -1,24 +1,27 @@
 package edu.gatech.thethunderflyers.ratapp.controller;
 
-import edu.gatech.thethunderflyers.ratapp.model.APIMessage;
 import edu.gatech.thethunderflyers.ratapp.model.RatData;
 import edu.gatech.thethunderflyers.ratapp.util.APIClient;
 import edu.gatech.thethunderflyers.ratapp.util.AsyncHandler;
 import edu.gatech.thethunderflyers.ratapp.util.Navigator;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollToEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MainMenuActivity implements Initializable, AsyncHandler<List<RatData>> {
+import static edu.gatech.thethunderflyers.ratapp.controller.LoginActivity.apiMessage;
+
+public class MainMenuActivity implements Initializable, AsyncHandler<ObservableList<RatData>> {
     @FXML
-    private ListView<RatData> reportTableView;
+    private ListView<RatData> reportView;
     @FXML
     private Button logoutButton, graphButton, mapButton, reportButton;
     private Navigator navigator = new Navigator();
@@ -53,7 +56,7 @@ public class MainMenuActivity implements Initializable, AsyncHandler<List<RatDat
     }
 
     @Override
-    public void handleResponse(List<RatData> response) {
+    public void handleResponse(ObservableList<RatData> response) {
 
     }
 }

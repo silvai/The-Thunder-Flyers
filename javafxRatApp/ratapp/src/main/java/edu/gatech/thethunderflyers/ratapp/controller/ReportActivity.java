@@ -71,7 +71,7 @@ public class ReportActivity implements Initializable, AsyncHandler<APIMessage> {
     @Override
     public void handleResponse(APIMessage response) {
         if (response.getSuccess()) {
-            navigator.navigate("mainMenuView.fxml", "Main Menu",
+            navigator.navigate("res/mainMenuView.fxml", "Main Menu",
                     (Stage) submitButton.getScene().getWindow());
             alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success!");
