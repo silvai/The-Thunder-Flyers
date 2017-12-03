@@ -1,21 +1,27 @@
 <div #map id="map"></div>
-<label for="begindate">Begin Date</label>
-<input type="date" id="begindate" required [(ngModel)]="beginDate" name="begindate" [max]="endDate" #bdate="ngModel">
+<br/>
+<div class="form-group">
+    <label for="begindate">Begin Date</label>
+    <input class="form-control" type="date" id="begindate" required [(ngModel)]="beginDate" name="begindate" [max]="endDate" #bdate="ngModel">
+</div>
+
 <br/>
 <div *ngIf="bdate.invalid && (bdate.dirty || bdate.touched)">
-  <div *ngIf="bdate.errors.required">
+  <div class="alert alert-danger" *ngIf="bdate.errors.required">
     Begin date is required.
   </div>
 </div>
-<br/>
-<label for="enddate">End Date</label>
-<input type="date" id="enddate" required [(ngModel)]="endDate" name="enddate" [min]="beginDate" [max]="todayDate" #edate="ngModel">
+
+<div class="form-group">
+    <label for="enddate">End Date</label>
+    <input class="form-control" type="date" id="enddate" required [(ngModel)]="endDate" name="enddate" [min]="beginDate" [max]="todayDate" #edate="ngModel">
+</div>
 <br/>
 <div *ngIf="edate.invalid && (edate.dirty || edate.touched)">
-  <div *ngIf="edate.errors.required">
+  <div class="alert alert-danger" *ngIf="edate.errors.required">
     End date is required.
   </div>
 </div>
 <br/><br/>
-<button type="submit" [disabled]="bdate.invalid || bdate.badInput || edate.invalid || edate.badInput" (click)="getMapData()">Submit</button>
+<button class="btn btn-success btn-lg" type="submit" [disabled]="bdate.invalid || bdate.badInput || edate.invalid || edate.badInput" (click)="getMapData()">Submit</button>
 

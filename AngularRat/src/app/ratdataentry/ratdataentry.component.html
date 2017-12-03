@@ -5,69 +5,83 @@
   </button>
 </div>
 <div class="modal-body">
-  <form #addRatDataForm="ngForm" (ngSubmit)="onSubmit()">
-    <label for="address">Address</label>
-    <input type="text" id="address" required [(ngModel)]="address" name="address" #add="ngModel">
-    <br/>
-
-    <div *ngIf="add.invalid && (add.dirty || add.touched)">
-      <div *ngIf="add.errors.required">
-        Address is required.
-      </div>
-    </div>
-    <br/>
-
-    <label for="city">City</label>
-    <input type="text" id="city" required [(ngModel)]="city" name="city" #cit="ngModel">
-    <br/>
-
-    <div *ngIf="cit.invalid && (cit.dirty || cit.touched)">
-      <div *ngIf="cit.errors.required">
-        City is required.
-      </div>
-    </div>
-    <br/>
-
-    <label for="zip">Zip Code</label>
-    <input type="number" id="zip" required [(ngModel)]="zip" name="zip" #zi="ngModel">
-    <br/>
-
-    <div *ngIf="zi.invalid && (zi.dirty || zi.touched)">
-      <div *ngIf="fname.errors.required">
-        Zip code is required.
-      </div>
-    </div>
-    <br/>
-
-    <label for="borough">Borough</label>
-    <select id="borough" required [(ngModel)]="borough" name="borough" #bo="ngModel">
-      <option *ngFor="let b of boroughs" [value]="b">{{ b }}</option>
-    </select>
-    <br/>
-
-    <div *ngIf="bo.invalid && (bo.dirty || bo.touched)">
-      <div *ngIf="bo.errors.required">
-        Borough is required.
-      </div>
-    </div>
-    <br/>
-
-    <label for="locationtype">Location Type</label>
-    <select id="locationtype" required [(ngModel)]="locationType" name="locationType" #lt="ngModel">
-      <option *ngFor="let lt of locationtypes" [value]="lt">{{ lt }}</option>
-    </select>
-    <br/>
-
-    <div *ngIf="lt.invalid && (lt.dirty || lt.touched)">
-      <div *ngIf="lt.errors.required">
-        Location type is required.
-      </div>
-    </div>
-    <br/>
-    
-    <br/><br/>
-    <button type="submit" [disabled]="!addRatDataForm.form.valid">Submit</button>
-  </form>
+  <div class="container">
+      <form #addRatDataForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input class="form-control" type="text" id="address" required [(ngModel)]="address" name="address" #add="ngModel">
+        </div>
+          
+          <br/>
+      
+          <div *ngIf="add.invalid && (add.dirty || add.touched)">
+            <div class="alert alert-danger" *ngIf="add.errors.required">
+              Address is required.
+            </div>
+          </div>
+          <br/>
+      
+          <div class="form-group">
+              <label for="city">City</label>
+              <input class="form-control" type="text" id="city" required [(ngModel)]="city" name="city" #cit="ngModel">
+          </div>
+          
+          <br/>
+      
+          <div *ngIf="cit.invalid && (cit.dirty || cit.touched)">
+            <div class="alert alert-danger" *ngIf="cit.errors.required">
+              City is required.
+            </div>
+          </div>
+          <br/>
+      
+          <div class="form-group">
+              <label for="zip">Zip Code</label>
+              <input class="form-control" type="number" id="zip" required [(ngModel)]="zip" name="zip" #zi="ngModel">
+          </div>
+          
+          <br/>
+      
+          <div *ngIf="zi.invalid && (zi.dirty || zi.touched)">
+            <div class="alert alert-danger" *ngIf="fname.errors.required">
+              Zip code is required.
+            </div>
+          </div>
+          <br/>
+      
+          <div class="form-group">
+              <label for="borough">Borough</label>
+              <select class="form-control" id="borough" required [(ngModel)]="borough" name="borough" #bo="ngModel">
+                <option *ngFor="let b of boroughs" [value]="b">{{ b }}</option>
+              </select>
+          </div>
+          <br/>
+      
+          <div *ngIf="bo.invalid && (bo.dirty || bo.touched)">
+            <div class="alert alert-danger" *ngIf="bo.errors.required">
+              Borough is required.
+            </div>
+          </div>
+          <br/>
+      
+          <div class="form-group">
+              <label for="locationtype">Location Type</label>
+              <select class="form-control" id="locationtype" required [(ngModel)]="locationType" name="locationType" #lt="ngModel">
+                <option *ngFor="let lt of locationtypes" [value]="lt">{{ lt }}</option>
+              </select>
+          </div>
+          <br/>
+      
+          <div *ngIf="lt.invalid && (lt.dirty || lt.touched)">
+            <div class="alert alert-danger" *ngIf="lt.errors.required">
+              Location type is required.
+            </div>
+          </div>
+          <br/>
+          
+          <button class="btn btn-success btn-lg" type="submit" [disabled]="!addRatDataForm.form.valid">Submit</button>
+        </form>
+  </div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>

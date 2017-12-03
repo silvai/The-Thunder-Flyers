@@ -1,4 +1,4 @@
-<ul>
+<ul class="center-block" style="list-style-type: none">
   <li *ngFor="let data of displayedData">
     <ng-template #ratdatamodal>
       <div class="modal-header">
@@ -18,15 +18,15 @@
         <p>Longitude: {{ data.longitude }}</p>
       </div>
     </ng-template>
-    <button class="btn btn-lg btn-outline-primary" (click)="open(ratdatamodal)">{{ data.id }}, {{ data.createdDate.toLocaleString() }}</button>
+    <button class="btn btn-sm btn-outline-primary text-center" (click)="open(ratdatamodal)">{{ data.id }}, {{ data.createdDate.toLocaleString() }}</button>
   </li>
 </ul>
-<div *ngIf="count > 0">
+<div class="text-center" *ngIf="count > 0">
   <span>{{ getMinDataIndex() }} - {{ getMaxDataIndex() }} of {{ count }}</span>
-  <button (click)="goToPage(1)" [disabled]="loading">First</button>
-  <button (click)="prev()" [disabled]="currPage == 1 || loading">Prev</button>
-  <button *ngFor="let pageNum of getPages()" (click)="goToPage(pageNum)">{{ pageNum }}</button>
-  <button (click)="next()" [disabled]="lastPage() || loading">Next</button>
-  <button (click)="goToPage(totalPages)" [disabled]="loading">Last</button>
+  <button class="page-item btn btn-sm btn-primary" (click)="goToPage(1)" [disabled]="loading">First</button>
+  <button class="page-item btn btn-sm btn-primary" (click)="prev()" [disabled]="currPage == 1 || loading">Prev</button>
+  <button class="page-item btn btn-sm btn-primary" *ngFor="let pageNum of getPages()" (click)="goToPage(pageNum)">{{ pageNum }}</button>
+  <button class="page-item btn btn-sm btn-primary" (click)="next()" [disabled]="lastPage() || loading">Next</button>
+  <button class="page-item btn btn-sm btn-primary" (click)="goToPage(totalPages)" [disabled]="loading">Last</button>
   <span>{{ totalPages }} pages</span>
 </div>

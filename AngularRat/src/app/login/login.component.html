@@ -1,27 +1,33 @@
-<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-  <label for="username">Username</label>
-  <input type="text" id="username" required [(ngModel)]="username" name="username" #uname="ngModel">
-  <br/>
-
-  <div *ngIf="uname.invalid && (uname.dirty || uname.touched)">
-    <div *ngIf="uname.errors.required">
-      Username is required.
+<div class="container">
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input class="form-control" type="text" id="username" required [(ngModel)]="username" name="username" #uname="ngModel">
     </div>
-  </div>
+    <br/>
 
-  <label for="password">Password</label>
-  <input type="password" id="password" required [(ngModel)]="password" name="password" #pass="ngModel">
-  <br/>
-
-  <div *ngIf="pass.invalid && (pass.dirty || pass.touched)">
-    <div *ngIf="pass.errors.required">
-      Password is required.
+    <div *ngIf="uname.invalid && (uname.dirty || uname.touched)">
+      <div class="alert alert-danger" *ngIf="uname.errors.required">
+        Username is required.
+      </div>
     </div>
-  </div>
 
-  <p name="status">{{status}}</p>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input class="form-control" type="password" id="password" required [(ngModel)]="password" name="password" #pass="ngModel">
+    </div>
+    <br/>
 
-  <br><br>
+    <div *ngIf="pass.invalid && (pass.dirty || pass.touched)">
+      <div class="alert alert-danger" *ngIf="pass.errors.required">
+        Password is required.
+      </div>
+    </div>
 
-  <button type="submit" [disabled]="!loginForm.form.valid" >Submit</button>
-</form>
+    <p name="status">{{status}}</p>
+
+    <br><br>
+
+    <button class="btn btn-success" type="submit" [disabled]="!loginForm.form.valid" >Submit</button>
+  </form>
+</div>

@@ -25,6 +25,10 @@ export class GraphComponent implements OnInit {
   constructor(private rs: RatdataService) { }
 
   ngOnInit() {
+    this.chartRef = new Chart(this.chartElement.nativeElement, null, {
+      width: 500,
+      height: 500
+    });
   }
 
   getMonthDiff(d1: Date, d2: Date): number {

@@ -48,7 +48,7 @@ export class NgbdModalContent {
 
 @Component({
   selector: 'app-ratdataentry',
-  template: '<button class="btn btn-lg btn-outline-primary" (click)="open()">Submit Rat Report</button>',
+  template: '<button class="btn btn-lg btn-outline-primary" (click)="open()">Submit Rat Report</button><br/><br/>',
   styleUrls: ['./ratdataentry.component.css'],
   encapsulation: ViewEncapsulation.None
 })
