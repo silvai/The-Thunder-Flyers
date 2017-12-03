@@ -3,6 +3,7 @@ package edu.gatech.thethunderflyers.ratapp.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -139,5 +140,10 @@ public class RatData implements Serializable {
      */
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d, %s", this.id, new SimpleDateFormat("MM/dd/yyyy").format(this.date));
     }
 }
