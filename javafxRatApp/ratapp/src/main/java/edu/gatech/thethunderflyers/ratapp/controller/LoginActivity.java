@@ -1,5 +1,8 @@
 package edu.gatech.thethunderflyers.ratapp.controller;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import edu.gatech.thethunderflyers.ratapp.model.APIMessage;
 import edu.gatech.thethunderflyers.ratapp.model.Model;
 import edu.gatech.thethunderflyers.ratapp.util.APIClient;
@@ -25,7 +28,8 @@ public class LoginActivity implements AsyncHandler<APIMessage> {
     @FXML
     private Button cancelButton;
 
-    public static APIMessage apiMessage;
+    public static String apiMessage;
+    public static int userId;
 
     public void submit(ActionEvent actionEvent) {
         Validator validator = new Validator(username, password);
@@ -59,19 +63,28 @@ public class LoginActivity implements AsyncHandler<APIMessage> {
 
     @Override
     public void handleResponse(APIMessage response) {
-        apiMessage = response;
         if (response.getSuccess()) {
+            apiMessage = response.getMessage();
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("res/mapsView.fxml"));
-                Parent root1 = fxmlLoader.load();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root1));
-                stage.setTitle("Rat Map");
-                stage.setResizable(false);
-                ((Stage) this.cancelButton.getScene().getWindow()).close();
-                stage.show();
-            } catch (Exception e) {
-                e.printStackTrace();
+                DecodedJWT jwt = JWT.decode(apiMessage);
+                userId = Integer.parseInt(jwt.getSubject());
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("res/mapsView.fxml"));
+                    Parent root1 = fxmlLoader.load();
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root1));
+                    stage.setTitle("Rat Map");
+                    stage.setResizable(false);
+                    ((Stage) this.cancelButton.getScene().getWindow()).close();
+                    stage.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } catch (JWTDecodeException ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Login Error");
+                alert.setHeaderText("We were unable to authenticate with our server. Try again later.");
+                alert.show();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);

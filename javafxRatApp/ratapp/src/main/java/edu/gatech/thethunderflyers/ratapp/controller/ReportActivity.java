@@ -17,11 +17,13 @@ import sun.rmi.runtime.Log;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static edu.gatech.thethunderflyers.ratapp.controller.LoginActivity.apiMessage;
+import static edu.gatech.thethunderflyers.ratapp.controller.LoginActivity.userId;
+
 public class ReportActivity implements Initializable, AsyncHandler<APIMessage> {
     private Navigator navigator = new Navigator();
     private Validator validate;
     private Alert alert;
-    private static APIMessage apiMessage;
 
     @FXML
     private Button submitButton, cancelButton;
@@ -39,14 +41,11 @@ public class ReportActivity implements Initializable, AsyncHandler<APIMessage> {
             double lat = Double.parseDouble(latitudeText.getText());
             double longitude = Double.parseDouble(longitudeText.getText());
 
-            //need to change user id?
-            //need to get the correct token.....
-
             APIClient.API_CLIENT.submitRatReport(
                     Model.getRatData(locationTypeBox.getSelectionModel().getSelectedItem(),
                             zip, addressText.getText(), cityText.getText(),
                             boroughBox.getSelectionModel().getSelectedItem(), lat,
-                            longitude, 11), apiMessage.getMessage(), this);
+                            longitude, userId), apiMessage, this);
         } else {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error!");
@@ -71,7 +70,6 @@ public class ReportActivity implements Initializable, AsyncHandler<APIMessage> {
 
     @Override
     public void handleResponse(APIMessage response) {
-        apiMessage = response;
         if (response.getSuccess()) {
             navigator.navigate("mainMenuView.fxml", "Main Menu",
                     (Stage) submitButton.getScene().getWindow());

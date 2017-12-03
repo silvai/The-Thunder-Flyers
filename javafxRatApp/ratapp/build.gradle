@@ -15,4 +15,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.github.rterp:GMapsFX:-SNAPSHOT'
     compile 'com.github.edvin:tornadofx-controls:-SNAPSHOT'
+    compile 'com.auth0:java-jwt:3.3.0'
 }

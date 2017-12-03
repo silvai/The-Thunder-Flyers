@@ -59,7 +59,7 @@ public class MapsActivity implements Initializable, AsyncHandler<ObservableList<
             APIClient.API_CLIENT.getRatDataDateRange(beginDateTimePicker.getDateTimeValue()
                             .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
                     endDateTimePicker.getDateTimeValue().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(),
-                    LoginActivity.apiMessage.getMessage(), this);
+                    LoginActivity.apiMessage, this);
         }
     }
 
