@@ -4,6 +4,7 @@ import edu.gatech.thethunderflyers.ratapp.model.RatData;
 import edu.gatech.thethunderflyers.ratapp.util.APIClient;
 import edu.gatech.thethunderflyers.ratapp.util.AsyncHandler;
 import edu.gatech.thethunderflyers.ratapp.util.Navigator;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.ScrollEvent;
+
 import javafx.stage.Stage;
 
 import java.net.URL;
