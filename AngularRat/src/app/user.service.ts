@@ -32,6 +32,21 @@ export class UserService {
     )
   }
 
+  getUser (userid: number) : Observable<User> {
+    return this.http.get<User>("http://localhost:3000/user/" + userid).pipe(
+      tap(user => console.dir(user)),
+      catchError(this.handleError<User>("getUser"))
+    );
+  }
+
+  adminUnban() : Observable<APIMessage> {
+    return this.http.post<APIMessage>("http://localhost:3000/admin/unban", "").pipe(
+      tap(apiMessage => console.dir(apiMessage)),
+      catchError(this.handleError<APIMessage>("adminUnban"))
+    );
+  }
+
+
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);

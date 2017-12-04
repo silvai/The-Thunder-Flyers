@@ -67,6 +67,16 @@ app.get("/user/:id", express_jwt({ secret: RSA_PUBLIC_KEY }), (req, res) => {
     });
 });
 
+app.post("/admin/unban", express_jwt({ secret: RSA_PUBLIC_KEY }), (req, res) => {
+    connection.query("UPDATE users SET `lockout` = 0 WHERE `lockout` = 3", (error, result, fields) => {
+        if (error) { throw error; }
+        res.json({
+            success: true,
+            message: "All banned users unbanned."
+        });
+    });
+})
+
 // POST (create) user
 // Take params from passed JSON and call function in user to create
 app.post("/auth/register", (req, res) => {

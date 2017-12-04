@@ -19,6 +19,7 @@ import { GraphComponent } from './graph/graph.component';
 import { RatdatadisplayComponent } from './ratdatadisplay/ratdatadisplay.component';
 import { RatdataentryComponent, NgbdModalContent } from './ratdataentry/ratdataentry.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     GraphComponent,
     RatdatadisplayComponent,
     RatdataentryComponent,
-    NgbdModalContent
+    NgbdModalContent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,2 @@
+<button *ngIf="!loading && isAdmin" class="btn btn-lg btn-success" (click)="unban()">Unban all banned users</button>
+<p *ngIf="!loading && !isAdmin">You are not an admin.</p>
